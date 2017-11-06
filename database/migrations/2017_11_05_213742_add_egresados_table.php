@@ -15,13 +15,13 @@ class AddEgresadosTable extends Migration
     {
         Schema::create('egresados', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_usuario');
+            $table->integer('id_usuario')->unsigned();
             $table->string('intereses');
             $table->integer('edad')->unsigned();
             $table->enum('genero',['Masculino','Femenino']);
-            $table->timestamps();
 
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

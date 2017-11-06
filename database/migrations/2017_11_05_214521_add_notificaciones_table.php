@@ -15,10 +15,11 @@ class AddNotificacionesTable extends Migration
     {
         Schema::create('notificaciones', function (Blueprint $table) {
             $table->increments('id');//pk
-            $table->integer('id_usuario'); //fk
+            $table->integer('id_usuario')->unsigned(); //fk
             $table->string('informacion'); //mistake
-            $table->timestamps();
+
             $table->foreign('id_usuario')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 
