@@ -1,2 +1,36 @@
 Proyecto laboratorio de software, push prueba
 Proyecto en laravel 5.4, php 7 y manejo de bootstrap frontend
+
+## Descargar el repositorio
+
+  git clone https://github.com/jucapema/Egresados.git
+
+
+## Configurar proyecto
+
+Instalar las depedencias
+
+  composer install
+
+> Crear un nuevo archivo llamado .env y guardarlo en la raíz 
+
+> Copiar el contenido del archivo .env.example en .env
+
+> En .env modificar el contenido de las variables APP_KEY, DB_USERNAME y DB_PASSWORD 
+APP_KEY= 
+DB_USERNAME= nombre del usuario
+DB_PASSWORD= contraseña del usuario
+
+nombre de la database = egresados //configuracion en el archivo .env
+APP_KEY=base64:2gw5aisfKZEHxLu6JUxJrHA68SoounOCRRIpeNe7eyw=
+DB_DATABASE=egresados
+
+DB_USERNAME=root
+  //usuario con acceso a la bd
+DB_PASSWORD=secret //password asignado
+
+Crear un usuario con todos los permisos en phpmyadmin
+
+CREATE USER 'nombre_usuario'@'localhost' IDENTIFIED BY 'tu_contrasena';
+
+GRANT ALL PRIVILEGES ON * . * TO 'nombre_usuario'@'localhost';
