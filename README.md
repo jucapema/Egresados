@@ -14,12 +14,11 @@ Proyecto en laravel 5.4, php 7 y manejo de bootstrap para el frontend
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
-<a href="https://laravel.com/docs/5.5/" </a>Documentacion Laravel 
 
-##Bootstrap
+## Bootstrap
 
 Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.
-<a href=http://getbootstrap.com/ alt="Oficial Page bootstrap"></a>
+ [Oficial Page bootstrap] (href=http://getbootstrap.com/)
 
 ## Contributing
 
