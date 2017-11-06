@@ -18,7 +18,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 ## Bootstrap
 
 Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. Quickly prototype your ideas or build your entire app with our Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful plugins built on jQuery.
- [Oficial Page bootstrap] (href=http://getbootstrap.com/)
+ [Oficial Page bootstrap](http://getbootstrap.com/).
 
 ## Contributing
 
