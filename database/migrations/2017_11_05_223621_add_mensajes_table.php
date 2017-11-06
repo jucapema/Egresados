@@ -14,14 +14,13 @@ class AddMensajesTable extends Migration
     public function up()
     {
         Schema::create('mensajes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('id_usuario')->unsigned(); //fk
-            $table->integer('id_notificacion')->unsigned(); //fk
+            $table->increments('id')->unique();
+            $table->integer('id_egresado')->unsigned(); //fk
+            //$table->integer('id_notificacion')->unsigned(); //fk
             $table->string('contenido');
             $table->string('title');
             $table->timestamps();
-            $table->foreign('id_usuario')->references('id')->on('users');//->onDelate();
-            $table->foreign('id_notificacion')->references('id')->on('notificaciones');
+            $table->foreign('id_egresado')->references('id')->on('egresados');//->onDelate();
         });
     }
 

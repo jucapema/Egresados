@@ -17,7 +17,6 @@ class AddNotificacionesTable extends Migration
             $table->increments('id');//pk
             $table->integer('id_usuario')->unsigned(); //fk
             $table->string('informacion'); //mistake
-
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
         });
