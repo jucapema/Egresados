@@ -16,5 +16,5 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::post('/suscribirse','SuscribirseController@store')->name('suscribirse');
 Route::get('/home', 'HomeController@index')->name('home');
