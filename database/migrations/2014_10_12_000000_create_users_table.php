@@ -19,7 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('apellido');
-            $table->string('pais');
+            $table->enum('tipo_rol',['root','admin','egresado']);
+            $table->enum('estado_cuenta',['activo','inactivo','ban','suscrita']);
+            //$table->string('pais');
             $table->rememberToken();
             $table->timestamps();
         });
