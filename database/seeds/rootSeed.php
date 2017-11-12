@@ -15,7 +15,7 @@ class rootSeed extends Seeder
       'dni' => '1234567',
       'name' 		=> 	'root',
       'email'		=>	'root@utp.edu.co',
-        'password'	=>	bcrypt('321654'),
+        'password'	=>	bcrypt('labo1234'),
       'tipo_rol'	=>	'root',
       'apellido'	=>	'root',
       'estado_cuenta' => 'activa'
