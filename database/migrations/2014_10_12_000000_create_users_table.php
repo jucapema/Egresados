@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('apellido');
             $table->enum('tipo_rol',['root','admin','egresado']);
-            $table->enum('estado_cuenta',['ban','suscrita']);
+            $table->enum('estado_cuenta',['activa','ban','suscrita']);
             //$table->string('pais');
             $table->dateTime('last_login')->nullable();
             $table->softDeletes();
