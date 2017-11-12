@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -27,8 +27,9 @@ class HomeController extends Controller
     {
         Auth::User()->name;
         if(Auth::User()->estado_cuenta!='activo'){
-          echo 'hola cuenta inactiva';
+          echo 'hola cuenta inactiva';redirect()->route('logout') ;
         }else{
+          if(Auth::User()->tipo_rol=='root'){return view('root.indexroot');}
           if(Auth::User()->tipo_rol=='egresado'){echo 'vista egresado';}
           if(Auth::User()->tipo_rol=='admin'){echo 'vista admin';}
         }

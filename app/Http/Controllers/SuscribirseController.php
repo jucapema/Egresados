@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SuscribirseController extends Controller
 {
-      
+
     public function store(Request $request)
     {
       User::create([
@@ -17,7 +17,8 @@ class SuscribirseController extends Controller
          'tipo_rol'=>'egresado',
          'estado_cuenta'=>'suscrita',
      ]);
-     echo 'aqui estoy';
+     //crear mensaje
+     return view('auth.login');
      //redirect()->view('/welcome');
     }
 
