@@ -25,14 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        Auth::User()->name;
-        if(Auth::User()->estado_cuenta!='activo'){
-          echo 'hola cuenta inactiva';redirect()->route('logout') ;
-        }else{
-          if(Auth::User()->tipo_rol=='root'){return view('root.indexroot');}
-          if(Auth::User()->tipo_rol=='egresado'){echo 'vista egresado';}
-          if(Auth::User()->tipo_rol=='admin'){echo 'vista admin';}
-        }
-        //return view('home');
+      Auth::User()->name;
+      if(Auth::User()->estado_cuenta!='activa'){
+        echo 'hola cuenta inactiva';redirect()->route('logout') ;
+      }else{
+        if(Auth::User()->tipo_rol=='root'){return view('root.indexroot');}
+        if(Auth::User()->tipo_rol=='egresado'){echo 'vista egresado';}
+        if(Auth::User()->tipo_rol=='admin'){echo 'vista admin';}
+      }
+      //  return view('home');
     }
 }
