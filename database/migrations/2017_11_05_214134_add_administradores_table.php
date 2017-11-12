@@ -16,11 +16,10 @@ class AddAdministradoresTable extends Migration
         Schema::create('administradores', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_usuario')->unsigned();
-            //$table->integer('id_publicaciones')->unsigned();
-            $table->string('direccion');
-            $table->string('ciudad');
+            $table->string('direccion')->nullable();  
+            $table->string('ciudad')->nullable();
             $table->integer('telefono')->unsigned();
-          //  $table->foreign('id_publicaciones')->references('id')->on('publicaciones');
+            $table->softDeletes();
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->timestamps();
         });

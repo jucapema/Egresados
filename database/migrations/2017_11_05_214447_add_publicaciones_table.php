@@ -16,12 +16,10 @@ class AddPublicacionesTable extends Migration
         Schema::create('publicaciones', function (Blueprint $table) {
             $table->increments('id')->unique(); //pk
             $table->integer('id_administrador')->unsigned(); //fk
-            //$table->integer('id_notificacion')->unsigned(); //fk
             $table->string('titulo');
-            $table->string('contenido');
-            //$table->string('multimedia');
+            $table->string('cuerpo');
+            //$table->string('multimedia'); //llave foreana
             $table->foreign('id_administrador')->references('id')->on('administradores');
-            //$table->foreign('id_notificacion')->references('id')->on('notificaciones');
             $table->timestamps();
           });
     }

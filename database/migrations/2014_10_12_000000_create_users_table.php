@@ -15,13 +15,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id')->unique(); //representara el dni
+            $table->integer('dni')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('apellido');
             $table->enum('tipo_rol',['root','admin','egresado']);
-            $table->enum('estado_cuenta',['activo','inactivo','ban','suscrita']);
+            $table->enum('estado_cuenta',['ban','suscrita']);
             //$table->string('pais');
+            $table->dateTime('last_login')->nullable();
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
