@@ -5,6 +5,7 @@ namespace App\Listeners;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Models\acceso;
 
 class SuccessfulLogin
 {
@@ -26,8 +27,7 @@ class SuccessfulLogin
      */
     public function handle(Login $event)
     {
-      $event->user->last_login = new \DateTime;
-      $event->user->save();
-      //agregar eso a una tabla
+      $last_login = new \DateTime;
+      acceso::create(['id_usuario'=>$event->user->id]);
     }
 }
