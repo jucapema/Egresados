@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Administrador extends Model
 {
-  protected $table = 'administrador';
+  protected $table = 'administradores';
 
   use softDeletes;
   protected $dates = ['deleted_at'];
@@ -15,7 +15,7 @@ class Administrador extends Model
   ];
 
   public function user(){
-    return $this->belongsTo('App\Models\User');
+    return $this->belongsTo('App\User');
   }
 
   public function publicacion(){
