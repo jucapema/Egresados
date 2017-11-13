@@ -2,10 +2,13 @@
 
 @section('content')
 <div class="container">
+  @if(Session::has('flash_message'))
+      {{Session::get('flash_message')}}
+    @endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Iniciar sesion</div>
 
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
@@ -42,10 +45,10 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
+                                    Olvido su contraseña?
                                 </a>
                                 <a class="btn btn-link" href="#">
-                                    Help?
+                                    Ayuda?
                                 </a>
                             </div>
                         </div>

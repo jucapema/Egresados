@@ -2,14 +2,28 @@
 
 @section('content')
 <div class="container">
+
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Formulario de suscripcion</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('suscribirse') }}">
+                    <form class="form-horizontal" action="{{ route('suscribirse') }}" method="POST">
                         {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('dni') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">DNI</label>
+
+                            <div class="col-md-6">
+                                <input id="dni" type="number" class="form-control" min="0" name="dni" value="{{ old('dni') }}" required autofocus>
+
+                                @if ($errors->has('dni'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('dni') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nombre</label>
@@ -50,18 +64,31 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('Fecha Nacimiento') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Fecha de Nacimiento</label>
 
-                  <!--      <div class="form-group{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="col-md-6">
+                                <input id="fecha_nacimiento" type="date" class="form-control" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required autofocus>
+
+                                @if ($errors->has('fecha_nacimiento'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('fecha_nacimiento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
 
-                                if ($errors->has('password'))
+                                @if ($errors->has('password'))
                                     <span class="help-block">
-                                        <strong>{ $errors->first('password') }}</strong>
+                                        <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                endif
+                                @endif
                             </div>
                         </div>
 
@@ -71,7 +98,7 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
-                        </div>-->
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
