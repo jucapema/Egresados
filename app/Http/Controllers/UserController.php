@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-
+use App\Mail\Mensaje;
+use Mail;
+use Session;
 class UserController extends Controller
 {
     /**
@@ -17,6 +19,10 @@ class UserController extends Controller
         //
     }
 
+    public function admins(){
+      $users = User::where('tipo_rol','=','administrador')->paginate(10);
+      return view('user.indexAdmin',['users'=>$users]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -72,6 +78,10 @@ class UserController extends Controller
         //
     }
 
+    public function correo(){
+      $user = User::find(1);
+      Mail::to('dicoma12@yahoo.es','prueba')->send(new Mensaje($user));
+    }
     /**
      * Remove the specified resource from storage.
      *
