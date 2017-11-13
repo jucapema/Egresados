@@ -4,18 +4,22 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
 
+    use softDeletes;
+    protected $dates = ['deleted_at'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
+     *user root : root root@localhost.com root123456, root ,activo
      */
     protected $fillable = [
-        'name', 'email', 'password','apellido','tipo_rol','estado_cuenta',
+        'dni','name', 'email', 'password','apellido','tipo_rol','estado_cuenta',
     ];
 
     /**
@@ -26,4 +30,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function egresado(){
+      return $this->hasOne('App\Models\Egresado');
+    }
+
+    public function administrador(){
+        return $this->hasOne('App\Models\Administrador');
+    }
+
+    public function notificacion(){
+        return $this->hasMany('App\Models\Notificacion');
+    }
+
+    public function acceso(){
+      return $this->hasMany('App\Models\acceso');
+    }
 }
