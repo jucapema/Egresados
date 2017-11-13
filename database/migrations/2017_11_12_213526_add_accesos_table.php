@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddEgresadosTable extends Migration
+class AddAccesosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class AddEgresadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('egresados', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('accesos', function (Blueprint $table) {
+            $table->increments('id')->unique();
             $table->integer('id_usuario')->unsigned();
-            $table->string('intereses')->nullable();
-            $table->date('fecha_nacimiento');
-            $table->enum('genero',['Masculino','Femenino'])->nullable();
-            $table->softDeletes();
+      //      $table->dateTime('login');
             $table->timestamps();
             $table->foreign('id_usuario')->references('id')->on('users');
         });
@@ -32,6 +29,6 @@ class AddEgresadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('egresados');
+        Schema::dropIfExists('accesos');
     }
 }
