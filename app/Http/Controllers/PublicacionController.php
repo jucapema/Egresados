@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Publicacion;
+use App\Models\Administrador;
 use Illuminate\Http\Request;
+use Session;
 
 class PublicacionController extends Controller
 {
@@ -14,7 +16,8 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        //
+        $publicaciones = Publicacion::orderBy('id','desc')->paginate(10);
+        return view('publicaciones.index',['publicaciones'=>$publicaciones]);
     }
 
     /**
@@ -24,7 +27,7 @@ class PublicacionController extends Controller
      */
     public function create()
     {
-        //
+        //return view('publicaciones.CreatePublicacion'); no existe la vista
     }
 
     /**
@@ -35,8 +38,20 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $v=\Validator::make($request->all()[
+          'titulo'='required|max:100',
+          'cuerpo'='required|max:255',
+        ]);
+        if($v->fails()){
+          return redirect()->back()->withInput()->withErrors($v->errors());
+        }else{
+          $data= $request->all();
+          $data['id_usuario'] = $request->user()->id;
+          $publicacion = Publicacion::create($data);
+          Session::flash('flash_message','Publicado');
+          return redirect()->route('Publicacion.index');
     }
+  }
 
     /**
      * Display the specified resource.
@@ -57,7 +72,7 @@ class PublicacionController extends Controller
      */
     public function edit(Publicacion $publicacion)
     {
-        //
+        return view('publicaciones.EditPublicacion',['publicacion'=>$publicacion]);
     }
 
     /**
@@ -69,8 +84,17 @@ class PublicacionController extends Controller
      */
     public function update(Request $request, Publicacion $publicacion)
     {
-        //
-    }
+      $v=\Validator::make($request->all()[
+        'titulo'='required|max:100',
+        'cuerpo'='required|max:255',
+      ]);
+      if($v->fails()){
+        return redirect()->back()->withInput()->withErrors($v->errors());
+      }else{
+            $
+            Session::flash('flash_message','Publicado');
+            return redirect()->route('Publicacion.index');
+  }         }
 
     /**
      * Remove the specified resource from storage.
@@ -80,6 +104,8 @@ class PublicacionController extends Controller
      */
     public function destroy(Publicacion $publicacion)
     {
-        //
+        $publicacion->delete();
+        Session::flash('flash_message','Publicacion Eliminada');
+        return redirect()->route('Publicacion.index');
     }
 }

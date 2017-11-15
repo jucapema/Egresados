@@ -23,16 +23,10 @@ class SuscribirseController extends Controller
         else{
           $edad = Carbon::parse($request['fecha_nacimiento'])->age;
           if($edad>=18){
-            User::create([
-               'name' => $request['name'],
-               'dni' => $request['dni'],
-               'email' => $request['email'],
-               'apellido' => $request['apellido'],
-               'password' => $request['password'],
-               'password_confirmation' => $request['password_confirmation'],
-               'tipo_rol'=>'egresado',
-               'estado_cuenta'=>'suscrita',
-             ]);
+            $data=$request->all();
+            $data['tipo_rol'] = 'egresado';
+            $data['estado_cuenta'] = 'suscrita';
+            User::create($data);
              Auth::logout();
              Session::flash('flash_message', 'Solicitud en Proceso');
              return view('auth.login');
