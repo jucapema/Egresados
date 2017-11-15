@@ -34,3 +34,10 @@ Crear un usuario con todos los permisos en phpmyadmin
 CREATE USER 'nombre_usuario'@'localhost' IDENTIFIED BY 'tu_contrasena';
 
 GRANT ALL PRIVILEGES ON * . * TO 'nombre_usuario'@'localhost';
+
+
+Tambien es requerido instalar dependencias para laravel collective, y el uso de otras librerias como carbon
+
+https://laravelcollective.com/docs/5.4/html -- laravel collective
+
+http://carbon.nesbot.com/ -- carbon

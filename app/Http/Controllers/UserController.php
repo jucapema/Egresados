@@ -19,10 +19,6 @@ class UserController extends Controller
         //
     }
 
-    public function admins(){
-      $users = User::where('tipo_rol','=','administrador')->paginate(10);
-      return view('user.indexAdmin',['users'=>$users]);
-    }
     /**
      * Show the form for creating a new resource.
      *

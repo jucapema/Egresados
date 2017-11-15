@@ -20,7 +20,7 @@
 </ul>
 <hr>
 <div class="container">
-<a class="btn btn-primary" href="{{route('admingestion')}}">
+<a class="btn btn-primary" href="{{route('Administrador.index')}}">
   Gestionar Administradores
 </a></div>
 @endsection

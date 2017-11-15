@@ -19,6 +19,6 @@ class Administrador extends Model
   }
 
   public function publicacion(){
-    return $this->hasMany('App\Models\Publicaciones')
+    return $this->hasMany('App\Models\Publicaciones');
   }
 }

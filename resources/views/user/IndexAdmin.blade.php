@@ -14,6 +14,11 @@
           alert("No hay Administradores Registrados!");
     </script>
   @endif
+  @if(Session::has('flash_message'))
+      <script type="text/javascript">
+        alert("{{Session::get('flash_message')}}");
+      </script>
+  @endif
   <a href="{{route('Administrador.create')}}" class="btn btn-info">Agregar</a>
   <a href="#" class="btn btn-info">Consultar</a>
    <a href="{route('Administrador.edit',['user'=>$user->id])}}" class="btn btn-info">Modificar</a>
