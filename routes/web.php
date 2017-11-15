@@ -19,7 +19,6 @@ Auth::routes();
 Route::post('/Suscribirse','SuscribirseController@store')->name('suscribirse');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function(){
-Route::get('/AdministradorGestion', 'UserController@admins')->name('admingestion');
 Route::get('/Enviar', 'UserController@correo')->name('correo');
 Route::resource('Usuario','UserController');
 Route::resource('Administrador','AdminController');
