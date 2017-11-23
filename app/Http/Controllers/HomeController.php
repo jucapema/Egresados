@@ -29,9 +29,9 @@ class HomeController extends Controller
       if(Auth::User()->estado_cuenta!='activa'){
         echo 'hola cuenta inactiva';redirect()->route('logout') ;
       }else{
-        if(Auth::User()->tipo_rol=='root'){return view('root.indexroot');}
-        if(Auth::User()->tipo_rol=='egresado'){echo 'vista egresado';}
-        if(Auth::User()->tipo_rol=='admin'){echo 'vista admin';}
+        if(Auth::User()->tipo_rol=='root'){return view('administrador.AdminMain');}
+        if(Auth::User()->tipo_rol=='egresado'){return view('egresados.EgresadoMain');}
+        if(Auth::User()->tipo_rol=='admin'){return view('administrador.AdminMain');}
       }
       //  return view('home');
     }
