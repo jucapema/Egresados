@@ -19,11 +19,11 @@ Auth::routes();
 Route::post('/Suscribirse','SuscribirseController@store')->name('suscribirse');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth'])->group(function(){
-Route::get('/Enviar', 'UserController@correo')->name('correo');
-Route::resource('Usuario','UserController');
-Route::resource('Administrador','AdminController');
-Route::resource('Egresado','EgresadoController');
-Route::resource('Mensaje','MensajeController');
-Route::resource('Publicacion','PublicacionController');
-Route::resource('Notificacion','NotificacionController');
+	Route::get('/Enviar', 'UserController@correo')->name('correo');
+	Route::resource('Usuario','UserController');
+	Route::resource('Administrador','AdminController');
+	Route::resource('Egresado','EgresadoController');
+	Route::resource('Mensaje','MensajeController');
+	Route::resource('Publicacion','PublicacionController');
+	Route::resource('Notificacion','NotificacionController');
 });

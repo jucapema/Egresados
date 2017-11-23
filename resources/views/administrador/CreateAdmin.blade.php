@@ -4,7 +4,7 @@
 
 @endsection
 
-@section('content')
+
 @section('content')
 @if(count($errors)>0)
         <div class="alert alert-warning" role="alert">
@@ -16,7 +16,7 @@
           @endforeach
         </div>
     @endif </br>
-{!!Form::open(['route'=>['Administrador.store'], 'method'=>'POST'])!!}
+  {!!Form::open(['route'=>['Administrador.store'], 'method'=>'POST'])!!}
   {{csrf_field()}}
     <div class="container">
 
