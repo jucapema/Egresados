@@ -1,12 +1,7 @@
-@extends('layouts.app')
+@extends('egresados.EgresadoMain')
 
-@section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
+@section('recuadro')
+<div class="cuadro">
                 <div class="panel-body">
                   <table class="table">
                     <th>id</th>
@@ -27,9 +22,6 @@
                   </table>
 
                     You are logged in!
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 @endsection
