@@ -15,12 +15,12 @@ class AccesoController extends Controller
     public function index()
     {
         $accesos=Acceso::orderBy('id','desc')->paginate(10);
-        return view('acesso.index',['acceso'=>$acceso->id_usuario]);
+        return view('acesso.index',['acceso'=>$accesos]);
     }
 
 
     public function odernar($id){
-      $ordenar = Acceso::all()->orderBy('id','desc')->where('id','');
+      //$ordenar = Acceso::all()->orderBy('id','desc')->where('id','');
     }
     /**
      * Store a newly created resource in storage.
@@ -37,5 +37,5 @@ class AccesoController extends Controller
     public function destroy(acceso $acceso)
     {
         //
-    }
+    }*/
 }

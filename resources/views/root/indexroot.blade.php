@@ -13,8 +13,14 @@
         <a class="btn btn-info" href="#">
             PERFIL
           </a>
-        <a class="btn btn-info" href="#">
-          INFORMACION
+        <a class="btn btn-info" href="{{route('Mensaje.create')}}">
+          mensajes a user egresado
+        </a>
+        <a class="btn btn-info" href="{{route('indexmensajes',['id'=>Auth::user()->id])}}">
+          index mensajes
+        </a>
+        <a class="btn btn-info" href="{{route('Mensaje.index')}}">
+          index mensajes todos
         </a>
       </div></ul>
 </ul>

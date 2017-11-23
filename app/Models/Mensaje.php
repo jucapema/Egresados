@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class Mensaje extends Model
   ];
 
   public function egresado(){
-    return $this->belongsTo('App\Models\Egresado');
+    return $this->belongsTo('App\Models\Egresado','id_egresado');
+  }
+
+  public function scopeMensajesid($query,$id)
+  {
+      return $$query->where('id_egresado',$id)->get();
   }
 }

@@ -94,7 +94,8 @@ class PublicacionController extends Controller
             $
             Session::flash('flash_message','Publicado');
             return redirect()->route('Publicacion.index');
-  }         }
+      }
+    }
 
     /**
      * Remove the specified resource from storage.
