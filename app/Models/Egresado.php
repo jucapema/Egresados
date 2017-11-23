@@ -18,6 +18,6 @@ class Egresado extends Model
   }
 
   public function mensaje(){
-    return $this->hasMany('App\Models\Mensaje');
+    return $this->hasMany('App\Models\Mensaje','id_egresado');
   }
 }

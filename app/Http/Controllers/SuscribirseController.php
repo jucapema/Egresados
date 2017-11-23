@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Models\Egresado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
@@ -27,6 +28,7 @@ class SuscribirseController extends Controller
             $data['tipo_rol'] = 'egresado';
             $data['estado_cuenta'] = 'suscrita';
             User::create($data);
+            Egresado::create($data);
              Auth::logout();
              Session::flash('flash_message', 'Solicitud en Proceso');
              return view('auth.login');

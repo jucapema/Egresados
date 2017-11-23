@@ -91,7 +91,7 @@ class EgresadoController extends Controller
      */
     public function update(Request $request, Egresado $egresado)
     {
-        $v=\Validator::make($request->all([
+        $v=\Validator::make($request->all(),[
           'dni'=>'required|numeric',
           'email'=>'required|email',
         ]);
@@ -124,6 +124,6 @@ class EgresadoController extends Controller
       $user->delete();
       $egresado->delete();
       Session::flash('deleted', 'Usuario Eliminado');
-      return redirect()->route('Egresado.index',['deleted',$user->id]); //TODO this is for restore
+      return redirect()->route('Egresado.index',['deleted'=>$user->id]); //TODO this is for restore
     }
 }

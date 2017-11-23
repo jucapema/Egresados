@@ -11,9 +11,6 @@
     @foreach($users as $user)
     @if ($user->tipo_rol!='root')
     <tbody>
-        @php
-        $Telefono = App\Models\Usuarios\Telefono::findOrFail($user->id);
-      @endphp
             <td><a href="{{route('Usuario.show',['usuario' => $user->id])}}">{{$user->name}}" "{{$user->apellidos}}</a></td>
             <td>{{$user->dni}}</td>
             <td>{{$user->email}}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use Mail;
 use Session;
+
 class AdminController extends Controller
 {
   /**
@@ -17,7 +18,7 @@ class AdminController extends Controller
   */
   public function index()
   {
-    $users = User::where('tipo_rol','=','admin')->paginate(10);
+    $users = User::where('tipo_rol','admin')->paginate(10);
     return view('user.indexAdmin',['users'=>$users]);
   }
 
@@ -114,6 +115,6 @@ class AdminController extends Controller
     $user=User::findOrfail($administrador->id);
     $administrador->delete();$user->delete();
     Session::flash('deleted', 'Usuario Eliminado');
-    return redirect()->route('Administrador.index',['deleted',$user->id]); //TODO this is for restore
+    return redirect()->route('Administrador.index',['deleted'=>$user->id]); //TODO this is for restore
   }
 }
