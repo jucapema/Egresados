@@ -1,0 +1,385 @@
+header{
+}
+/*#################################### ESTILO LOGO ####################################*/
+.logo{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/*################################ ESTILO BOTON ATRAS #################################*/
+/*----- Estilo Botón -----*/
+.atras{
+  margin: 0px;
+  padding: 0px;
+  left: -50px;
+  color: #0E7AD0;
+
+}
+/*----- Mouse sobre Botón -----*/
+.atras .atr:hover {
+  color: #05264D;
+}
+/*----- Click sobre Botón -----*/
+.atras .atr:active {
+  color: #ff9900;
+}
+/*################################ ESTILO FOTO PERFIL #################################*/
+/*----- Estilo Foto -----*/
+.foto{
+  margin: 0px;
+  padding: 0px;  
+  left: -150px;
+  color: #0E7AD0;
+}
+/*----- Mouse sobre Foto -----*/
+.foto .ft:hover {
+  cursor: pointer;
+}
+/*----- Click sobre Foto -----*/
+.foto .ft:active {
+  cursor: pointer;
+}
+/*################################ ESTILO NOMBRE EGRESADO #################################*/
+/*----- Estilo Foto -----*/
+.nombre{
+  margin: 0px;
+  padding: 0px;  
+  font-family: Montserrat;
+  font-size: 25px;
+  font-weight: bold;
+  color: #000000;
+  position: relative;
+  left: -150px;
+  top: 50px;
+}
+/*----- Mouse sobre Foto -----*/
+.nombre .name:hover {
+  cursor: pointer;
+}
+/*----- Click sobre Foto -----*/
+.nombre .name:active {
+  cursor: pointer;
+}
+/*################################### ESTILO TÍTULO ###################################*/
+.title{
+  margin-top: 35px;
+}
+/*################################# ESTILO WALLPAPER ##################################*/
+.wallpaper{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: -1;
+}
+/*############################## ESTILO MENÚ HORIZONTAL ###############################*/
+/*----- Espaciado -----*/
+.btn-breadcrumb .btn {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  text-shadow: 0 0 3px #000000, 0 0 3px #000000;
+  left: 80px;
+  top: -100px;
+  background-color: #0E51A2;
+}
+.bordemenu {
+  border-right: 2px solid #FFFFFF;
+}
+
+/*----- Transiciones Mouse sobre Menú -----*/
+.btn-breadcrumb .btn:hover {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #0E7BD2;
+  border-left: 5px solid #ff9900;
+  border-right: 5px solid #ff9900;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.btn-breadcrumb .btn:active {
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 5px solid #76ff03;
+  border-right: 5px solid #76ff03;
+  background-color: #05264D;
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+
+.btn-breadcrumb .activa1{
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 5px solid #76ff03;
+  border-right: 5px solid #76ff03;
+  background-color: #05264D;
+}
+/*############################## ESTILO SUBMENÚ HORIZONTAL ###############################*/
+.dropdown-menu{
+  background-color: #0E51A2;
+  left: 80px;
+  border: 3px solid #000000;
+  padding: 0px;
+  top: -60px;
+} 
+
+.bordesubmenu {
+  border-bottom: 1px solid #FFFFFF;
+}
+
+.dropdown-menu .btn2 {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  text-shadow: 0 0 3px #000000, 0 0 3px #000000;
+  background-color: #0E51A2;
+  color: #FFFFFF;
+  padding-left: 10px;
+}
+/*----- Transiciones Mouse sobre Menú -----*/
+.dropdown-menu .btn2:hover {
+  border-right: 5px solid #ff9900;
+  border-left: 5px solid #ff9900;
+  padding-left: 20px;
+  background-color: #0E7BD2;
+  color: #FFFFFF;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.dropdown-menu .btn2:active {
+  padding-left: 20px;
+  border-left: 5px solid #76ff03;
+  background-color: #05264D;
+  color: #FFFFFF;
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+
+.dropdown-menu .activa11{
+  padding-left: 20px;
+  background-color: #05264D;
+  color: #FFFFFF;
+}
+
+/*############################### ESTILO MENÚ VERTICAL ################################*/
+/* ul = lista no ordenada (viñetas), aplica estilos a cada uno de los "li" */
+/* li = elementos contenidos en las "ul", aplica estilos de manera independiente */
+
+/*----- Iconos -----*/
+.iconosmenu{
+  color:white;
+  position:relative;
+  vertical-align:middle;
+  transform:scale(1.2);
+}
+/*----- Menú -----*/
+.nav-side-menu {
+  overflow: auto;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: 200;
+  background-color: #484849;
+  position: relative;
+  top: 0px;
+  left: 30px;
+  width: 300px;
+  height: auto;
+  color: #FFFFFF;
+}
+/*----- Título Menú -----*/
+.nav-side-menu .brand {
+  background-color: #007E33;
+  line-height: 50px;
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  border-top: 3px solid #000000;
+  border-left: 3px solid #000000;
+  border-right: 3px solid #000000;
+  border-bottom: 1px solid #000000;
+}
+/*----- Botón Menú (Dispositivos Móviles) -----*/
+.nav-side-menu .toggle-btn {
+  display: none;
+}
+/*----- Recuadros de los Botones -----*/
+.nav-side-menu ul,
+.nav-side-menu li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 35px;
+  cursor: pointer;
+  border-top: 1px solid #000000;
+}
+/*----- Flecha (v) -----*/
+.nav-side-menu ul :not(collapsed) .arrow:before,
+.nav-side-menu li :not(collapsed) .arrow:before {
+  font-family: FontAwesome;
+  content: "\f078"; /* Código de icono Font Awesome */
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+  float: right;
+}
+
+/*----- Flecha (>) Submenú -----*/
+.nav-side-menu ul .sub-menu li.active,
+.nav-side-menu li .sub-menu li.active {
+  color: #d19b3d;
+}
+/*----- Texto Submenú -----*/
+.nav-side-menu ul .sub-menu li.active a,
+.nav-side-menu li .sub-menu li.active a {
+  color: #d19b3d;
+}
+/*----- Recuadros Submenú -----*/
+.nav-side-menu ul .sub-menu li,
+.nav-side-menu li .sub-menu li {
+  background-color: #181c20;
+  border: none;
+  line-height: 28px;
+  border-bottom: 1px solid #23282e;
+  margin-left: 0px;
+}
+/*----- Mouse sobre las Opciones del Submenú -----*/
+.nav-side-menu ul .sub-menu li:hover,
+.nav-side-menu li .sub-menu li:hover {
+  background-color: #FF51C0;
+}
+/*----- Flecha (>) Submenú -----*/
+.nav-side-menu ul .sub-menu li:before,
+.nav-side-menu li .sub-menu li:before {
+  font-family: FontAwesome;
+  content: "\f105"; /* Código de icono Font Awesome */
+  display: inline-block;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: middle;
+}
+/*----- Bordes Menú -----*/
+.nav-side-menu ul {
+  padding-left: 0px;
+  border-left: 3px solid #000000;
+  border-right: 3px solid #000000;
+  border-bottom: 3px solid #000000;  
+}
+/*----- Texto Menú -----*/
+.nav-side-menu li a {
+  text-decoration: none;
+  color: #FFFFFF;
+}
+/*----- Márgenes Menú -----*/
+.nav-side-menu li a i {
+  padding-left: 10px;
+  width: 20px;
+  padding-right: 30px;
+}
+/*----- Transiciones Mouse sobre Menú -----*/
+.nav-side-menu li:hover {
+  border-left: 5px solid #ff9900;
+  padding-left: 15px;
+  background-color: #01579b;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+/*----- Opción Activa -----*/
+.nav-side-menu li:active {
+  padding-left: 15px;
+  border-left: 5px solid #76ff03;
+  background-color: #05264D;
+  -webkit-transition: all 0.1s ease;
+  -moz-transition: all 0.1s ease;
+  -o-transition: all 0.1s ease;
+  -ms-transition: all 0.1s ease;
+  transition: all 0.1s ease;
+}
+
+.nav-side-menu .activa2 {
+  padding-left: 15px;
+  border-left: 5px solid #76ff03;
+  background-color: #05264D;
+}
+/*----- Propiedades Responsive para todos los elementos -----*/
+@media (max-width: 767px) {
+  .nav-side-menu {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .nav-side-menu .toggle-btn {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10 !important;
+    padding: 3px;
+    background-color: #ffffff;
+    color: #000;
+    width: 40px;
+    text-align: center;
+  }
+  .brand {
+    text-align: left !important;
+    font-size: 22px;
+    padding-left: 20px;
+    line-height: 50px !important;
+  }
+}
+@media (min-width: 767px) {
+  .nav-side-menu .menu-list .menu-content {
+    display: block;
+  }
+}
+
+
+
+
+.pie {
+  position: absolute;
+  top: 800px;
+  bottom: 0;
+  width: 100%;
+  border-top: 4px solid #000000;
+}
+
+.logo2{
+  position: absolute;
+  left: 1000px;
+  top: 850px;
+}
+
+.textfooter{
+  position: absolute;
+  left: 30px;
+  top: 850px;
+}
+
+.recuadro{
+  position: relative;
+  height: 450px;
+  width: 800px;
+  background-color: #CFCFCF;
+  border: 4px solid #000000;
+  left: 450px;
+  top: -250px;
+}
