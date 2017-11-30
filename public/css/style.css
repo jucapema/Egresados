@@ -10,9 +10,12 @@ header{
 .atras{
   margin: 0px;
   padding: 0px;
-  left: -50px;
-  color: #0E7AD0;
-
+  position: absolute;
+  left: 30px;
+  top: 30px;
+}
+.atr{
+  color: #D0FF41;
 }
 /*----- Mouse sobre Botón -----*/
 .atras .atr:hover {
@@ -382,4 +385,149 @@ header{
   border: 4px solid #000000;
   left: 450px;
   top: -250px;
+}
+
+/*############################### ESTILO LOGIN ################################*/
+.panel-heading{
+  border-radius: 50px;
+  position: relative;
+  width: 50%;
+  left: 180px;
+  padding: 0px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+}
+
+.panel{
+  position: relative;
+  top: 100px;
+  background-color: #077FB7;
+  border-radius: 40px;
+  border: 5px solid #000000;
+}
+.boton1{
+  background-color: #92CD1F;
+  color: #000000;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid #000000;
+  position: relative;
+  left: 70px;
+}
+.boton1:hover{
+  background-color: #64910D;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.boton2{
+  background-color: #D50202;
+  color: #FFFFFF;
+  font-family: Montserrat;
+  font-size: 15px;
+  border: 2px solid #000000;
+  position: relative;
+  left: 90px;
+}
+
+.boton2:hover{
+  background-color: #8C0808;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+
+.btn-link{
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  position: relative;
+  left: 25px;
+}
+
+.btn-link:hover{
+  color: #FFA800;
+  text-decoration: none;
+  text-shadow: 0 0 2px #000000, 0 0 2px #000000;
+}
+
+.control-label{
+  font-family: Montserrat;
+  font-size: 18px;
+  color: #000000;
+}
+
+.suscrip{
+  font-family: Montserrat;
+  font-size: 25px;
+  color: #FFFFFF;  
+  position: relative;
+  left: 110px;
+}
+.suscrip:hover{
+  color: #C4F112;
+  text-decoration: none;
+  text-shadow: 0 0 3px #000000, 0 0 3px #000000;
+}
+
+.form-control{
+  border: 2px solid #000000;
+  font-family: Montserrat;
+  color: #000000;
+}
+
+.imglogin{
+  padding: 0px;
+  margin: 0px;
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+}
+
+/*############################### ESTILO REGISTER ################################*/
+.panel2{
+  position: relative;
+  top: 20px;
+  background-color: #077FB7;
+  border-radius: 40px;
+  border: 5px solid #000000;
+}
+
+.btn-register{
+  background-color: #92CD1F;
+  color: #000000;
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #000000;
+  position: relative;
+  left: 120px;
+  top: 10px;
+}
+
+.btn-register:hover{
+  background-color: #64910D;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.btn-restpassword{
+  background-color: #92CD1F;
+  color: #000000;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  border: 2px solid #000000;
+}
+
+.btn-restpassword:hover{
+  background-color: #64910D;
+  color: #000000;
+  border: 2px solid #000000;
 }
