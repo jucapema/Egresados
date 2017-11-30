@@ -6,6 +6,7 @@ use App\Models\Egresado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use App\User;
 
 class EgresadoController extends Controller
 {
@@ -16,10 +17,15 @@ class EgresadoController extends Controller
      */
     public function index()
     {
-        $egresado = Egresado::orderBy('id','desc')->paginate(10);
-        //return  view('IndexEgresado',['egresado'=>$egresado]);
+      $users = User::where('tipo_rol','egresado')->paginate(10);
+      return view('user.indexEgresado',['users'=>$users]);
     }
 
+    public function indexsuscrita()
+    {
+      $users = User::where('estado_cuenta','suscrita')->paginate(10);
+      return view('user.indexSuscrita',['users'=>$users]);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Models\Mensaje;
+use App\Models\Egresado;
 use App\Models\Notificacion;
 use Illuminate\Http\Request;
 
@@ -15,9 +16,8 @@ class MensajeController extends Controller
      */
     public function index()
     {
-
         $mensajes=Mensaje::orderBy('id_egresado', 'asc')->paginate(10);
-        return view('home',['mensajes'=>$mensajes]);
+        //return view('home',['mensajes'=>$mensajes]);
     }
 
     /**
@@ -27,8 +27,10 @@ class MensajeController extends Controller
      */
     public function create()
     {
-        $users = User::where('id','!=',\Auth::user()->id)->get();
-        return view('notificaciones.Mensaje',compact('users'));
+
+        $egresados = Egresado::all();
+//var_dump($users);
+        return view('notificaciones.Mensaje',compact('egresados'));
     }
 
     /**
@@ -47,11 +49,16 @@ class MensajeController extends Controller
       }else{*/
       //$data['id_usuario']
       //$data=$request->except('id_egresado');
-      $mensaje=Mensaje::create($request->all());
-      \Session::flash('flash_message','Mensaje_Enviado');
-      return redirect()->back();
+      $data=$request->all();
+      $data['send_id'] = \Auth::user()->id;
+      $mensaje=Mensaje::create($data);
         //return redirect()->route('Notificacion.store',['tipo'=>'mensaje','valores'=>$mensaje]);
-        //Notificacion::create();
+        $data2['id_usuario'] =$$request->id_egresado;
+        $data2['tipo'] ='mensaje';
+        $data2['informacion'] = $request['titulo'].$request['cuerpo'];
+        Notificacion::create();
+        \Session::flash('flash_message','Mensaje_Enviado');
+        return redirect()->back();
     }
 
   /*  public function indexmensajes($id){

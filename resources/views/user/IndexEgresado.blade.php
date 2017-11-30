@@ -1,28 +1,3 @@
-@include('layouts.app')
-
-@section('content')
-    <table class="table">
-        <thead>
-          <th>Nombre</th>
-          <th>Codigo</th>
-          <th>Correo</th>
-          <th>Solicitud</th>
-        </thead>
-    @foreach($users as $user)
-    @if ($user->tipo_rol!='root')
-    <tbody>
-            <td><a href="{{route('Usuario.show',['usuario' => $user->id])}}">{{$user->name}}" "{{$user->apellidos}}</a></td>
-            <td>{{$user->dni}}</td>
-            <td>{{$user->email}}
-              <small class="pull-right">
-                    <a href="{{route ('Administrador.aprobar',['user' => $user->id])}}" class="btn btn-primary">Aprobar</a>
-              </small><small class="pull-right">
-                  <a href="{{route ('Administrador.rechazar',['user' => $user->id])}}" class="btn btn-danger">rechazar</a>
-            </small></td>
-          </tbody>
-          @endif
-          {{$users->render()}}
-@endsection
 
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
@@ -51,7 +26,7 @@
 <body>
   @if($users->count()==0)
     <script type="text/javascript">
-    alert("No hay Administradores Registrados!");
+    alert("No hay Egresados Registrados!");
     </script>
   @endif
   @if(Session::has('flash_message'))
@@ -109,12 +84,17 @@
   </nav>
 </div>
 <div class="container">
+  <a href="{{route('Egresado.create')}}" class="btn btn-info">Agregar</a>
+  <a href="#" class="btn btn-info">Consultar</a>
+  <a href="{route('Administrador.edit',['user'=>$user->id])}}" class="btn btn-info">Modificar</a>
+  <a href="{route('Administrador.destroy',['user'=>$user->id])}" class="btn btn-info">Eliminar</a>
   <table id="users" class="table table-striped table-bordered dt-responsive nowrap">
     <thead>
       <tr>
-        <th>Administrador</th>
+        <th>Nombre</th>
         <th>DNI</th>
         <th>Correo</th>
+        <th>Estado Cuenta</th>
       </tr>
     </thead>
   </table>
@@ -126,11 +106,12 @@ $(document).ready(function () {
   $('#users').DataTable({
     "processing":true,
     "serverSide":true,
-    "ajax": "list/admins",
+    "ajax": "list/egresados",
     "columns":[
       {data: 'name'},
       {data: 'dni'},
       {data: 'email'},
+      {data: 'estado_cuenta'},
     ]
   });
 });

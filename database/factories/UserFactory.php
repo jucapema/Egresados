@@ -43,6 +43,7 @@ $factory->define(App\Models\Administrador::class, function (Faker\Generator $fak
         },
         'direccion'=> $faker->address,
         'ciudad'=>$faker->city,
+        'valor'=>'false',
         'telefono' => $faker->phoneNumber,
     ];
 });

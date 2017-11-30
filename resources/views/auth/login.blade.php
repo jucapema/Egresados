@@ -3,8 +3,10 @@
 @section('content')
 <div class="container">
   @if(Session::has('flash_message'))
-      {{Session::get('flash_message')}}
-    @endif
+    <script type="text/javascript">
+      alert("{{Session::get('flash_message')}}");
+    </script>
+  @endif
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">

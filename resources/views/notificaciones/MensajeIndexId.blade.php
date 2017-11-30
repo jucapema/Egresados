@@ -14,7 +14,7 @@
           <td>{{$mensaje->user->name}}</td>
           <td>{{$mensaje->title}}</td>
           <td>{{$mensaje->contenido}}</td>
-          <td>{{ $post->created_at->diffForHumans() }} </td>
+          <td>{{ $mensaje->created_at->diffForHumans() }} </td>
 
         </tr>
       @endforeach

@@ -12,7 +12,7 @@ class Publicacion extends Model
   ];
 
   public function administrador(){
-    return $this->belongsTo('App\Models\Administrador');
+    return $this->belongsTo('App\Models\Administrador','id_administrador');
   }
-  
+
 }

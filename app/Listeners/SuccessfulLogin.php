@@ -27,12 +27,6 @@ class SuccessfulLogin
      */
     public function handle(Login $event)
     {
-      /*$id=$request->user()->id;
-      $acceso = acceso::findOrfail($id);
-      if(empty($acceso){
-
-      }*/
-      $last_login = new \DateTime;
       acceso::create(['id_usuario'=>$event->user->id]);
-    }
+  }
 }

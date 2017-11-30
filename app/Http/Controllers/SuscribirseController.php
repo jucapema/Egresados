@@ -15,7 +15,8 @@ class SuscribirseController extends Controller
       $v = \Validator::make($request->all(), [
             'name' => 'required',
             'dni' => 'required|unique:users',
-            'email'    => 'required|email|unique:users',
+            'email'    => 'required|email|unique:users', //[A-Z]@[utp.edu.co]
+            'fecha_nacimiento' => 'required',
         ]);
         if ($v->fails())
         {
@@ -27,7 +28,10 @@ class SuscribirseController extends Controller
             $data=$request->all();
             $data['tipo_rol'] = 'egresado';
             $data['estado_cuenta'] = 'suscrita';
-            User::create($data);
+            $data['password'] = bcrypt($request['password']);
+            $data['confirmation_password'] = bcrypt($request['confirmation_password']);
+            $user=User::create($data);
+            $data['id_usuario'] = $user->id;
             Egresado::create($data);
              Auth::logout();
              Session::flash('flash_message', 'Solicitud en Proceso');

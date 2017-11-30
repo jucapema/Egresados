@@ -20,8 +20,8 @@
             <div class="form-group">
               <select class="form-control" name="id_egresado" autofocus required>
                 <option value="">Seleciona un usuario</option>
-                @foreach ($users as $user)
-                  <option value="{{$user->id}}">{{$user->name}}:  {{$user->email}}</option>
+                @foreach ($egresados as $egresado)
+                  <option value="{{$egresado->id_usuario}}">{{$egresado->user->name}}:  {{$egresado->user->email}}</option>
                 @endforeach
               </select>
             </div>

@@ -105,6 +105,7 @@ $(document).ready(function () {
   $('#users').DataTable({
     "processing":true,
     "serverSide":true,
+    //"token":,
     "ajax": "list/admins",
     "columns":[
       {data: 'name'},

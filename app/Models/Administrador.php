@@ -15,10 +15,10 @@ class Administrador extends Model
   ];
 
   public function user(){
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\User','id_usuario');
   }
 
   public function publicacion(){
-    return $this->hasMany('App\Models\Publicaciones');
+    return $this->hasMany('App\Models\Publicaciones','id_administrador');
   }
 }

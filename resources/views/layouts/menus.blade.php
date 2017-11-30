@@ -12,11 +12,13 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-hover-dropdown/2.2.1/bootstrap-hover-dropdown.min.js" integrity="sha256-oZUp5ULh9oikWgL4PJ/ceUdVHxFP0v2F1wQBC7iLuOQ=" crossorigin="anonymous"></script>
-    
+
 @yield('headers')
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta charset="utf-8">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     
 </head>
 
@@ -36,17 +38,28 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 atras">
                     <a href="#"><i class="fa fa-arrow-circle-left fa-4x atr" aria-hidden="true"></i></a></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 foto">
-                    <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png" 
-                    onmouseover="this.src='https://image.ibb.co/eY9aF6/Cambiar_Foto_de_Perfil.png';" 
-                    onmouseout="this.src='https://image.ibb.co/fLsj8R/Foto_Egresado.png';" class="ft"></div>
+                  <!--<img src="{{asset('storage/images/1.png')}}"-->
+                    <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png"
+                    onmouseover="this.src='https://image.ibb.co/eY9aF6/Cambiar_Foto_de_Perfil.png';"
+                    onmouseout="this.src='https://image.ibb.co/fLsj8R/Foto_Egresado.png';" class="ft"
+                    onmousedown ="cargar();">
+                  </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                     <h1 class="nombre">{{Auth::user()->name}} {{Auth::user()->apellido}} ({{Auth::user()->tipo_rol}})</h1></div>
             </section>
         </div>
-           </header> 
+
+           </header>
 @yield('content')
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+<script type="text/javascript">
+  function cargar(){
+    alert("vida hpt");
+    //view('pruebaarchivo');
+    };
+</script>
 
    <script type="text/javascript">
       $( document ).ready(function() {
@@ -74,7 +87,7 @@
          });
       });
    </script>
-<div class="recuadro"></div>
+<!--<div class="recuadro"></div>-->
 </body>
 
 <footer>

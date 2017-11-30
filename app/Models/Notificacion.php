@@ -8,10 +8,10 @@ class Notificacion extends Model
 {
   protected $table = 'notificaciones';
 
-  protected $fillable = ['id_usuario','informacion',
+  protected $fillable = ['id_usuario','tipo','informacion',
   ];
 
   public function User(){
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\User','id_usuario');
   }
 }

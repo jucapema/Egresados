@@ -18,6 +18,7 @@ class AddAdministradoresTable extends Migration
             $table->integer('id_usuario')->unsigned();
             $table->string('direccion')->nullable();
             $table->string('ciudad')->nullable();
+            $table->string('valor')->default('false')->nullable(); //cambiar clave
             $table->string('telefono');
             $table->softDeletes();
             $table->foreign('id_usuario')->references('id')->on('users');
