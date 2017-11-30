@@ -1,15 +1,31 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+</head>
+<body>
+
 <div class="container">
   @if(Session::has('flash_message'))
       {{Session::get('flash_message')}}
     @endif
+    <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Iniciar sesion</div>
-
+                <div class="panel-heading" align="center">INICIAR SESIÓN</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
@@ -47,7 +63,7 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Olvido su contraseña?
                                 </a>
-                                <a class="btn btn-link" href="#">
+                                <a class="btn btn-link" href="https://www.utp.edu.co/egresados/egresados-utp.html">
                                     Ayuda?
                                 </a>
                             </div>
@@ -55,19 +71,21 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-default boton1">
                                     Ingresar
                                 </button>
-                                <button type="reset" class="btn btn-danger">
-                                    Salir
+                                <button type="reset" class="btn btn-default boton2">
+                                    Cancelar
                                 </button>
-                                <h3><a href="{{ route('register') }}">Suscribirse</a></h3>
+                                <h3><a href="{{ route('register') }}" class="suscrip">Suscribirse</a></h3>
                             </div>
                         </div>
                     </form>
+                <img src="http://i64.tinypic.com/1z38h8w.png" class="imglogin">
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
+</body>
+</html>
