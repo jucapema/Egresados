@@ -9,6 +9,9 @@ use Auth;
 use Session;
 class SuscribirseController extends Controller
 {
+    public function __construct(){
+      $this->middleware('guest',['only'=>'store' ]);
+    }
 
     public function store(Request $request)
     {

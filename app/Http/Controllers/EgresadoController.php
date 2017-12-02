@@ -6,6 +6,7 @@ use App\Models\Egresado;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
+use Auth;
 use App\User;
 
 class EgresadoController extends Controller
@@ -17,14 +18,17 @@ class EgresadoController extends Controller
      */
     public function index()
     {
-      $users = User::where('tipo_rol','egresado')->paginate(10);
-      return view('user.indexEgresado',['users'=>$users]);
+      $users = User::where('tipo_rol','egresado')->get();
+      $cantnewuser=User::where('estado_cuenta','suscrita')->get();
+      $cantcance=Egresado::where('baja','true')->get();
+      return view('user.indexEgresado',['users'=>$users, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
     public function indexsuscrita()
     {
-      $users = User::where('estado_cuenta','suscrita')->paginate(10);
-      return view('user.indexSuscrita',['users'=>$users]);
+      $users = User::where('estado_cuenta','suscrita')->get();
+      $cantcance=Egresado::where('baja','true')->get();
+      return view('user.indexSuscrita',['users'=>$users, 'cantnewuser'=>$users,'cantcance'=>$cantcance]);
     }
     /**
      * Show the form for creating a new resource.
@@ -36,6 +40,25 @@ class EgresadoController extends Controller
         return view('CreateEgresado');
     }
 
+    public function cancelar()
+    {
+      $cantcance=Egresado::where('baja','true')->get();
+      $cantnewuser=User::where('estado_cuenta','suscrita')->get();
+      return view('user.indexEgresadoCancel',['egresados'=>$cantcance, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
+    }
+
+    public function darsedebaja(Request $request){
+        $egresado=Egresado::findOrFail(Auth::user()->egresado->id);
+        var_dump($egresado);
+        var_dump($egresado->user->name);
+        if($egresado->user->tipo_rol=='egresado'){
+          $egresado->update(["baja"=>"true"]);
+var_dump($egresado->baja);
+          session::flash('flash_message','peticion recibida');
+          //Auth::logout();
+          //return view('auth.login');
+        }
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -74,9 +97,14 @@ class EgresadoController extends Controller
      */
     public function show(Egresado $egresado)
     {
-        return redirect()->route('Usuario.show',['usuario'=>$egresado->id_usuario]);
+        //
     }
 
+public function contactos(){
+      $users = User::where('tipo_rol','egresado')->where('estado_cuenta','activa')->get();
+      
+      return view('egresados.ListEgresados',['users'=>$users]);
+}
     /**
      * Show the form for editing the specified resource.
      *
@@ -97,25 +125,7 @@ class EgresadoController extends Controller
      */
     public function update(Request $request, Egresado $egresado)
     {
-        $v=\Validator::make($request->all(),[
-          'dni'=>'required|numeric',
-          'email'=>'required|email',
-        ]);
-        if($v->fails()){
-          return redirect()->back()->withInput()->withErrors($v->errors());
-        } else{
-          $edad = Carbon::parse($request['fecha_nacimiento'])->age;
-          if($edad>=18){
-                $egresado->update($request->all());
-                $user=User::findOrfail($egresado->id_usuario);
-                $user->update($request->all());
-                Session::flash('flash_message', 'Usuario Actualizado');
-              //  return redirect()->route('Egresado.index'); TODO a q vista direccionar?
-          }else{
-            Session::flash('flash_message', 'Debes ser mayor de edad');
-            return redirect()->back(); //TODO humm
-          }
-        }
+
     }
 
     /**

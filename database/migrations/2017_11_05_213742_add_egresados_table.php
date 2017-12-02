@@ -19,6 +19,7 @@ class AddEgresadosTable extends Migration
             $table->string('intereses')->nullable();
             $table->date('fecha_nacimiento');
             $table->enum('genero',['Masculino','Femenino'])->nullable();
+            $table->string('baja')->default('false')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('id_usuario')->references('id')->on('users');

@@ -16,7 +16,7 @@
           @endforeach
         </div>
     @endif </br>
-{!!Form::open(['route'=>['Egresado.update'], 'method'=>'POST'])!!}
+{!!Form::open(['route'=>'Egresado.update', 'method'=>'POST'])!!}
 {{method_field(put)}}
   {{csrf_field()}}
     <div class="container">

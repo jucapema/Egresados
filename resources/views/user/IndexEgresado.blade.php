@@ -1,121 +1,174 @@
+@extends('administrador.AdminMain')
+@section('mainheaders')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+@endsection
+@section('recuadro')
+        <div class="container">
+          <div class="panel panel-default">
+              <div class="panel-heading" align="center">Viendo Egresados</div>
+              <div class="form-group">
 
-<!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
-<head>
-  <!---<meta name="viewport" content="width=device-width" />-->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Administradores Egresados UTP</title>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add_circle</i> New Egresado</button>
+                @component('modals.modal')
+                  @slot('id')
+                    modalAdd
+                  @endslot
+                  @slot('title')
+                    Agregar
+                  @endslot
+                  @slot('cuerpo')
+                      @component('egresados.CreateEgresado')
+                      @endcomponent
+                  @endslot
+                  @slot('boton')
+                    button.agregar
+                  @endslot
+                @endcomponent
+              </div>
+              <div class="panel-body">
 
+                    <table class="table" id="users">
+                      <thead>
+                        <tr>
+                          <th>DNI</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Email</th>
+                          <th>Intereses</th>
+                          <th>Edad</th>
+                          <th>Genero</th>
+                          <th>Estado Cuenta</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach ($users as $user)
+                            @component('user.ModalFormEdit')
+                              @slot('id')
+                                {{$user->id}}
+                              @endslot
+                              @slot('idmodal')
+                                  modalEditar{{$user->id}}
+                              @endslot
+                              @slot('title')
+                                    Editar Informacion de {{$user->name}}
+                              @endslot
+                              @slot('contenido')
+                                @component('administrador.EditAdmin')
+                                  @slot('id')
+                                    {{$user->id}}
+                                  @endslot
+                                @endcomponent
+                              @endslot
+                            @endcomponent
+                          @component('user.ModalConfirmar')
+                            @slot('ruta')
+                              {{route('Usuario.destroy',['user'=>$user->id])}}
+                            @endslot
+                            @slot('idmodal')
+                                modalEliminar{{$user->id}}
+                            @endslot
+                            @slot('title')
+                                  Eliminar Usuario {{$user->name}}
+                            @endslot
+                            @slot('contenido')
+                              Estas Seguro que deseas eliminar a {{$user->name}}
+                            @endslot
+                          @endcomponent
 
-  <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-
-  <title>{{ config('app.name', 'Egresados, Lista Administradores') }}</title>
-
-  <!-- Styles -->
-  <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-</head>
-
-
-
-<body>
-  @if($users->count()==0)
-    <script type="text/javascript">
-    alert("No hay Egresados Registrados!");
-    </script>
-  @endif
-  @if(Session::has('flash_message'))
-    <script type="text/javascript">
-    alert("{{Session::get('flash_message')}}");
-    </script>
-  @endif
-  <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-
-          <!-- Branding Image -->
-          <a class="navbar-brand" href="{{ url('/home') }}">
-            {{ config('app.name', 'Egresados') }}
-          </a>
+                          @component('user.ModalConfirmar')
+                            @slot('ruta')
+                              {{route('state',['user'=>$user->id])}}
+                            @endslot
+                            @slot('idmodal')
+                                modalState{{$user->id}}
+                            @endslot
+                            @slot('title')
+                                  Cambiar el estado del usuario {{$user->name}}
+                            @endslot
+                            @slot('contenido')
+                              ¿Estas Seguro de Cambiar el estado de la cuenta {{$user->name}} a Banneado?
+                              {{auth::user()->name}}
+                            @endslot
+                          @endcomponent
+                          @php
+                            $edad = Carbon\Carbon::parse($user->egresado->fecha_nacimiento)->age;
+                          @endphp
+                        <tr>
+                          <td>{{$user->dni}}</td>
+                          <td>{{$user->name}}</td>
+                          <td>{{$user->apellido}}</td>
+                          <td>{{$user->email}}</td>
+                          <td>{{$user->egresado->intereses}}</td>
+                          <td>{{$edad}}</td>
+                          <td>{{$user->egresado->genero}}</td>
+                          <td>{{$user->estado_cuenta}}</td>
+                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete</i></button>
+                          <button type='button' class='state btn btn-info' data-toggle='modal' data-target='#modalState{{$user->id}}' ><i class="material-icons iconosmenu">update</i>State</button></td>
+                        </tr>
+                      @endforeach
+                      </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+        @section('mainmodals')
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-          <!-- Left Side Of Navbar -->
-          <ul class="nav navbar-nav">
-            &nbsp;
-          </ul>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+          <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+          <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
 
-          <!-- Right Side Of Navbar -->
-          <ul class="nav navbar-nav navbar-right">
-            <!-- Authentication Links-->
-            @guest
-              <li><a href="{ route('login') }}">Login</a></li>
-              <li><a href="{ route('register') }}">Register</a></li>
-            @else
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                  {{ Auth::user()->name }} <span class="caret"></span>
-                </a>
+        $(document).ready(function(){
 
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    Logout
-                  </a>
-
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    {{ csrf_field() }}
-                  </form>
-                </li>
-              </ul>
-            </li>
-          @endguest
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
-<div class="container">
-  <a href="{{route('Egresado.create')}}" class="btn btn-info">Agregar</a>
-  <a href="#" class="btn btn-info">Consultar</a>
-  <a href="{route('Administrador.edit',['user'=>$user->id])}}" class="btn btn-info">Modificar</a>
-  <a href="{route('Administrador.destroy',['user'=>$user->id])}" class="btn btn-info">Eliminar</a>
-  <table id="users" class="table table-striped table-bordered dt-responsive nowrap">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>DNI</th>
-        <th>Correo</th>
-        <th>Estado Cuenta</th>
-      </tr>
-    </thead>
-  </table>
-  <script src="{{ asset('js/app.js') }}"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function () {
-  $('#users').DataTable({
-    "processing":true,
-    "serverSide":true,
-    "ajax": "list/egresados",
-    "columns":[
-      {data: 'name'},
-      {data: 'dni'},
-      {data: 'email'},
-      {data: 'estado_cuenta'},
-    ]
-  });
-});
+var table= $("#users").DataTable({
+              "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+              "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                      },
+            });
+            obtener_data_edit("#users tbody",table);
+            obtener_id_eliminar("#users tbody",table);
+            obtener_id_state("#users tbody",table);
+      });
 </script>
-</div>
-</body>
-</html>
+      <script type="text/javascript">
+      $(document).ready(function(){
+var obtener_data_edit=function(tbody,table){
+        $(tbody).on("click", "button.editar",function(){
+          var data=table.row($(this).parents("tr")).data();
+          var id=$("#frmEditarUsuario #id").val(data.id),
+            dni=$("#dni").val(data.dni),
+            name=$("#name").val(data.name),
+            email=$("#email").val(data.email),
+            apellido=$("#apellido").val(data.apellido);
+          //console.log(data);
+          });
+        }
+      });
+      </script>
+            <script type="text/javascript">
+            $(document).ready(function(){
+      var obtener_id_eliminar=function(tbody,table){
+              $(tbody).on("click", "button.eliminar",function(){
+                var data=table.row($(this).parents("tr")).data();
+                var id=$("#frmEliminarUsuario #id").val(data.id);
+                console.log(data);
+              });
+            }
+            var obtener_id_state=function(tbody,table){
+                    $(tbody).on("click", "button.state",function(){
+                        var data=table.row($(this).parents("tr")).data();
+                        var id=$("#frmEliminarUsuario #id").val(data.id);
+                        console.log(data);
+                    });
+                  }
+          });
+      </script>
+
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @endsection
+@endsection

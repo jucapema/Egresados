@@ -27,15 +27,18 @@ function ValidarImagen(obj){
         img.src = URL.createObjectURL(uploadFile);
     }
         </script>
+        @php
+          $publicacion = App\Models\Publicacion::findOrFail($id);
+        @endphp
 <div class="panel panel-default">
   <div class="panel-body">
-            {!!Form::open(['route'=>['Publicacion.store'], 'method'=>'POST', 'enctype'=>"multipart/form-data"])!!}
-
+            {!!Form::open(['route'=>['Publicacion.update','publicacion'=>$publicacion->id], 'method'=>'POST', 'enctype'=>"multipart/form-data"])!!}
+{{method_field('put')}}
             {{csrf_field()}}
                             <div class="panel-heading">Formulario para administrador</div>
               <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
               {!!form::label('Titulo: ')!!}<br>
-              {!!form::text('titulo',old('titulo'),['class'=>'col-lx-6 col-md-6','autofocus required'])!!}
+              {!!form::text('titulo',$publicacion->titulo,['class'=>'col-lx-6 col-md-6','autofocus required'])!!}
             @if ($errors->has('titulo'))
                 <span class="help-block">
                     <strong>{{ $errors->first('titulo') }}</strong>
@@ -43,7 +46,7 @@ function ValidarImagen(obj){
             @endif</div>
             <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
               {!!form::label('Contenido: ')!!}<br>
-              {!!form::textarea('cuerpo',old('cuerpo'),['class'=>'form group col-lx-6 col-md-6', 'autofocus required'])!!}
+              {!!form::textarea('cuerpo',$publicacion->cuerpo,['class'=>'form group col-lx-6 col-md-6', 'autofocus required'])!!}
             @if ($errors->has('cuerpo'))
                   <span class="help-block">
                       <strong>{{ $errors->first('cuerpo') }}</strong>
@@ -51,7 +54,7 @@ function ValidarImagen(obj){
               @endif</div>
               <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
                 {!!form::label('Fecha del evento: ')!!}<br>
-                {!!form::date('fecha',old('fecha'),['class'=>'form group col-lx-6 col-md-6', 'autofocus required'])!!}
+                {!!form::date('fecha',$publicacion->fecha,['class'=>'form group col-lx-6 col-md-6', 'autofocus required'])!!}
               @if ($errors->has('fecha'))
                     <span class="help-block">
                         <strong>{{ $errors->first('fecha') }}</strong>
@@ -59,7 +62,7 @@ function ValidarImagen(obj){
                 @endif</div>
                 <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
                   {!!form::label('Cargar Archivos: ')!!}<br>
-                  {!!form::file('file',old('file'),['class'=>'form group col-lx-6 col-md-6', 'autofocus required', 'onchange'=>"ValidarImagen(this);"])!!}
+                  {!!form::file('file',old('file'),['class'=>'form group col-lx-6 col-md-6', 'autofocus required'])!!}
                 @if ($errors->has('file'))
                       <span class="help-block">
                           <strong>{{ $errors->first('file') }}</strong>

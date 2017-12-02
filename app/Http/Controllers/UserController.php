@@ -6,6 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Mail\Mensaje;
 use App\Models\acceso;
+use App\Models\Egresado;
+use App\Models\Administrador;
+use Carbon\Carbon;
 use Mail;
 use Session;
 class UserController extends Controller
@@ -18,6 +21,13 @@ class UserController extends Controller
     public function index()
     {
         //
+    }
+
+    public function indextrash(){
+        $user = User::onlyTrashed()->where('tipo_rol','egresado')->get();
+        $cantcance=Egresado::where('baja','true')->get();
+        $cantnewuser=User::where('estado_cuenta','suscrita')->get();
+        return view('user.IndexTrash',['users'=>$user,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
     public function change_password(Request $request){
@@ -52,13 +62,26 @@ class UserController extends Controller
         //
     }
 
+    public function state(Request $request)  //bannear cuenta
+    {
+        $user=User::findOrfail($id);
+        $user->update(['estado_cuenta'=>'ban']);
+        $data2['id_usuario'] =$user->id;
+        $data2['tipo'] ='ban';
+        $data2['informacion'] = 'sr'."".$user->name.$user->apellido."".'Su cuenta se encuentra suspendida porfavor contatenos.';
+        Notificacion::create($data2);
+        Session::flash('flash_message','Usuario Banneado');
+        $user->delete();
+        //$user->logout();
+        return redirect()->back();
+      }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
         //
     }
@@ -92,9 +115,46 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {
-        //
+    public function update(Request $request, $id)
+    { //validar q el correo no exista
+      $v = \Validator::make($request->all(), [
+            'dni'=>'numeric',
+            'email'    => 'email', //[A-Z]@[utp.edu.co]
+            'telefono'=> 'min:7|numeric',
+        ]);
+        if ($v->fails())
+        {
+          return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+      $user = User::findOrfail($id);
+      if($user->email!=$request->email){
+          $emails=User::where('email',$request->email)->get();
+          $v = \Validator::make($request->all(), [
+                'email'    => 'email|unique:users', //[A-Z]@[utp.edu.co]
+            ]);
+            if ($v->fails())
+            {
+              return redirect()->back()->withInput()->withErrors($v->errors());
+            }
+        }
+        if($user->tipo_rol=="admin"){
+          $administrador = Administrador::findOrfail($user->administrador->id);
+          $user->update($request->all());
+          $administrador->update($request->all());
+        }
+        else if($user->tipo_rol=="egresado"){
+          $edad = Carbon::parse($request['fecha_nacimiento'])->age;
+          if($edad>=18){
+                $egresado = Egresado::findOrfail($user->egresado->id);
+                $user->update($request->all());
+                $egresado->update($request->all());
+          }else{
+            Session::flash('flash_message', 'Debes ser mayor de edad');
+            return redirect()->back(); //TODO humm
+          }
+        }
+        session::flash('flash_message','Informacion Actualizada ');
+        return redirect()->back();
     }
 
     public function correo(){

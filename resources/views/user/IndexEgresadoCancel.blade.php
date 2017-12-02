@@ -7,7 +7,7 @@
 @section('recuadro')
         <div class="container">
           <div class="panel panel-default">
-              <div class="panel-heading" align="center">Viendo Lista de suscriptores {{count($users)}}</div>
+              <div class="panel-heading" align="center">Viendo Lista Usuarios  {{count($egresados)}}</div>
               <div class="panel-body">
 
                     <table class="table" id="users">
@@ -17,40 +17,25 @@
                           <th>Nombre</th>
                           <th>Apellido</th>
                           <th>Email</th>
-                          <th>Fecha Nacimiento</th>
+                          <th>Fecha Pidio Darse de Baja</th>
                           <th>Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($egresados as $egresado)
                           <!-- boton para aceptar-->
                           @component('user.ModalConfirmar')
                             @slot('ruta')
                               {route('Egresado.state',['user'=>$user->id])}}
                             @endslot
                             @slot('idmodal')
-                                modalEditar{{$user->id}}
+                                modalEditar{{$egresado->user->id}}
                             @endslot
                             @slot('title')
-                                  Agregar {{$user->name}}
+                                  Agregar {{$egresado->user->name}}
                             @endslot
                             @slot('contenido')
-                              Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
-                            @endslot
-                          @endcomponent
-                          <!-- boton para rechazar-->
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {{route('Usuario.destroy',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Rechazar Usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas Rechazar a {{$user->name}}
+                              Estas Seguro que deseas Agregar a {{$egresado->user->name}} Nuestra plataforma
                             @endslot
                           @endcomponent
                           <!-- boton para contactar-->
@@ -59,27 +44,27 @@
                               {route('Usuario.destroy',['user'=>$user->id])}}
                             @endslot
                             @slot('idmodal')
-                                modalSend{{$user->id}}
+                                modalSend{{$egresado->user->id}}
                             @endslot
                             @slot('title')
-                                  Rechazar Usuario {{$user->name}}
+                                  Rechazar Usuario {{$egresado->user->name}}
                             @endslot
                             @slot('contenido')
                                 @component('notificaciones.ModalMensaje')
                                   @slot('correo')
-                                    {{$user->email}}
+                                    {{$egresado->user->email}}
                                   @endslot
                                 @endcomponent
                             @endslot
                           @endcomponent
                         <tr>
-                          <td>{{$user->dni}}</td>
-                          <td>{{$user->name}}</td>
-                          <td>{{$user->apellido}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{$user->egresado->fecha_nacimiento}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">done_all</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete_forever</i></button>
-                            <button type='button' class='send btn btn-success' data-toggle='modal' data-target='#modalSend{{$user->id}}' ><i class="material-icons iconosmenu">send</i></button></td>
+                          <td>{{$egresado->user->dni}}</td>
+                          <td>{{$egresado->user->name}}</td>
+                          <td>{{$egresado->user->apellido}}</td>
+                          <td>{{$egresado->user->email}}</td>
+                          <td>{{$egresado->user->updated_at}}</td>
+                          <td><button type='button' class='editar btn btn-danger' data-toggle='modal' data-target='#modalEditar{{$egresado->user->id}}'><i class="material-icons iconosmenu">delete_forever</i>
+                            <button type='button' class='send btn btn-success' data-toggle='modal' data-target='#modalSend{{$egresado->user->id}}' ><i class="material-icons iconosmenu">send</i></button></td>
                         </tr>
                       @endforeach
                       </tbody>
@@ -105,7 +90,6 @@ var table= $("#users").DataTable({
                       },
             });
             obtener_data_edit("#users tbody",table);
-            obtener_id_eliminar("#users tbody",table);
             obtener_id_send("#users tbody",table);
       });
 var obtener_data_edit=function(tbody,table){
@@ -119,14 +103,6 @@ var obtener_data_edit=function(tbody,table){
           //console.log(data);
         });
       }
-
-      var obtener_id_eliminar=function(tbody,table){
-              $(tbody).on("click", "button.eliminar",function(){
-                var data=table.row($(this).parents("tr")).data();
-                var id=$("#frmEliminarUsuario #id").val(data.id);
-                console.log(data);
-              });
-            }
 
       var obtener_id_send=function(tbody,table){
               $(tbody).on("click", "button.send",function(){

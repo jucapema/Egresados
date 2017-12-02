@@ -1,28 +1,6 @@
-@extends('layouts.app')
-
-@section('titulo')
-
-@endsection
-
-
-@section('content')
-@if(count($errors)>0)
-        <div class="alert alert-warning" role="alert">
-           @foreach ($errors->all() as $error)
-              <div>{{ $error }}</div>
-              <script type="text/javascript">
-                  alert("{{ $error }}");
-              </script>
-          @endforeach
-        </div>
-    @endif </br>
   {!!Form::open(['route'=>['Administrador.store'], 'method'=>'POST'])!!}
   {{csrf_field()}}
-    <div class="container">
-
-      <div class="row">
-          <div class="col-md-8 col-md-offset-2">
-              <div class="panel panel-default">
+            <div class="panel panel-default">
                   <div class="panel-heading">Formulario para administrador</div>
                     <div class="panel-body">
     <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
@@ -81,6 +59,3 @@
           {!!form::reset('Cancelar',['class'=>'btn btn-boton'])!!}
           {!!form::close()!!}
         </div>
-      </div>
-    </div>
-@endsection

@@ -15,5 +15,9 @@ class DatabaseSeeder extends Seeder
          $this->call(rootSeed::class);
         factory(App\Models\Egresado::class,20)->create();
         factory(App\Models\Administrador::class,5)->create();
+        factory(App\Models\Publicacion::class,5)->create();
+        factory(App\Models\Egresado::class,'baja',5)->create();
+        factory(App\Models\Egresado::class,'suscrita',5)->create();
+
     }
 }

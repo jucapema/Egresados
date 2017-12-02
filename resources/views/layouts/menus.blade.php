@@ -19,7 +19,7 @@
     <meta charset="utf-8">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
 </head>
 
 <body>
@@ -52,6 +52,7 @@
            </header>
 @yield('content')
     <!-- Scripts -->
+
     <script src="{{ asset('js/app.js') }}"></script>
 
 <script type="text/javascript">
@@ -87,6 +88,7 @@
          });
       });
    </script>
+
 <!--<div class="recuadro"></div>-->
 </body>
 
@@ -95,4 +97,6 @@
   <div><img src="https://image.ibb.co/hczsF6/Logo_UTP_2.png" class="logo2"></div>
   <div><img src="https://image.ibb.co/hakPv6/Texto_Footer.png" class="textfooter"></div>
 </footer>
+@include('modals.modalhorizontal')
+@yield('modals')
 </html>

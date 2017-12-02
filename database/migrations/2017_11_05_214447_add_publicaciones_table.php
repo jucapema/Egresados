@@ -18,7 +18,8 @@ class AddPublicacionesTable extends Migration
             $table->integer('id_administrador')->unsigned(); //fk
             $table->string('titulo');
             $table->string('cuerpo');
-            //$table->string('multimedia'); //llave foreana
+            $table->date('fecha');
+            $table->string('multimedia')->nullable(); //nombre del archivo subido
             $table->foreign('id_administrador')->references('id')->on('administradores');
             $table->timestamps();
           });

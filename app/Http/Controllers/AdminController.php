@@ -18,7 +18,7 @@ class AdminController extends Controller
   */
   public function index()
   {
-    $users = User::where('tipo_rol','admin')->paginate(10);
+    $users = User::where('tipo_rol','admin')->get();
     return view('user.indexAdmin',['users'=>$users]);
   }
 
@@ -94,14 +94,9 @@ class AdminController extends Controller
   * @param  \App\Administrador  $administrador
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, Administrador $administrador)
+  public function update(Request $request, $id)
   {
-    if($request->fails()){
-      return redirect()->back()->withInput()->withErrors($v->errors());
-    }else{
-      $administrador->update($request->all());
-      return redirect()->route('Administrador.show',['administrador'=>$administrador]);
-    }
+
   }
 
   /**

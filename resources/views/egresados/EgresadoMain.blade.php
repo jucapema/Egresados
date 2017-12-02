@@ -13,9 +13,9 @@
                     <li><a class="btn2 bordesubmenu" data-toogle="modal" data-target="#miventana">Editar Información</a></li>
                     <li><a class="btn3" data-toogle="modal" data-target="#ventanapassword">Cambiar Contraseña</a></li>
                 </ul>
-                <a href="#" class="btn btn-primary bordemenu">Información</a>
-                <a href="#" class="btn btn-primary bordemenu">Dar de Baja</a>
-                <a href="#" class="btn btn-primary">Ayuda</a>
+                <a class="btn btn-primary btn6 bordemenu" data-toogle="modal" data-target="#miventanainfo">Información</a>
+                <a class="btn btn-primary btn5 bordemenu" data-toogle="modal" data-target="#baja">Dar de Baja</a>
+                <a href="https://www.utp.edu.co/egresados/egresados-utp.html" target="_blank" class="btn btn-primary">Ayuda</a>
                 <a href="{{route('logout')}}" class="btn btn-primary">Salir</a>
             </div>
         </div>
@@ -28,18 +28,19 @@
 
             <div class="menu-list">
                 <ul id="menu-content" class="menu-content collapse out">
-                    <li><a href="#"><i class="material-icons iconosmenu">notifications_active</i>Notificaciones</a><span class="badge">{{count($egresado->user->notificacion)}}</span></li>
-                    <li><a href="{{route('Mensaje.index')}}"><i class="material-icons iconosmenu">mail</i>Mensajes de Egresados</a><span class="badge">{{count($egresado->mensaje)}}</span></li>
-                    <li class="#"><a href="#"><i class="material-icons iconosmenu">person_add</i>Buscar Amigos</a><span class="badge">{{count($egresado->mensaje)}}</span></li>
+                    <li><a href="#"><i class="material-icons iconosmenu">notifications_active</i>Notificaciones</a><span class="badge">{{count(Auth::user()->notificacion)}}</span></li>
+                    <li><a href="#"><i class="material-icons iconosmenu">publish</i>Publicaciones</a><span class="badge"></span></li>
+                    <li><a href="{{route('Mensaje.index')}}"><i class="material-icons iconosmenu">mail</i>Mensajes de Egresados</a><span class="badge">{{count(Auth::user()->egresado->mensaje)}}</span></li>
+                    <li><a href="{{route('listcontactos')}}"><i class="material-icons iconosmenu">person_add</i>Buscar Amigos</a></li>
                     <li><a href="{{route('Mensaje.create')}}"><i class="material-icons iconosmenu">chat</i>Chat</a></li>
                 </ul>
             </div>
     </div>
 
-    @include('modalhorizontal')
+
+
+    <div class= "recuadro">
     @yield('recuadro')
-<!--
-    <div class= cuadro>
-      Aqui sirve todo
-    </div>-->
+
+    </div>
 @endsection('content')
