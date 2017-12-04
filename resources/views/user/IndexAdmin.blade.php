@@ -1,20 +1,16 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-<link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
-<!-- CSRF Token -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
-        <title>Laravel</title>
+@extends('root.RootMain')
 
-    </head>
-    <body>
-        <div class="container">
+@section('mainheaders')
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
+@endsection
+
+@section('recuadro')
+
+
+<!-- CSRF Token -->
+        <div style="overflow:scroll;height:450px;width:800px;">
           <div class="panel panel-default">
               <div class="panel-heading" align="center">Viendo Administradores</div>
               <div class="form-group">
@@ -52,38 +48,26 @@
                       </thead>
                       <tbody>
                         @foreach ($users as $user)
-                            @component('user.ModalFormEdit')
-                              @slot('id')
-                                {{$user->id}}
-                              @endslot
-                              @slot('idmodal')
-                                  modalEditar{{$user->id}}
-                              @endslot
-                              @slot('title')
-                                    Editar Informacion de {{$user->name}}
-                              @endslot
-                              @slot('contenido')
-                                @component('administrador.EditAdmin')
-                                  @slot('id')
-                                    {{$user->id}}
-                                  @endslot
-                                @endcomponent
-                              @endslot
-                            @endcomponent
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {{route('Usuario.destroy',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Elimnari Usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas eliminar a {{$user->name}}
-                            @endslot
-                          @endcomponent
+
+                          <!-- why dont works fine-->
+                              @component('user.ModalFormEdit')
+                                @slot('id')
+                                  {{$user->id}}
+                                @endslot
+                                @slot('idmodal')
+                                    modalEditar{{$user->id}}
+                                @endslot
+                                @slot('title')
+                                      Editar Informacion de {{$user->name}}
+                                @endslot
+                                @slot('contenido')
+                                  @component('administrador.EditAdmin')
+                                    @slot('id')
+                                      {{$user->id}}
+                                    @endslot
+                                  @endcomponent
+                                @endslot
+                              @endcomponent
                         <tr>
                           <td>{{$user->dni}}</td>
                           <td>{{$user->name}}</td>
@@ -91,8 +75,24 @@
                           <td>{{$user->email}}</td>
                           <td>{{$user->administrador->telefono}}</td>
                           <td>{{$user->administrador->direccion}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete</i></button></td>
+                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>
+                            <td><button class="contactar btn btn-danger" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons iconosmenu">delete</i> </button>
+                            @component('user.ModalConfirmar')
+                              @slot('ruta')
+                                {{route('Usuario.destroy',['user'=>$user->id])}}
+                              @endslot
+                              @slot('idmodal')
+                                modalBorrar{{$user->id}}
+                              @endslot
+                              @slot('title')
+                                    Eliminar administrador {{$user->name}} {{$user->apellido}}
+                              @endslot
+                              @slot('contenido')
+                                Eliminar Usuario {{$user->name}}
+                              @endslot
+                            @endcomponent
                         </tr>
+
                       @endforeach
                       </tbody>
 
@@ -101,10 +101,13 @@
 
             </div>
         </div>
+        @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
         <script>
 
         $(document).ready(function(){
@@ -118,27 +121,25 @@ var table= $("#users").DataTable({
             obtener_data_edit("#users tbody",table);
             obtener_id_eliminar("#users tbody",table);
       });
+
 var obtener_data_edit=function(tbody,table){
         $(tbody).on("click", "button.editar",function(){
           var data=table.row($(this).parents("tr")).data();
-          var id=$("#frmEditarUsuario #id").val(data.id),
-            dni=$("#dni").val(data.dni),
-            name=$("#name").val(data.name),
-            email=$("#email").val(data.email),
-            apellido=$("#apellido").val(data.apellido);
+          var id=$("#frmEditarUsuario #id").val(data.id);
           //console.log(data);
         });
       }
 
-      var obtener_id_eliminar=function(tbody,table){
-              $(tbody).on("click", "button.eliminar",function(){
+      var obtener_data_eliminar=function(tbody,table){
+              $(tbody).on("click", "button.contactar",function(){
                 var data=table.row($(this).parents("tr")).data();
-                var id=$("#frmEliminarUsuario #id").val(data.id);
-                console.log(data);
+                var id=$("#frmEditarUsuario #id").val(data.id);
+                $(this).addClass(tbody);
+                //console.log(data);
               });
-            }
+      }
       </script>
 
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </body>
-</html>
+    @endsection
+@endsection

@@ -8,9 +8,11 @@ use App\Mail\Mensaje;
 use App\Models\acceso;
 use App\Models\Egresado;
 use App\Models\Administrador;
+use App\Models\Notificacion;
 use Carbon\Carbon;
 use Mail;
 use Session;
+use Auth;
 class UserController extends Controller
 {
     /**
@@ -24,11 +26,29 @@ class UserController extends Controller
     }
 
     public function indextrash(){
-        $user = User::onlyTrashed()->where('tipo_rol','egresado')->get();
-        $cantcance=Egresado::where('baja','true')->get();
-        $cantnewuser=User::where('estado_cuenta','suscrita')->get();
-        return view('user.IndexTrash',['users'=>$user,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
+        $user = User::onlyTrashed()->get();
+        //$cantcance=Egresado::where('baja','true')->get();
+        //$cantnewuser=User::where('estado_cuenta','suscrita')->get();
+          return view('user.IndexTrash',['users'=>$user]);
+
     }
+
+    public function restore($id)
+        {
+          $user = User::withTrashed()->where('id',$id)->first();
+           if($user->tipo_rol=='admin'){
+              $administrador = Administrador::withTrashed()->where('id_usuario',$user->id)->firstorfail();
+              $user->restore();
+              $administrador->restore(); //agregar sofdelete
+            }
+            if($user->tipo_rol=='egresado'){
+              $egresado=$egresado::withTrashed()->where('id_usuario',$user->id)->firstorfail();
+              $user->restore();
+              $egresado->restore();
+            }
+            Session::flash('flash_message', 'Usuario Restaurado');
+            return redirect()->back();
+        }
 
     public function change_password(Request $request){
       if(\Hash::check($request->Password_actual, \Auth::user()->password)){
@@ -36,9 +56,7 @@ class UserController extends Controller
         $user=User::find(\Auth::user()->id);
         $new['password'] =bcrypt($request->password);
         $user->update($new);
-          if (\Auth::user()->tipo_rol=='admin' and count(\Auth::user()->acceso)==0) {
-              acceso::create(['id_usuario'=>\Auth::user()->id]);
-          }
+          //validar si el admin es primera vez
         \Auth::logout();
         session::flash('flash_message','La contraseña ha sido actualizada ');
         return view('auth.login');
@@ -61,20 +79,6 @@ class UserController extends Controller
     {
         //
     }
-
-    public function state(Request $request)  //bannear cuenta
-    {
-        $user=User::findOrfail($id);
-        $user->update(['estado_cuenta'=>'ban']);
-        $data2['id_usuario'] =$user->id;
-        $data2['tipo'] ='ban';
-        $data2['informacion'] = 'sr'."".$user->name.$user->apellido."".'Su cuenta se encuentra suspendida porfavor contatenos.';
-        Notificacion::create($data2);
-        Session::flash('flash_message','Usuario Banneado');
-        $user->delete();
-        //$user->logout();
-        return redirect()->back();
-      }
     /**
      * Store a newly created resource in storage.
      *
@@ -86,6 +90,23 @@ class UserController extends Controller
         //
     }
 
+    public function agregar(Request $request)
+    {
+      $user=User::findOrfail($request->user);
+      if($user->estado_cuenta!='activa')
+      {
+        $user->update(['estado_cuenta'=>'activa']);
+        $data2['id_usuario'] =$user->id;
+        $data2['tipo'] ='agregado'; //egresado agregado
+        $data2['id_tipo'] ='1'; //1 para los agregados, 1 para los banneados
+        Notificacion::create($data2);
+        \Session::flash('flash_message','Egresado Aceptado');
+        return redirect()->back();
+      }else{
+        \Session::flash('flash_message','Contacto añadido');
+        return redirect()->back();
+      }
+    }
     /**
      * Display the specified resource.
      *
@@ -167,8 +188,21 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        //
+        $user=User::findorfail($id);
+        if($user->tipo_rol=='admin')
+        {
+          $administrador=Administrador::findorfail($user->administrador->id);
+          $administrador->delete();
+        }
+        elseif($user->tipo_rol=='egresado')
+        {
+          $egresado=Egresado::findorfail($user->egresado->id);
+          $egresado->delete();
+        }
+        $user->delete();
+        Session::flash('flash_message','Usuario Eliminado');
+        return redirect()->back();
     }
 }

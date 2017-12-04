@@ -35,18 +35,13 @@ class HomeController extends Controller
         return redirect()->back();
       }else{
         if(Auth::User()->tipo_rol=='egresado'){
-            $Egresado=Egresado::findOrFail(auth::user()->egresado->id);
-            return view('egresados.EgresadoMain',['egresado'=>$Egresado]);
+            return redirect()->route('posts');
           }
         elseif(Auth::User()->tipo_rol=='admin'){
-              $user=User::where('estado_cuenta','suscrita')->get();  ///errorcicimo
-            //  return view('administrador.AdminMain',['user'=>$user]);
             return redirect()->route('Publicacion.index');
             }
         if(Auth::User()->tipo_rol=='root'){
-          //return view('pruebaarchivo');}
-          //return view('manejo');}
-          return view('root.RootMain');}
+          return redirect()->route('Administrador.index');}
         }
       }
 

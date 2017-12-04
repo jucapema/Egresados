@@ -13,7 +13,6 @@
 {{method_field('put')}}
   {{csrf_field()}}
 
-              <div class="panel panel-default">
                   <div class="panel-heading">Hola {{auth::user()->name}}</div>
                     <div class="panel-body">
     <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
@@ -96,8 +95,7 @@
                 </span>
                 @endif</div>
     @endif
-          </div>
+
           {!!form::submit('Registrar',['class'=>'btn btn-primary'])!!}
           {!!form::close()!!}
-        </div>
-</div>
+        

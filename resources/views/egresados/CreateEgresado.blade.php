@@ -1,7 +1,7 @@
 
 {!!Form::open(['route'=>['Egresado.store'], 'method'=>'POST'])!!}
   {{csrf_field()}}
-              <div class="panel panel-default">
+
                   <div class="panel-heading">Formulario para egresados</div>
                     <div class="panel-body">
     <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
@@ -45,4 +45,3 @@
           {!!form::submit('Registrar',['class'=>'btn btn-primary'])!!}
           {!!form::reset('Cancelar',['class'=>'btn btn-boton'])!!}
           {!!form::close()!!}
-        </div>

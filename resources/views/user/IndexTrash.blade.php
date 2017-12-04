@@ -1,13 +1,13 @@
-@extends('administrador.AdminMain')
+@extends('root.RootMain')
+
 @section('mainheaders')
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-        <div class="container">
-          <div class="panel panel-default">
-              <div class="panel-heading" align="center">Viendo Lista de suscriptores {{count($users)}}</div>
+<div style="overflow:scroll;height:450px;width:800px;">
+              <div class="panel-heading" align="center">Usuairos eliminados {{count($users)}}</div>
               <div class="panel-body">
 
                     <table class="table" id="users">
@@ -16,37 +16,40 @@
                           <th>DNI</th>
                           <th>Nombre</th>
                           <th>Apellido</th>
+                          <th>Rol</th>
                           <th>Email</th>
                           <th>Fecha Elminacion</th>
-                          <th>Eliminado By</th>
+
                           <th>Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
                         @foreach ($users as $user)
                           <!-- boton para aceptar-->
-                          @component('user.ModalConfirmar')
+
+                        <tr>
+                          <td>{{$user->dni}}</td>
+                          <td>{{$user->name}}</td>
+                          <td>{{$user->apellido}}</td>
+                          <td>{{{$user->tipo_rol}}}</td>
+                          <td>{{$user->email}}</td>
+                          <td>{{$user->deleted_at->diffForHumans()}}</td>
+
+                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons iconosmenu">restore</i> </button>
+                          @component('user.ModalConfirmarAdd')
                             @slot('ruta')
-                              {route('Egresado.state',['user'=>$user->id])}}
+                              {{route('restore',['user'=>$user->id])}}
                             @endslot
                             @slot('idmodal')
-                                modalRestore{{$user->id}}
+                                modalBorrar{{$user->id}}
                             @endslot
                             @slot('title')
                                   Agregar {{$user->name}}
                             @endslot
                             @slot('contenido')
-                              Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
+                              Estas Seguro que deseas Restarurar a {{$user->name}} Nuestra plataforma
                             @endslot
                           @endcomponent
-                        <tr>
-                          <td>{{$user->dni}}</td>
-                          <td>{{$user->name}}</td>
-                          <td>{{$user->apellido}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{$user->deleted_at->diffForHumans()}}</td>
-                          <td>{{$user->user->name}}</td>
-                          <td><button type='button' class='restore btn btn-primary' data-toggle='modal' data-target='#modalRestore{{$user->id}}'><i class="material-icons iconosmenu">done_all</i></button>	</td>
                         </tr>
                       @endforeach
                       </tbody>
@@ -55,7 +58,6 @@
                 </div>
 
             </div>
-        </div>
         @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
@@ -72,16 +74,17 @@ var table= $("#users").DataTable({
                       },
             });
 
-            obtener_id_send("#users tbody",table);
+            obtener_data_edit("#users tbody",table);
       });
 
-      var obtener_id_send=function(tbody,table){
-              $(tbody).on("click", "button.restore",function(){
-                  var data=table.row($(this).parents("tr")).data();
-                  var id=$("#frmEliminarUsuario #id").val(data.id);
-                  console.log(data);
+      var obtener_data_edit=function(tbody,table){
+              $(tbody).on("click", "button.contactar",function(){
+                var data=table.row($(this).parents("tr")).data();
+                var id=$("#frmEditarUsuario #id").val(data.id);
+                $(this).addClass(tbody);
+                //console.log(data);
               });
-            }
+      }
       </script>
 
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

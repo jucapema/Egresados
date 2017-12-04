@@ -5,8 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-        <div class="container">
-          <div class="panel panel-default">
+<div style="overflow:scroll;height:450px;width:800px;">
               <div class="panel-heading" align="center">Viendo Lista de suscriptores {{count($users)}}</div>
               <div class="panel-body">
 
@@ -23,53 +22,23 @@
                       </thead>
                       <tbody>
                         @foreach ($users as $user)
-                          <!-- boton para aceptar-->
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {route('Egresado.state',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEditar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Agregar {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
-                            @endslot
-                          @endcomponent
-                          <!-- boton para rechazar-->
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {{route('Usuario.destroy',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Rechazar Usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas Rechazar a {{$user->name}}
-                            @endslot
-                          @endcomponent
                           <!-- boton para contactar-->
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {route('Usuario.destroy',['user'=>$user->id])}}
+                          @component('user.ModalFormEdit')
+                            @slot('id')
+                              {{$user->id}}
                             @endslot
                             @slot('idmodal')
                                 modalSend{{$user->id}}
                             @endslot
                             @slot('title')
-                                  Rechazar Usuario {{$user->name}}
+                                  Enviar email a {{$user->name}}
                             @endslot
                             @slot('contenido')
-                                @component('notificaciones.ModalMensaje')
-                                  @slot('correo')
-                                    {{$user->email}}
-                                  @endslot
-                                @endcomponent
+                              @component('notificaciones.ModalMensaje')
+                                @slot('correo')
+                                  {{$user->email}}
+                                @endslot
+                              @endcomponent
                             @endslot
                           @endcomponent
                         <tr>
@@ -78,22 +47,52 @@
                           <td>{{$user->apellido}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->egresado->fecha_nacimiento}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">done_all</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete_forever</i></button>
+                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">done_all</i></button>
+                            <button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete_forever</i></button>
                             <button type='button' class='send btn btn-success' data-toggle='modal' data-target='#modalSend{{$user->id}}' ><i class="material-icons iconosmenu">send</i></button></td>
+                            <!-- boton para aceptar-->
+                            @component('user.ModalConfirmarAdd')
+                              @slot('ruta')
+                                {{route('agregar',['user'=>$user->id])}}
+                              @endslot
+                              @slot('idmodal')
+                                  modalEditar{{$user->id}}
+                              @endslot
+                              @slot('title')
+                                    Agregar {{$user->name}}
+                              @endslot
+                              @slot('contenido')
+                                Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
+                              @endslot
+                            @endcomponent
+                            <!-- boton para rechazar-->
+                            @component('user.ModalConfirmar')
+                              @slot('ruta')
+                                {{route('Usuario.destroy',['user'=>$user->id])}}
+                              @endslot
+                              @slot('idmodal')
+                                  modalEliminar{{$user->id}}
+                              @endslot
+                              @slot('title')
+                                    Rechazar Usuario {{$user->name}}
+                              @endslot
+                              @slot('contenido')
+                                Estas Seguro que deseas Rechazar a {{$user->name}}
+                              @endslot
+                            @endcomponent
+
                         </tr>
                       @endforeach
                       </tbody>
 
                     </table>
                 </div>
-
-            </div>
         </div>
         @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script>
 
         $(document).ready(function(){
@@ -111,11 +110,7 @@ var table= $("#users").DataTable({
 var obtener_data_edit=function(tbody,table){
         $(tbody).on("click", "button.editar",function(){
           var data=table.row($(this).parents("tr")).data();
-          var id=$("#frmEliminarUsuario #id").val(data.id),
-            dni=$("#dni").val(data.dni),
-            name=$("#name").val(data.name),
-            email=$("#email").val(data.email),
-            apellido=$("#apellido").val(data.apellido);
+          var id=$("#frmEliminarUsuario #id").val(data.id),;
           //console.log(data);
         });
       }

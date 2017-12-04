@@ -5,8 +5,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-        <div class="container">
-          <div class="panel panel-default">
+<div style="overflow:scroll;height:450px;width:850px;">
               <div class="panel-heading" align="center">Viendo Egresados</div>
               <div class="form-group">
 
@@ -45,42 +44,27 @@
                       </thead>
                       <tbody>
                         @foreach ($users as $user)
-                            @component('user.ModalFormEdit')
-                              @slot('id')
-                                {{$user->id}}
-                              @endslot
-                              @slot('idmodal')
-                                  modalEditar{{$user->id}}
-                              @endslot
-                              @slot('title')
-                                    Editar Informacion de {{$user->name}}
-                              @endslot
-                              @slot('contenido')
-                                @component('administrador.EditAdmin')
-                                  @slot('id')
-                                    {{$user->id}}
-                                  @endslot
-                                @endcomponent
-                              @endslot
-                            @endcomponent
-                          @component('user.ModalConfirmar')
+                              @component('user.ModalFormEdit')
+                                @slot('id')
+                                  {{$user->id}}
+                                @endslot
+                                @slot('idmodal')
+                                    modalEditar{{$user->id}}
+                                @endslot
+                                @slot('title')
+                                      Editar Informacion de {{$user->name}}
+                                @endslot
+                                @slot('contenido')
+                                  @component('administrador.EditAdmin')
+                                    @slot('id')
+                                      {{$user->id}}
+                                    @endslot
+                                  @endcomponent
+                                @endslot
+                              @endcomponent
+                          @component('user.ModalConfirmarAdd')
                             @slot('ruta')
-                              {{route('Usuario.destroy',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Eliminar Usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas eliminar a {{$user->name}}
-                            @endslot
-                          @endcomponent
-
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {{route('state',['user'=>$user->id])}}
+                              {{route('bannear',['user'=>$user->id])}}
                             @endslot
                             @slot('idmodal')
                                 modalState{{$user->id}}
@@ -107,13 +91,27 @@
                           <td>{{$user->estado_cuenta}}</td>
                           <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete</i></button>
                           <button type='button' class='state btn btn-info' data-toggle='modal' data-target='#modalState{{$user->id}}' ><i class="material-icons iconosmenu">update</i>State</button></td>
+
+                          @component('user.ModalConfirmar')
+                            @slot('ruta')
+                              {{route('Usuario.destroy',['user'=>$user->id])}}
+                            @endslot
+                            @slot('idmodal')
+                                modalEliminar{{$user->id}}
+                            @endslot
+                            @slot('title')
+                                  Eliminar Usuario {{$user->name}}
+                            @endslot
+                            @slot('contenido')
+                              Estas Seguro que deseas eliminar a {{$user->name}}
+                            @endslot
+                          @endcomponent
                         </tr>
                       @endforeach
                       </tbody>
                     </table>
                 </div>
             </div>
-        </div>
         @section('mainmodals')
 
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
@@ -123,8 +121,7 @@
         <script type="text/javascript">
 
         $(document).ready(function(){
-
-var table= $("#users").DataTable({
+          var table= $("#users").DataTable({
               "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
               "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
@@ -134,24 +131,15 @@ var table= $("#users").DataTable({
             obtener_id_eliminar("#users tbody",table);
             obtener_id_state("#users tbody",table);
       });
-</script>
-      <script type="text/javascript">
-      $(document).ready(function(){
-var obtener_data_edit=function(tbody,table){
+
+      var obtener_data_edit=function(tbody,table){
         $(tbody).on("click", "button.editar",function(){
           var data=table.row($(this).parents("tr")).data();
-          var id=$("#frmEditarUsuario #id").val(data.id),
-            dni=$("#dni").val(data.dni),
-            name=$("#name").val(data.name),
-            email=$("#email").val(data.email),
-            apellido=$("#apellido").val(data.apellido);
-          //console.log(data);
+          var id=$("#frmEditarUsuario #id").val(data.id);
           });
         }
-      });
-      </script>
-            <script type="text/javascript">
-            $(document).ready(function(){
+
+
       var obtener_id_eliminar=function(tbody,table){
               $(tbody).on("click", "button.eliminar",function(){
                 var data=table.row($(this).parents("tr")).data();
@@ -166,7 +154,6 @@ var obtener_data_edit=function(tbody,table){
                         console.log(data);
                     });
                   }
-          });
       </script>
 
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

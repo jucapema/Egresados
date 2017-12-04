@@ -1,7 +1,3 @@
-<form id="frmEliminarUsuario" action="{{$ruta}}" method="post">
-  {{csrf_field()}}
-    {{method_field('delete')}}
-    
   <input type="hidden" id="id" name="id" value="id">
   <div class="modal fade" id="{{$idmodal}}" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog">
@@ -14,10 +10,8 @@
           {{$contenido}}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Continuar</button>
+          <a href="{{$ruta}}" class="btn btn-primary">Continuar</a>
         </div>
       </div>
     </div>
   </div>
-</form>

@@ -36,8 +36,7 @@
                     <li><a href="{{route('indexsuscrita')}}"><i class="material-icons iconosmenu">person_add</i>Solicitudes de Nuevos Usuarios</a><span class="badge">{{count($cantnewuser)}}</span></li>
                     <li><a href="{{route('Egresado.index')}}"><i class="material-icons iconosmenu">supervisor_account</i>Gestion de Cuentas Egresados</a></li>
                     <li><a href="{{route('cancelar')}}"><i class="material-icons iconosmenu">add_alert</i>Solicitudes de Cancelacion de Cuenta</a><span class="badge">{{count($cantcance)}}</span></li>
-                    <li><a href="{{route('restore')}}"><i class="material-icons iconosmenu">delete_sweep</i>Cuentas Inactivas</a></li>
-                    <li><a href="#"><i class="material-icons iconosmenu">web_asset</i>Actividad Plaataforma</a></li>
+                    <li><a href="{{route('Acceso.index')}}"><i class="material-icons iconosmenu">web_asset</i>Actividad Plataforma</a></li>
                 </ul>
             </div>
     </div>

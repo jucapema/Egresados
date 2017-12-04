@@ -22,6 +22,7 @@ class AddMensajesTable extends Migration
             $table->string('title');
             $table->timestamps();
             $table->foreign('id_egresado')->references('id')->on('egresados');//->onDelate();
+            $table->foreign('send_id')->references('id')->on('users');//->onDelate();
         });
     }
 

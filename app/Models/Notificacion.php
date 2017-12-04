@@ -8,7 +8,7 @@ class Notificacion extends Model
 {
   protected $table = 'notificaciones';
 
-  protected $fillable = ['id_usuario','tipo','informacion',
+  protected $fillable = ['id_usuario','tipo','id_tipo',
   ];
 
   public function User(){

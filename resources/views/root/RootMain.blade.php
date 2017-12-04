@@ -1,6 +1,6 @@
 @extends('layouts.menus')
 @section('headers')
-
+    @yield('mainheaders')
 @endsection('headers')
 @section('content')
     <div class="container" align="center">
@@ -28,7 +28,7 @@
             <div class="menu-list">
                 <ul id="menu-content" class="menu-content collapse out">
                     <li><a href="{{route('Administrador.index')}}"><i class="material-icons iconosmenu">settings</i>Gestionar Administradores</a></li>
-                    <li><a href="#"><i class="material-icons iconosmenu">delete_sweep</i>Cuentas Inactivas</a></li>
+                    <li><a href="{{route('listrestore')}}"><i class="material-icons iconosmenu">delete_sweep</i>Cuentas Inactivas</a></li>
                     <li><a href="#"><i class="material-icons iconosmenu">web_asset</i>Actividad Plaataforma</a></li>
                 </ul>
 
@@ -38,7 +38,10 @@
 
 
 
-    <div class= "cuadro">
+    <div class= "recuadro">
       @yield('recuadro')
     </div>
+    @section('modals')
+        @yield('mainmodals')
+    @endsection
 @endsection('content')

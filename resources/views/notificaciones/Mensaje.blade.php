@@ -1,16 +1,10 @@
-@extends('layouts.app')
+@php
+  //$users=App\User::where('tipo_rol','egresado')->where('id','!=',$id)->where('estado_cuenta','activa')->orderBy('name','asc')->get();
+  $users=App\User::contactos($id)->orderBy('name','asc')->get();
+@endphp
 
-@section('content')
-      @if(Session::has('flash_message'))
-        <script type="text/javascript">
-          alert("{{Session::get('flash_message')}}");
-        </script>
-      @endif
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default">
-          <div class="panel-heading">Enviar Mensaje</div>
+
+          <div class="panel-heading">Enviar Mensaje {{count($users)}}</div>
           <form method="POST" action="{{route('Mensaje.store')}}">
             {{csrf_field()}}
           <div class="panel-body">
@@ -18,10 +12,10 @@
               <input name="title" class="form-control" placeholder="Titulo" autofocus required></input>
             </div>
             <div class="form-group">
-              <select class="form-control" name="id_egresado" autofocus required>
+              <select class="form-control" name="email" autofocus required>
                 <option value="">Seleciona un usuario</option>
-                @foreach ($egresados as $egresado)
-                  <option value="{{$egresado->id_usuario}}">{{$egresado->user->name}}:  {{$egresado->user->email}}</option>
+                @foreach ($users as $user)
+                  <option value="{{$user->email}}">Correo:  {{$user->email}} --------{{$user->name}}</option>
                 @endforeach
               </select>
             </div>
@@ -33,12 +27,3 @@
             </div>
           </div>
         </form>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-@endsection

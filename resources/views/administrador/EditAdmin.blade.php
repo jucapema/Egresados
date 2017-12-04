@@ -4,7 +4,6 @@
     {!!Form::open(['route'=>['Usuario.update', 'User' => $user->id],'method'=>'POST'])!!}
     {{method_field('put')}}
     {{csrf_field()}}
-                  <div class="panel panel-default">
                       <div class="panel-heading">Ediar la informacion de {{$user->name}}</div>
                         <div class="panel-body">
         <div class="col-md-12 col-lx-12 col-lg-12 col-sm-12">
@@ -91,4 +90,3 @@
               {!!form::submit('Registrar',['class'=>'btn btn-primary'])!!}
             {!!form::close()!!}
             </div>
-    </div>

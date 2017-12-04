@@ -5,95 +5,99 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-        <div class="container">
+  <div style="overflow:scroll;height:450px;width:800px;">
           <div class="panel panel-default">
-              <div class="panel-heading" align="center">Publicaciones</div>
-              <div class="form-group">
-
-                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>Publicar Contenido</button>
-                @component('modals.modal')
-                  @slot('id')
-                    modalAdd
-                  @endslot
-                  @slot('title')
-                    <a ><i class="material-icons iconosmenu">insert_invitation</i>Agregar Nueva Publicacion </a>
-                  @endslot
-                  @slot('cuerpo')
-                      @component('publicaciones.CreatePublicacion')
-                      @endcomponent
-                  @endslot
-                  @slot('boton')
-                    button.agregar
-                  @endslot
-                @endcomponent
-              </div>
+              <div class="panel-heading" align="center">Notificaciones Pendientes {{count($publicaciones)}}</div>
               <div class="panel-body">
-
+                <div class="form-group">
+                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>Publicar Contenido</button>
+                             @component('modals.modal')
+                               @slot('id')
+                                 modalAdd
+                               @endslot
+                               @slot('title')
+                                 Agregar Nueva Publicacion
+                               @endslot
+                               @slot('cuerpo')
+                                   @component('publicaciones.CreatePublicacion')
+                                   @endcomponent
+                               @endslot
+                               @slot('boton')
+                                 button.agregar
+                               @endslot
+                             @endcomponent
+                           </div>
                     <table class="table" id="users">
                       <thead>
                         <tr>
                           <th>Image</th>
-                          <th>Titulo</th>
-                          <th>Contenido</th>
-                          <th>Fecha del Evento</th>
-                          <th>Publicado Por</th>
-                          <th>Actualizado el</th>
-                          <th>Publicado el</th>
-                          <th>Acciones</th>
+                         <th>Titulo</th>
+                         <th>Contenido</th>
+                         <th>Fecha del Evento</th>
+                         <th>Publicado Por</th>
+
+                         <th>Publicado el</th>
+                         <th>Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($publicaciones as $publicacion)
+                        @foreach ($publicaciones as $publicacion)
                           @component('user.ModalFormEdit')
-                            @slot('id')
-                              {{$publicacion->id}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEditar{{$publicacion->id}}
-                            @endslot
-                            @slot('title')
-                                  Editar Informacion de {{$publicacion->titulo}}
-                            @endslot
-                            @slot('contenido')
-                              @component('publicaciones.EditPublicacion')
-                                @slot('id')
-                                  {{$publicacion->id}}
-                                @endslot
-                              @endcomponent
-                            @endslot
-                          @endcomponent
-                        @component('user.ModalConfirmar')
-                          @slot('ruta')
-                            {{route('Publicacion.destroy',['post'=>$publicacion->id])}}
-                          @endslot
-                          @slot('idmodal')
-                              modalEliminar{{$publicacion->id}}
-                          @endslot
-                          @slot('title')
-                                Elimninar publicacion:  {{$publicacion->titulo}}
-                          @endslot
-                          @slot('contenido')
-                            Estas Seguro que deseas eliminar a {{$publicacion->titulo}}
-                          @endslot
-                        @endcomponent
+                              @slot('id')
+                                {{$publicacion->id}}
+                              @endslot
+                              @slot('idmodal')
+                                  modalEditar{{$publicacion->id}}
+                              @endslot
+                              @slot('title')
+                                    Editar Informacion de {{$publicacion->titulo}}
+                              @endslot
+                              @slot('contenido')
+                                @component('publicaciones.EditPublicacion')
+                                  @slot('id')
+                                    {{$publicacion->id}}
+                                  @endslot
+                                @endcomponent
+                              @endslot
+                            @endcomponent
                         <tr>
                           <td><img src="/storage/images/{{$publicacion->multimedia}}" alt="" style="width:50px;"></td>
-                          <td>{{$publicacion->titulo}}</td>
-                          <td>{{$publicacion->cuerpo}}</td>
-                          <td>{{$publicacion->fecha}}</td>
-                          <td>{{$publicacion->administrador->user->name}}</td>
-                          <td>{{$publicacion->update_at}}</td>
-                          <td>{{$publicacion->created_at->diffForHumans()}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$publicacion->id}}'><i class="material-icons iconosmenu">edit</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$publicacion->id}}' ><i class="material-icons iconosmenu">delete</i></button></td>
+                                                   <td>{{$publicacion->titulo}}</td>
+                                                   <td>{{$publicacion->cuerpo}}</td>
+                                                   <td>{{$publicacion->fecha}}</td>
+                                                   @if ($publicacion->administrador!=null)
+                                                     <td>{{$publicacion->administrador->user->name}}</td>
+                                                   @else
+                                                       <td>Administrador Desconocido</td>
+                                                   @endif
+
+                                                   <td>{{$publicacion->created_at->diffForHumans()}}</td>
+
+                          <td><button type='button' class='editar btn btn-success' data-toggle='modal' data-target='#modalEditar{{$publicacion->id}}' ><i class="material-icons iconosmenu">edit</i></button></td>
+                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalBorrar{{$publicacion->id}}'> <i class="material-icons iconosmenu">delete_forever</i> </button>
+@component('user.ModalConfirmar')
+  @slot('ruta')
+    {{route('Publicacion.destroy',['Publicacion'=>$publicacion->id])}}
+  @endslot
+  @slot('idmodal')
+    modalBorrar{{$publicacion->id}}
+  @endslot
+  @slot('title')
+    Eliminar publicacion
+  @endslot
+  @slot('contenido')
+    Seguro de Eliminar esta Publicacion
+  @endslot
+@endcomponent
                         </tr>
                       @endforeach
                       </tbody>
 
                     </table>
                 </div>
-
+</div>
             </div>
-        </div>
+
         @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
@@ -110,23 +114,26 @@ var table= $("#users").DataTable({
                       },
             });
             obtener_data_edit("#users tbody",table);
-            obtener_id_eliminar("#users tbody",table);
+            obtener_data_info("#users tbody",table);
+
       });
 var obtener_data_edit=function(tbody,table){
+        $(tbody).on("click", "button.contactar",function(){
+          var data=table.row($(this).parents("tr")).data();
+          var id=$("#frmEditarUsuario #id").val(data.id);
+          $(this).addClass(tbody);
+          //console.log(data);
+        });
+}
+
+
+var obtener_data_info=function(tbody,table){
         $(tbody).on("click", "button.editar",function(){
           var data=table.row($(this).parents("tr")).data();
           var id=$("#frmEditarUsuario #id").val(data.id);
           //console.log(data);
         });
       }
-
-      var obtener_id_eliminar=function(tbody,table){
-              $(tbody).on("click", "button.eliminar",function(){
-                var data=table.row($(this).parents("tr")).data();
-                var id=$("#frmEliminarUsuario #id").val(data.id);
-                console.log(data);
-              });
-            }
       </script>
 
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

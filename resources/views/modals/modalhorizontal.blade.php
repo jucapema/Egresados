@@ -45,7 +45,6 @@
     @slot('boton')
       btn6
     @endslot
-
   @endcomponent
   <!--Modalsssss Modal editar informacion root-->
               @component('modals.modal')
@@ -65,33 +64,38 @@
               @endcomponent
 <!-- darse baja -->
 @if (auth::user()->tipo_rol=='egresado')
+        @component('modals.modal')
+          @slot('id')
+            baja
+          @endslot
+          @slot('title')
+            Editar Informacion
+          @endslot
+          @slot('cuerpo')
+              @component('user.EditUser')
+              @endcomponent
+          @endslot
+          @slot('boton')
+            btn5
+          @endslot
+        @endcomponent
+
     @component('modals.modal')
       @slot('id')
-          baja
+        chat
       @endslot
       @slot('title')
-        Darse de baja?
+        Enviar correo
       @endslot
       @slot('cuerpo')
-
-            <div class="form-group">
-              <form action="{{route('baja')}}" method="post">
-                {{method_field('put')}}
-                {{csrf_field()}}
-                <div class="form-group">
-                  <input type="text" name="baja" class="form-control"  placeholder="Porque nos dejas"></input>
-                </div>
-              <h1> Deseas solicitar Cancelar tu suscripcion en </h1>
-              <h1>  la plataroma egresados utp?</h1>
-            <div class="form-group">
-              <button class="btn btn-Danger btn-block">Darse de Baja</button>
-            </div>
-          </form>
-        </div>
-
+          @component('notificaciones.Mensaje')
+            @slot('id')
+              {{\auth::user()->id}}
+            @endslot
+          @endcomponent
       @endslot
       @slot('boton')
-        btn5
+        btn7
       @endslot
     @endcomponent
 @endif

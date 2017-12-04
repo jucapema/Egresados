@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\acceso;
+use App\Models\Egresado;
 use Illuminate\Http\Request;
-
+use app\User;
 class AccesoController extends Controller
 {
     /**
@@ -14,8 +15,10 @@ class AccesoController extends Controller
      */
     public function index()
     {
-        $accesos=Acceso::orderBy('id','desc')->paginate(10);
-        return view('acesso.index',['acceso'=>$accesos]);
+        $accesos=Acceso::all();
+        $cantnewuser=User::where('estado_cuenta','suscrita')->get();
+        $cantcance=Egresado::where('baja','true')->get();
+        return view('acceso.indexAccesos',['accesos'=>$accesos,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
 

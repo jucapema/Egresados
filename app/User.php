@@ -47,8 +47,12 @@ class User extends Authenticatable
       return $this->hasMany('App\Models\acceso','id_usuario');
     }
 
-    public function scopeMensaje($query){
-      $query->where('id','!=',\Auth::user()->id)->get();
+    public function mensaje(){
+      return $this->hasMany('App\Models\Mensaje','id_usuario');
+    }
+
+    public function scopeContactos($query,$id){
+      return $query->where('tipo_rol','egresado')->where('id','!=',$id)->where('estado_cuenta','activa');
     }
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Egresado;
+use App\Models\Mensaje;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Session;
@@ -100,11 +101,11 @@ var_dump($egresado->baja);
         //
     }
 
-public function contactos(){
-      $users = User::where('tipo_rol','egresado')->where('estado_cuenta','activa')->get();
-      
-      return view('egresados.ListEgresados',['users'=>$users]);
-}
+      public function contactos(){
+            $users = User::where('tipo_rol','egresado')->where('estado_cuenta','activa')->get();
+              $mensajes=Mensaje::mensajesid(Auth::user()->egresado->id)->get();
+            return view('egresados.ListEgresados',['users'=>$users,'mensajes'=>$mensajes]);
+      }
     /**
      * Show the form for editing the specified resource.
      *
@@ -127,6 +128,24 @@ public function contactos(){
     {
 
     }
+    public function cambiarvalor(Request $request)  //bannear cuenta
+    {
+        $user=User::findOrfail($request->user);
+        if($user->estado_cuenta=='activa')
+        {
+          //var_dump($user);
+          $user->update(['estado_cuenta'=>'ban']);
+          $data2['id_usuario'] =$user->id;
+          $data2['tipo'] ='ban'; //egresado agregado
+          $data2['id_tipo'] ='1'; //1 para los agregados, 1 para los banneados
+          \Notificacion::create($data2);
+          \Session::flash('flash_message','Cuenta Banneada');
+          return redirect()->back();
+        }else{
+          \Session::flash('flash_message','Egresado ya banneado');
+          return redirect()->back();
+        }
+      }
 
     /**
      * Remove the specified resource from storage.

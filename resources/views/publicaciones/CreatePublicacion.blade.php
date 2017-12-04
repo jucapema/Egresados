@@ -27,7 +27,7 @@ function ValidarImagen(obj){
         img.src = URL.createObjectURL(uploadFile);
     }
         </script>
-<div class="panel panel-default">
+
   <div class="panel-body">
             {!!Form::open(['route'=>['Publicacion.store'], 'method'=>'POST', 'enctype'=>"multipart/form-data"])!!}
 
@@ -68,5 +68,4 @@ function ValidarImagen(obj){
                     {!!form::submit('Registrar',['class'=>'btn btn-primary'])!!}
                     {!!form::reset('Cancelar',['class'=>'btn btn-boton'])!!}
                     {!!form::close()!!}
-                  </div>
                   </div>

@@ -1,12 +1,12 @@
 @extends('layouts.menus')
 @section('headers')
-
+    @yield('mainheaders')
 @endsection('headers')
 @section('content')
     <div class="container" align="center">
         <div class="row">
             <div class="btn-group btn-breadcrumb" >
-                <a href="#" class="btn btn-primary bordemenu activa1"><i class="glyphicon glyphicon-home"></i></a>
+                <a href="{{route('posts')}}" class="btn btn-primary bordemenu activa1"><i class="glyphicon glyphicon-home"></i></a>
               <a href="#" class="btn btn-primary bordemenu" data-toggle="dropdown" data-hover="dropdown">Perfil</a>
                   <ul class="dropdown-menu">
                     <li><a class="btn4 bordesubmenu">Foto de Perfil</a></li>
@@ -28,11 +28,11 @@
 
             <div class="menu-list">
                 <ul id="menu-content" class="menu-content collapse out">
-                    <li><a href="#"><i class="material-icons iconosmenu">notifications_active</i>Notificaciones</a><span class="badge">{{count(Auth::user()->notificacion)}}</span></li>
-                    <li><a href="#"><i class="material-icons iconosmenu">publish</i>Publicaciones</a><span class="badge"></span></li>
-                    <li><a href="{{route('Mensaje.index')}}"><i class="material-icons iconosmenu">mail</i>Mensajes de Egresados</a><span class="badge">{{count(Auth::user()->egresado->mensaje)}}</span></li>
+                    <li><a href="{{route('Notificacion.index')}}"><i class="material-icons iconosmenu">notifications_active</i>Notificaciones</a><span class="badge">{{count(Auth::user()->notificacion)}}</span></li>
+                    <li><a href="{{route('Mensaje.index')}}"><i class="material-icons iconosmenu">mail</i>Mensajes de Egresados</a><span class="badge">{{count($mensajes)}}</span></li>
                     <li><a href="{{route('listcontactos')}}"><i class="material-icons iconosmenu">person_add</i>Buscar Amigos</a></li>
-                    <li><a href="{{route('Mensaje.create')}}"><i class="material-icons iconosmenu">chat</i>Chat</a></li>
+                    <li><a data-toogle="modal" data-target="#contactos"><i class="btn8 material-icons iconosmenu">list</i>Lista de Amigos</a></li>
+                    <li><a data-toogle="modal" data-target="#chat"><i class="btn7 material-icons iconosmenu">chat</i>Chat</a></li>
                 </ul>
             </div>
     </div>
@@ -43,4 +43,10 @@
     @yield('recuadro')
 
     </div>
+    @section('modals')
+
+        @yield('mainmodals')
+
+
+    @endsection
 @endsection('content')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Publicacion;
 use App\Models\Egresado;
 use App\Models\Notificacion;
+use App\Models\Mensaje;
 use Illuminate\Http\Request;
 use App\User;
 use Session;
@@ -32,6 +33,12 @@ class PostController extends Controller
     public function create()
     {
         //
+    }
+
+    public function listposts(){
+      $publicaciones=Publicacion::all();
+        $mensajes=Mensaje::mensajesid(Auth::user()->egresado->id)->get();
+      return view('publicaciones.verPosts',['publicaciones'=>$publicaciones, 'mensajes'=>$mensajes]);
     }
 
     /**
@@ -62,7 +69,7 @@ class PostController extends Controller
         foreach ($users as $user) {
                  $data2['id_usuario'] =$user->id;
                  $data2['tipo'] ='post';
-                 $data2['informacion'] = $request['titulo'].$request['cuerpo'].$request['fecha'];
+                 $data2['id_tipo'] =$publicacion->id;
                  Notificacion::create($data2);
                }
         Session::flash('flash_message','Publicado exitosamente');
@@ -99,7 +106,7 @@ class PostController extends Controller
      * @param  \App\models\publicacion  $publicacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, publicacion $publicacion)
+    public function update(Request $request, $id)
     {
       $v = \Validator::make($request->all(),[
           'fecha'=>'date',
@@ -108,14 +115,16 @@ class PostController extends Controller
       if($v->fails()){
        return redirect()->back()->withInput()->withErrors($v->errors());
       }else{
+        $publicacion=Publicacion::findorfail($id);
         $data = $request->all();
+
         //$data['id_administrador']=Auth::user()->administrador->id;
         $file = $request->file('file');
         $nombre=$file->getClientOriginalName();
         $request->file('file')->storePubliclyAs('images',$nombre,'public'); //guarda en public
         $data['multimedia']=$nombre;
         $publicacion->update($data);
-        Session::flash('flash_message','Publicado exitosamente');
+        Session::flash('flash_message','Actualizado Correctamente');
         return redirect()->back();
       }
     }
@@ -126,8 +135,15 @@ class PostController extends Controller
      * @param  \App\models\publicacion  $publicacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(publicacion $publicacion)
+    public function destroy($id)
     {
-        //
+        $publicacion=Publicacion::findorfail($id);
+        $notificacion=Notificacion::where('id_tipo',$id)->where('tipo','post')->where('created_at',$publicacion->created_at);
+        if(count($notificacion)>0){
+              $notificacion->delete();
+        }
+        $publicacion->delete();
+        Session::flash('flash_message','Publicaicon Eliminada Correctamente');
+        return redirect()->back();
     }
 }

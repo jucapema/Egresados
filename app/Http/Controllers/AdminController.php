@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrador;
+use App\Models\Egresado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
@@ -75,6 +76,15 @@ class AdminController extends Controller
       return redirect()->route('usuario.show',['usuario'=>$administrador->id_usuario]);
   }
 
+    public function borrarcuenta(Request $request){
+      $user=User::findOrfail($request->user);
+      $egresado=Egresado::findOrfail($user->egresado->id);
+      $egresado->delete();
+      $user->delete();
+      //envio emails
+      Session::flash('flash_message', 'Usuario dado de baja');
+      return redirect()->back();
+    }
   /**
   * Show the form for editing the specified resource.
   *
