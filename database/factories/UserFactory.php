@@ -1,5 +1,5 @@
 <?php
- $faker = Faker\Factory::create('es_ES');
+ //$faker = Faker\Factory::create('es_ES');
 /*
 |--------------------------------------------------------------------------
 | Model Factories

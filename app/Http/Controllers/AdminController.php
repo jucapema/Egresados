@@ -25,7 +25,7 @@ class AdminController extends Controller
   public function index()
   {
     $users = User::where('tipo_rol','admin')->get();
-    return view('user.indexAdmin',['users'=>$users]);
+    return view('user.IndexAdmin',['users'=>$users]);
   }
 
   /**
