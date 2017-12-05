@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
-
+    //'default' => env('DB_CONNECTION', 'mysql'), //local
+    'default' => env('DB_CONNECTION', 'pgsql'), //heroku
     /*
     |--------------------------------------------------------------------------
     | Database Connections
@@ -56,11 +56,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'ec2-184-72-243-166.compute-1.amazonaws.com'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'd2s7kok55qm0ih'),
+            'username' => env('DB_USERNAME', 'ealzyaxkhsyinu'),
+            'password' => env('DB_PASSWORD', 'be3d83fbb318adc7151fb6392e5da2c2c75ad9c04af2bdc7bf2664b195a3c08d'),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
