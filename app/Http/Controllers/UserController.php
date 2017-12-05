@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Mail\Mensaje;
 use App\Models\acceso;
 use App\Models\Egresado;
+use App\Models\Favorito;
 use App\Models\Administrador;
 use App\Models\Notificacion;
 use Carbon\Carbon;
@@ -15,14 +16,10 @@ use Session;
 use Auth;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function __construct(){
+      $this->middleware('root',['only'=>['restore','indextrash','correo']]);
+      $this->middleware('admin',['only'=>['ChangePassword','destroy']]);
+      $this->middleware('egresado',['only'=>['change_password','update','agregar']]);
     }
 
     public function indextrash(){
@@ -30,7 +27,6 @@ class UserController extends Controller
         //$cantcance=Egresado::where('baja','true')->get();
         //$cantnewuser=User::where('estado_cuenta','suscrita')->get();
           return view('user.IndexTrash',['users'=>$user]);
-
     }
 
     public function restore($id)
@@ -46,48 +42,41 @@ class UserController extends Controller
               $user->restore();
               $egresado->restore();
             }
-            Session::flash('flash_message', 'Usuario Restaurado');
+            flash('Usuario Restaurado')->warning();
             return redirect()->back();
         }
 
     public function change_password(Request $request){
       if(\Hash::check($request->Password_actual, \Auth::user()->password)){
-      //if($request->Password_actual == \Auth::user()->password){
-        $user=User::find(\Auth::user()->id);
-        $new['password'] =bcrypt($request->password);
-        $user->update($new);
-          //validar si el admin es primera vez
-        \Auth::logout();
-        session::flash('flash_message','La contraseña ha sido actualizada ');
-        return view('auth.login');
+            //if(\Hash::check($request->password_confirmation, $request->password)){
+          //if($request->Password_actual == \Auth::user()->password){
+            $user=User::find(\Auth::user()->id);
+            $new['password'] =bcrypt($request->password);
+            $user->update($new);
+            if (Auth::user()->administrador->valor=='false') {
+                $administrador=Administrador::findOrfail(Auth::user()->administrador->id);
+                $administrador->update(['valor'=>'true']);
+                flash('La contraseña ha sido actualizada ')->success();
+                return redirect()->route('Publicacion.index');
+            }else{
+              \Auth::logout();
+              //session::flash('flash_message','La contraseña ha sido actualizada ');
+              flash('La contraseña ha sido actualizada ')->success();
+              return redirect()->back();
+            }
+            /*else{
+            flash('La nueva Contraseña no coincide')->error()->important();
+            return redirect()->back();
+          }*/
       }else{
-        session::flash('flash_message','La contraseña no coindide porfavor intente de nuevo');
+        //session::flash('flash_message','La contraseña no coindide porfavor intente de nuevo');
+        flash('La contraseña no coindide porfavor intente de nuevo')->error()->important();
         return redirect()->back();
       }
     }
 
     public function ChangePassword(){
-      return view('changepassword');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request,$id)
-    {
-        //
+      return view('administrador.CambiarPassAdmin');
     }
 
     public function agregar(Request $request)
@@ -100,58 +89,39 @@ class UserController extends Controller
         $data2['tipo'] ='agregado'; //egresado agregado
         $data2['id_tipo'] ='1'; //1 para los agregados, 1 para los banneados
         Notificacion::create($data2);
-        \Session::flash('flash_message','Egresado Aceptado');
+        //\Session::flash('flash_message','Egresado Aceptado');
+        flash('Egresado Aceptado')->success();
         return redirect()->back();
       }else{
-        \Session::flash('flash_message','Contacto añadido');
+        $favorito=Favorito::create(['id_usuario'=>Auth::user()->id,'amigo'=>$user->id]);
+        //\Session::flash('flash_message','Contacto añadido');
+        flash('Contacto añadido')->success();
         return redirect()->back();
       }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     { //validar q el correo no exista
+      $user = User::findOrfail($id);
+      if($user==$request->all()){
+        flash('Error al intentar actualizar debido a que la Información es igual')->error();
+      }
       $v = \Validator::make($request->all(), [
             'dni'=>'numeric',
-            'email'    => 'email', //[A-Z]@[utp.edu.co]
-            'telefono'=> 'min:7|numeric',
-        ]);
+            'email'    => 'regex:/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i',
+            'telefono'=> 'regex:/^[3][0-9]{7}$/',
+          ],
+          $messages = [
+              'email.regex' => 'Debes usar el correo institucional',
+          ]);
         if ($v->fails())
         {
           return redirect()->back()->withInput()->withErrors($v->errors());
         }
-      $user = User::findOrfail($id);
       if($user->email!=$request->email){
           $emails=User::where('email',$request->email)->get();
           $v = \Validator::make($request->all(), [
-                'email'    => 'email|unique:users', //[A-Z]@[utp.edu.co]
+                'email'    => 'regex:/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i|unique:users',
             ]);
             if ($v->fails())
             {
@@ -170,17 +140,18 @@ class UserController extends Controller
                 $user->update($request->all());
                 $egresado->update($request->all());
           }else{
-            Session::flash('flash_message', 'Debes ser mayor de edad');
+            flash('Debes ser mayor de edad')->error();
             return redirect()->back(); //TODO humm
           }
         }
-        session::flash('flash_message','Informacion Actualizada ');
+        //session::flash('flash_message','Informacion Actualizada ');
+        flash('Informacion Actualizada ')->success();
         return redirect()->back();
     }
 
     public function correo(){
       $user = User::find(1);
-      Mail::to('dicoma12@yahoo.es','prueba')->send(new Mensaje($user));
+      Mail::to('@','prueba')->send(new Mensaje($user));
     }
     /**
      * Remove the specified resource from storage.
@@ -202,7 +173,7 @@ class UserController extends Controller
           $egresado->delete();
         }
         $user->delete();
-        Session::flash('flash_message','Usuario Eliminado');
+        flash('Usuario Eliminado')->error()->important();
         return redirect()->back();
     }
 }

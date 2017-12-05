@@ -11,7 +11,7 @@ class Administrador extends Model
 
   use softDeletes;
   protected $dates = ['deleted_at'];
-  protected $fillable = ['id_usuario', 'direccion', 'ciudad', 'telefono',
+  protected $fillable = ['id_usuario', 'direccion', 'ciudad', 'telefono','valor',
   ];
 
   public function user(){

@@ -64,39 +64,24 @@
               @endcomponent
 <!-- darse baja -->
 @if (auth::user()->tipo_rol=='egresado')
-        @component('modals.modal')
+  @component('modals.modal')
+    @slot('id')
+      chat
+    @endslot
+    @slot('title')
+      Enviar correo
+    @endslot
+    @slot('cuerpo')
+        @component('notificaciones.Mensaje')
           @slot('id')
-            baja
-          @endslot
-          @slot('title')
-            Editar Informacion
-          @endslot
-          @slot('cuerpo')
-              @component('user.EditUser')
-              @endcomponent
-          @endslot
-          @slot('boton')
-            btn5
+            {{\auth::user()->id}}
           @endslot
         @endcomponent
+    @endslot
+    @slot('boton')
+      btn7
+    @endslot
+  @endcomponent
 
-    @component('modals.modal')
-      @slot('id')
-        chat
-      @endslot
-      @slot('title')
-        Enviar correo
-      @endslot
-      @slot('cuerpo')
-          @component('notificaciones.Mensaje')
-            @slot('id')
-              {{\auth::user()->id}}
-            @endslot
-          @endcomponent
-      @endslot
-      @slot('boton')
-        btn7
-      @endslot
-    @endcomponent
 @endif
               <!---end modalas -->

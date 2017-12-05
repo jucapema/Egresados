@@ -40,6 +40,7 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
+    //'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -103,8 +104,8 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY'), //local
+    //'key' => env('APP_KEY','base64:2gw5aisfKZEHxLu6JUxJrHA68SoounOCRRIpeNe7eyw='),
 
     'cipher' => 'AES-256-CBC',
 
@@ -164,6 +165,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         //Illuminate\Support\Schema::class,
 
         /*
@@ -181,6 +183,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Laracasts\Flash\FlashServiceProvider::class,
     ],
 
     /*

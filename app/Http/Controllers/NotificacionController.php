@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use Auth;
 class NotificacionController extends Controller
 {
-    /**
+    public function __construct(){
+      $this->middleware('egresado');
+    }
+        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -22,61 +25,6 @@ class NotificacionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Notificacion  $notificacion
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Notificacion $notificacion)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Notificacion  $notificacion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Notificacion $notificacion)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Notificacion  $notificacion
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Notificacion $notificacion)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Notificacion  $notificacion
@@ -86,7 +34,8 @@ class NotificacionController extends Controller
     {
         $notificacion=Notificacion::findorfail($id);
         $notificacion->delete();
-        \Session::flash('flash_message','Vista marcada');
+        //\Session::flash('flash_message','Vista marcada');
+        flash('Vista marcada')->error()->important();
         return redirect()->back();
     }
 }

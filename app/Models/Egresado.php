@@ -10,9 +10,8 @@ class Egresado extends Model
 
   use softDeletes;
   protected $dates = ['deleted_at'];
-  protected $fillable = ['id_usuario', 'intereses','fecha_nacimiento','genero','carrera',
+  protected $fillable = ['id_usuario', 'intereses','fecha_nacimiento','genero','carrera','baja',
   ];
-  protected $hidden = ['baja','contactos','favoritos',];
 
   public function user(){
     return $this->belongsTo('App\User','id_usuario');

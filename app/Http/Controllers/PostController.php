@@ -12,6 +12,10 @@ use Session;
 use Auth;
 class PostController extends Controller
 {
+      public function __construct(){
+        $this->middleware('admin',['only'=>['index','store','update','destroy']]);
+        $this->middleware('egresado',['only'=>['listposts']]);
+      }
     /**
      * Display a listing of the resource.
      *
@@ -23,16 +27,6 @@ class PostController extends Controller
       $cantnewuser=User::where('estado_cuenta','suscrita')->get();
       $cantcance=Egresado::where('baja','true')->get();
       return view('publicaciones.IndexPublicaciones',['publicaciones'=>$publicaciones, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     public function listposts(){
@@ -72,40 +66,12 @@ class PostController extends Controller
                  $data2['id_tipo'] =$publicacion->id;
                  Notificacion::create($data2);
                }
-        Session::flash('flash_message','Publicado exitosamente');
+        //Session::flash('flash_message','Publicado exitosamente');
+        flash('Publicado exitosamente')->success();
         return redirect()->back();
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\models\publicacion  $publicacion
-     * @return \Illuminate\Http\Response
-     */
-    public function show(publicacion $publicacion)
-    {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\models\publicacion  $publicacion
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(publicacion $publicacion)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\publicacion  $publicacion
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
       $v = \Validator::make($request->all(),[
@@ -124,7 +90,7 @@ class PostController extends Controller
         $request->file('file')->storePubliclyAs('images',$nombre,'public'); //guarda en public
         $data['multimedia']=$nombre;
         $publicacion->update($data);
-        Session::flash('flash_message','Actualizado Correctamente');
+        flash('Actualizado Correctamente')->success();
         return redirect()->back();
       }
     }
@@ -138,12 +104,14 @@ class PostController extends Controller
     public function destroy($id)
     {
         $publicacion=Publicacion::findorfail($id);
-        $notificacion=Notificacion::where('id_tipo',$id)->where('tipo','post')->where('created_at',$publicacion->created_at);
-        if(count($notificacion)>0){
-              $notificacion->delete();
+        $notificaciones=Notificacion::where('id_tipo',$id)->where('tipo','post')->where('created_at',$publicacion->created_at)->get();
+        foreach ($notificaciones as $notificacion) {
+
+          $notificacion->delete();
         }
         $publicacion->delete();
-        Session::flash('flash_message','Publicaicon Eliminada Correctamente');
+//        Session::flash('flash_message','Publicacion Eliminada Correctamente');
+        flash('Publicacion Eliminada Correctamente')->error()->important();
         return redirect()->back();
     }
 }

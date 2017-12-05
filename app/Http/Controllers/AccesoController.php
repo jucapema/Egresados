@@ -13,9 +13,13 @@ class AccesoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function __construct(){
+       $this->middleware('admin',['only'=>'index']);
+     }
+
     public function index()
     {
-        $accesos=Acceso::all();
+        $accesos=Acceso::where('id_usuario','!=',\auth::user()->id)->get();
         $cantnewuser=User::where('estado_cuenta','suscrita')->get();
         $cantcance=Egresado::where('baja','true')->get();
         return view('acceso.indexAccesos',['accesos'=>$accesos,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
