@@ -48,7 +48,7 @@ class UserController extends Controller
 
     public function change_password(Request $request){
       if(\Hash::check($request->Password_actual, \Auth::user()->password)){
-            if(\Hash::check($request->password_confirmation, $request->password)){
+            //if(\Hash::check($request->password_confirmation, $request->password)){
           //if($request->Password_actual == \Auth::user()->password){
             $user=User::find(\Auth::user()->id);
             $new['password'] =bcrypt($request->password);
@@ -64,10 +64,10 @@ class UserController extends Controller
               flash('La contraseña ha sido actualizada ')->success();
               return redirect()->back();
             }
-          }else{
+            /*else{
             flash('La nueva Contraseña no coincide')->error()->important();
             return redirect()->back();
-          }
+          }*/
       }else{
         //session::flash('flash_message','La contraseña no coindide porfavor intente de nuevo');
         flash('La contraseña no coindide porfavor intente de nuevo')->error()->important();

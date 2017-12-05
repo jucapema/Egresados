@@ -1,5 +1,5 @@
 @php
-         $favoritos=app\models\Favorito::where('id_usuario',Auth::user()->id)->get();
+         $favoritos=App\Models\Favorito::where('id_usuario',Auth::user()->id)->get();
     //$users=App\User::where('id',$favorito->amigo)->get();
 @endphp
 <div style="overflow:scroll;height:450px;width:500px;">

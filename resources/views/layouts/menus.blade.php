@@ -23,7 +23,9 @@
 </head>
 
 <body>
+  <div class="container" align="center">
     @include('flash::message')
+  </div>
     <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
 
     <header>

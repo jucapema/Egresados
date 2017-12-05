@@ -26,14 +26,14 @@ class EgresadoController extends Controller
       $users = User::where('tipo_rol','egresado')->get();
       $cantnewuser=User::where('estado_cuenta','suscrita')->get();
       $cantcance=Egresado::where('baja','true')->get();
-      return view('user.indexEgresado',['users'=>$users, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
+      return view('user.IndexEgresado',['users'=>$users, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
     public function indexsuscrita()
     {
       $users = User::where('estado_cuenta','suscrita')->get();
       $cantcance=Egresado::where('baja','true')->get();
-      return view('user.indexSuscrita',['users'=>$users, 'cantnewuser'=>$users,'cantcance'=>$cantcance]);
+      return view('user.IndexSuscrita',['users'=>$users, 'cantnewuser'=>$users,'cantcance'=>$cantcance]);
     }
     /**
      * Show the form for creating a new resource.
@@ -45,7 +45,7 @@ class EgresadoController extends Controller
     {
       $cantcance=Egresado::where('baja','true')->get();
       $cantnewuser=User::where('estado_cuenta','suscrita')->get();
-      return view('user.indexEgresadoCancel',['egresados'=>$cantcance, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
+      return view('user.IndexEgresadoCancel',['egresados'=>$cantcance, 'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
     public function darsedebaja(Request $request){

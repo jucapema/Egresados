@@ -13,8 +13,8 @@ return [
     |
     */
 
-    //'default' => env('DB_CONNECTION', 'mysql'), //local
-    'default' => env('DB_CONNECTION', 'pgsql'), //heroku
+    'default' => env('DB_CONNECTION', 'mysql'), //local
+    //'default' => env('DB_CONNECTION', 'pgsql'), //heroku
     /*
     |--------------------------------------------------------------------------
     | Database Connections

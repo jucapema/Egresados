@@ -39,8 +39,8 @@ return [
     |
     */
 
-    //'debug' => env('APP_DEBUG', false),
-    'debug' => env('APP_DEBUG', true),
+    'debug' => env('APP_DEBUG', false),
+    //'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -104,8 +104,8 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-//'key' => env('APP_KEY'), //local
-    'key' => env('APP_KEY','base64:2gw5aisfKZEHxLu6JUxJrHA68SoounOCRRIpeNe7eyw='),
+    'key' => env('APP_KEY'), //local
+    //'key' => env('APP_KEY','base64:2gw5aisfKZEHxLu6JUxJrHA68SoounOCRRIpeNe7eyw='),
 
     'cipher' => 'AES-256-CBC',
 

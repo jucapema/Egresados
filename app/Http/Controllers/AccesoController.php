@@ -19,7 +19,7 @@ class AccesoController extends Controller
 
     public function index()
     {
-        $accesos=Acceso::all();
+        $accesos=Acceso::where('id_usuario','!=',\auth::user()->id)->get();
         $cantnewuser=User::where('estado_cuenta','suscrita')->get();
         $cantcance=Egresado::where('baja','true')->get();
         return view('acceso.indexAccesos',['accesos'=>$accesos,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);

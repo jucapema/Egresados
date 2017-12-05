@@ -64,6 +64,7 @@ class AdminController extends Controller
       $data['estado_cuenta'] = 'activa';
       $Usuario= User::create($data);
       $data['id_usuario'] = $Usuario->id;
+      $data['valor'] = 'false';
       $Administrador = Administrador::create($data);
     //  Mail::raw('$Usuario->email', function ($message) {   //funcion para enviar al correo del empleado la clave, por ahora crea un log
       //echo 'welcome tu contraseña es $data[password]';
