@@ -59,7 +59,7 @@ class AdminController extends Controller
     }else{
       $data = $request->all();
       $data['tipo_rol'] = 'admin';
-      $data['password'] = 'secret';//Hash::make(rand(0,8));
+      $data['password'] = bcrypt('secret');//Hash::make(rand(0,8));
       $data['confirmation_password'] = bcrypt($data['password']);
       $data['estado_cuenta'] = 'activa';
       $Usuario= User::create($data);
