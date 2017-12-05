@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class StorageController extends Controller
 {
+  public function __construct(){
+    $this->middleware('egresado');
+  }
+
   public function save(Request $request)
   {
     $v = \Validator::make($request->all(), [
@@ -22,7 +26,7 @@ class StorageController extends Controller
     $nombre = $request->user()->id.'.'.$file->getClientOriginalExtension();
      //\Storage::disk('local')->put($nombre,  \File::get($file));
      $request->file('file')->storePubliclyAs('images',$nombre,'public'); //guarda en public
-     \Session::flash('flash_message','Foto subida');
+     flash('Foto subida Correctamente')->success();
      return redirect()->back();
    }
 

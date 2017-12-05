@@ -51,6 +51,10 @@ class User extends Authenticatable
       return $this->hasMany('App\Models\Mensaje','id_usuario');
     }
 
+    public function favoritos(){
+      return $this->hasMany('App\Models\Favorito','id_usuario');
+    }
+
     public function scopeContactos($query,$id){
       return $query->where('tipo_rol','egresado')->where('id','!=',$id)->where('estado_cuenta','activa');
     }

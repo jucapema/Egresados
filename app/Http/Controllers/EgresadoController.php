@@ -12,6 +12,10 @@ use App\User;
 
 class EgresadoController extends Controller
 {
+    public function __construct(){
+      $this->middleware('admin',['only'=>['index','indexsuscrita','cancelar','cambiarvalor']]);
+      $this->middleware('egresado',['only'=>['darsedebaja','contactos']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,10 +40,6 @@ class EgresadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('CreateEgresado');
-    }
 
     public function cancelar()
     {
@@ -49,15 +49,14 @@ class EgresadoController extends Controller
     }
 
     public function darsedebaja(Request $request){
-        $egresado=Egresado::findOrFail(Auth::user()->egresado->id);
-        var_dump($egresado);
-        var_dump($egresado->user->name);
+        $egresado=Egresado::findOrFail($request->user);
         if($egresado->user->tipo_rol=='egresado'){
-          $egresado->update(["baja"=>"true"]);
-var_dump($egresado->baja);
+
+          $egresado->update(['baja'=>'true']);
+
           session::flash('flash_message','peticion recibida');
-          //Auth::logout();
-          //return view('auth.login');
+          Auth::logout();
+          return view('auth.login');
         }
     }
     /**
@@ -70,7 +69,10 @@ var_dump($egresado->baja);
     {
       $v = \Validator::make($request->all(),[
         'dni'=>'required|unique:users|numeric',
-        'email'=>'required|email|unique:users',
+        'email'=>'required|regex:/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i|unique:users',
+      ],
+      $messages = [
+          'email.regex' => 'Debes usar el correo institucional',
       ]);
       if($v->fails()){
         return redirect()->back()->withInput()->withErrors($v->errors());
@@ -84,50 +86,21 @@ var_dump($egresado->baja);
           $user = User::create($data);
           $data['id_usuario']=$user->id;
           Egresado::create($data);
-          Session::flash('flash_message', 'Registro Exitoso');
+          //Session::flash('flash_message', 'Registro Exitoso');
+          flash('Registro Exitoso')->success();
           return redirect()->route('Egresado.index');
         }
       }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Egresado  $egresado
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Egresado $egresado)
-    {
-        //
-    }
 
       public function contactos(){
-            $users = User::where('tipo_rol','egresado')->where('estado_cuenta','activa')->get();
-              $mensajes=Mensaje::mensajesid(Auth::user()->egresado->id)->get();
+            $users = User::where('tipo_rol','egresado')->where('estado_cuenta','activa')->where('id','!=',Auth::user()->id)->get();
+            $mensajes=Mensaje::mensajesid(Auth::user()->egresado->id)->get();
             return view('egresados.ListEgresados',['users'=>$users,'mensajes'=>$mensajes]);
       }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Egresado  $egresado
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Egresado $egresado)
-    {
-        return view('egresados.EditEgresado',['egresado'=>$egresado->id_usuario]);
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Egresado  $egresado
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Egresado $egresado)
-    {
 
-    }
     public function cambiarvalor(Request $request)  //bannear cuenta
     {
         $user=User::findOrfail($request->user);
@@ -139,10 +112,12 @@ var_dump($egresado->baja);
           $data2['tipo'] ='ban'; //egresado agregado
           $data2['id_tipo'] ='1'; //1 para los agregados, 1 para los banneados
           \Notificacion::create($data2);
-          \Session::flash('flash_message','Cuenta Banneada');
+          //\Session::flash('flash_message','Cuenta Banneada');
+          flash('Cuenta banneada')->important();
           return redirect()->back();
         }else{
-          \Session::flash('flash_message','Egresado ya banneado');
+          //\Session::flash('flash_message','Egresado ya banneado');
+          flash('Egresado ya banneado')->warning();
           return redirect()->back();
         }
       }

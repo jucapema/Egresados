@@ -43,7 +43,8 @@
                           <th>Email</th>
                           <th>Telefono</th>
                           <th>Direccion</th>
-                          <th>Acciones</th>
+                          <th>Editar</th>
+                          <th>Eliminar</th>
                         </tr>
                       </thead>
                       <tbody>

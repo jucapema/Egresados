@@ -65,7 +65,14 @@
                           <td>{{$user->egresado->intereses}}</td>
                           <td>{{$user->egresado->carrera}}</td>
                           <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons iconosmenu">email</i> </button>
-                          <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_add</i> </button></td>
+  @php
+    $favoritos=App\Models\Favorito::where('id_usuario',auth::user()->id)->where('amigo',$user->id)->get();
+  @endphp
+@if (count($favoritos)>0)
+    <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_delete</i> </button></td>
+@else
+  <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_add</i> </button></td>
+@endif
                         </tr>
                       @endforeach
                       </tbody>

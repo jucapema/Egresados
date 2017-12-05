@@ -38,7 +38,11 @@ class HomeController extends Controller
             return redirect()->route('posts');
           }
         elseif(Auth::User()->tipo_rol=='admin'){
-            return redirect()->route('Publicacion.index');
+            if (Auth::User()->administrador->valor=='false') {
+                return redirect()->route('ChangePassword');
+            }else{
+              return redirect()->route('Publicacion.index');
+              }
             }
         if(Auth::User()->tipo_rol=='root'){
           return redirect()->route('Administrador.index');}

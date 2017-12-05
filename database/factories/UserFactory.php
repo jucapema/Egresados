@@ -1,5 +1,5 @@
 <?php
-
+ $faker = Faker\Factory::create('es_ES');
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -33,8 +33,6 @@ $factory->define(App\Models\Egresado::class, function (Faker\Generator $faker) {
         'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
         'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
         'baja'=>'false',
-        'contactos'=> function(){return rand(2,6);},
-        'favoritos'=> 1,
         'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
         'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
     ];
@@ -60,8 +58,6 @@ $factory->defineAs(App\Models\Egresado::class,'baja', function (Faker\Generator 
         'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
         'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
         'baja'=>'true',
-        'contactos'=>function(){return rand(2,6);},
-        'favoritos'=>0,
         'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
         'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
     ];
@@ -75,8 +71,6 @@ $factory->defineAs(App\Models\Egresado::class,'suscrita', function (Faker\Genera
   'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
   'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
   'baja'=>'baja',
-  'contactos'=>0,
-  'favoritos'=>0,
   'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
   'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
 ];
@@ -96,7 +90,7 @@ $factory->define(App\Models\Publicacion::class, function (Faker\Generator $faker
         'id_administrador' => function () {return rand(1,3);
         },
         'titulo'=>  function(){ $cargos=array("Actividad Reciclar","Reunion De Egresados","Reuniones","Actividaddes");return $cargos[rand(0,3)];},
-        'cuerpo'=>$faker->word,
+        'cuerpo'=> function(){ return "Reunicon de egresados para .... en .... gracias por la atencion ";},
         'fecha'=>  function(){ return \Carbon\Carbon::createFromDate(2017, 12, 25);},
     ];
 });
@@ -112,7 +106,7 @@ $factory->defineAs(App\Models\Notificacion::class, 'mensaje' ,function (Faker\Ge
 //---------------------mensajes entre 2 users
 $factory->define(App\Models\Mensaje::class, function (Faker\Generator $faker) {
     return [
-      'id_egresado'=> 1,
+        'id_egresado'=> 1,
         'title' => $faker->title,
         'contenido' => $faker->word,
         'send_id' => 3,

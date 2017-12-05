@@ -23,6 +23,15 @@
       alert("{{Session::get('flash_message')}}");
     </script>
   @endif
+
+  <script>
+  function ValidarCorreo(obj){
+    if (!(/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i).test(obj)) {  //expresion regular va aca
+      alert('Debes Usar el Correo Institucional');
+    }
+  }
+  </script>
+
 <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -36,7 +45,7 @@
                             <label for="email" class="col-md-4 control-label">Correo</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus onchange="ValidarCorreo(this);">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
