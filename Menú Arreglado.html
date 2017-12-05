@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+
+    <style>
+		/*----- Márgenes y Espaciado -----*/
+        #menu, #menu ul {
+            list-style:none;
+            padding:0;
+            margin:0;
+        }
+        /*----- Estilo de cada botón -----*/
+        #menu li {
+            float:left;
+            position:relative;
+            width: 10em;
+            text-align: center;
+        }
+ 
+        /*----- Interior de cada Botón -----*/
+        #menu a {
+            display:block;
+            border-right:1px solid #fff;
+		  	background-color: #0E51A2;
+            color:#FFFFFF;
+            text-decoration:none;
+            padding:10px;
+		  	font-family: Montserrat;
+		  	font-size: 18px;
+		  	font-weight: 500;
+	  		text-shadow: 0 0 3px #000000, 0 0 3px #000000;
+        }
+		/*----- Mouse sobre el Menú -----*/
+        #menu a:hover {
+			background-color: #0E7BD2;
+			border-left: 5px solid #ff9900;
+			border-right: 5px solid #ff9900;
+			-webkit-transition: all 0.3s ease;
+			-moz-transition: all 0.3s ease;
+			-o-transition: all 0.3s ease;
+			-ms-transition: all 0.3s ease;
+			transition: all 0.3s ease;
+        }
+
+        /*----- Al dar click sobre el Menú -----*/
+        #menu a:active {
+		  	border-left: 5px solid #76ff03;
+		  	border-right: 5px solid #76ff03;
+		  	background-color: #05264D;
+		  	-webkit-transition: all 0.1s ease;
+		  	-moz-transition: all 0.1s ease;
+		  	-o-transition: all 0.1s ease;
+		  	-ms-transition: all 0.1s ease;
+		  	transition: all 0.1s ease;
+        }
+
+        /*----- Posición y Visibilidad Submenú -----*/
+        #menu li ul {
+            position:absolute;
+            display:none;
+        }
+        /*----- Borde Submenú -----*/
+        #menu ul {
+            border-top:1px solid #fff;
+        }
+        /*----- Estilo Submenú -----*/
+        #menu ul a {
+            border-bottom:1px solid #fff;
+		  	background-color: #0E51A2;}
+ 
+		/*----- Mouse sobre el Submenú -----*/
+        #menu li:hover ul {
+            display:block;
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+    <header>
+ 
+        <nav id="menu">
+            <li><a href="#">
+            	<i class="glyphicon glyphicon-home"></i></a></li>
+            <li><a href="#">Perfil</a>
+                <ul>
+                    <li><a href="#">Foto de Perfil</a></li>
+                    <li><a href="#">Editar Información</a></li>
+                    <li><a href="#">Cambiar Contraseña</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Ayuda</a></li>
+            <li><a href="#">Salir</a></li>
+        </nav>
+    </header>
+
+</body>
+</html>

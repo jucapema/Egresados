@@ -10,12 +10,12 @@
 
 
 <!-- CSRF Token -->
-        <div style="overflow:scroll;height:450px;width:800px;">
-          <div class="panel panel-default">
-              <div class="panel-heading" align="center">Viendo Administradores</div>
+        <div>
+          <div class="panelexterno panel-default gestionadmin scrollbar1">
+              <div class="panel-heading" align="center">Gestión de Administradores</div>
               <div class="form-group">
-
-                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>New Admin</button>
+                <button type='button' class='agregar btn boton1' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>
+                Nuevo Administrador</button>
                 @component('modals.modal')
                   @slot('id')
                     modalAdd
@@ -33,8 +33,7 @@
                 @endcomponent
               </div>
               <div class="panel-body">
-
-                    <table class="table" id="users">
+                    <table class="table tabladmin cell-border compact" id="users">
                       <thead>
                         <tr>
                           <th>DNI</th>
@@ -68,15 +67,15 @@
                                   @endcomponent
                                 @endslot
                               @endcomponent
-                        <tr>
+                        <tr id="columtable">
                           <td>{{$user->dni}}</td>
                           <td>{{$user->name}}</td>
                           <td>{{$user->apellido}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->administrador->telefono}}</td>
                           <td>{{$user->administrador->direccion}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>
-                            <td><button class="contactar btn btn-danger" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons iconosmenu">delete</i> </button>
+                          <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons">edit</i></button>
+                            <button class="contactar btn btn-circle colordelete" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons">delete</i> </button></td>
                             @component('user.ModalConfirmar')
                               @slot('ruta')
                                 {{route('Usuario.destroy',['user'=>$user->id])}}

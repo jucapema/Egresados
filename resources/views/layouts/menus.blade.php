@@ -35,8 +35,8 @@
                     <img src="https://image.ibb.co/ftpqxm/Titulo_P_gina.png" class="animated bounceInDown title"></div>
             </section>
             <section class="main row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 atras">
-                    <a href="#"><i class="fa fa-arrow-circle-left fa-4x atr" aria-hidden="true"></i></a></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 atras2">
+                    <a href="#"><i class="fa fa-arrow-circle-left fa-4x atr2" aria-hidden="true"></i></a></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 foto">
                   <!--<img src="{{asset('storage/images/1.png')}}"-->
                     <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png"
@@ -45,7 +45,20 @@
                     onmousedown ="cargar();">
                   </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
-                    <h1 class="nombre">{{Auth::user()->name}} {{Auth::user()->apellido}} ({{Auth::user()->tipo_rol}})</h1></div>
+                    <h1 class="usuario">Usuario:
+                    @if(Auth::user()->tipo_rol=='root')
+                        Root
+                    @endif
+                    @if(Auth::user()->tipo_rol=='admin')
+                        Administrador
+                    @endif
+                    @if(Auth::user()->tipo_rol=='egresado')
+                        Egresado
+                    @endif
+                    </h1></div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
+                    <h1 class="nombre">{{Auth::user()->name}} {{Auth::user()->apellido}}</h1>
+                </div>
             </section>
         </div>
 
@@ -62,32 +75,6 @@
     };
 </script>
 
-   <script type="text/javascript">
-      $( document ).ready(function() {
-         $(".btn-group a").on("click", function(){
-            $(".btn-group").find(".activa1").removeClass("activa1");
-            $(this).addClass("activa1");
-         });
-      });
-   </script>
-
-   <script type="text/javascript">
-      $( document ).ready(function() {
-         $(".dropdown-menu a").on("click", function(){
-            $(".dropdown-menu").find(".activa11").removeClass("activa11");
-            $(this).addClass("activa11");
-         });
-      });
-   </script>
-
-   <script type="text/javascript">
-      $( document ).ready(function() {
-         $(".menu-content li").on("click", function(){
-            $(".menu-content").find(".activa2").removeClass("activa2");
-            $(this).addClass("activa2");
-         });
-      });
-   </script>
 
 <!--<div class="recuadro"></div>-->
 </body>

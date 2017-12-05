@@ -5,12 +5,12 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-  <div style="overflow:scroll;height:450px;width:800px;">
-          <div class="panel panel-default">
-              <div class="panel-heading" align="center">Viendo Egresados</div>
+  <div>
+          <div class="panelexterno panel-default buscaramigos scrollbar1">
+              <div class="panel-heading" align="center">Buscar Amigos</div>
               <div class="panel-body">
 
-                    <table class="table" id="users">
+                    <table class="table tabladmin cell-border compact" id="users">
                       <thead>
                         <tr>
                           <th>Imagen</th>
@@ -57,15 +57,15 @@
                                 Agregar a {{$user->name}} tu lista de amigos
                               @endslot
                             @endcomponent
-                        <tr>
+                        <tr id="columtable">
                            <td><img src="storage/images/1.jpg" alt="" style="width:50px;"></td>
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->egresado->genero}}</td>
                           <td>{{$user->egresado->intereses}}</td>
                           <td>{{$user->egresado->carrera}}</td>
-                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons iconosmenu">email</i> </button>
-                          <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_add</i> </button></td>
+                          <td align="center"><button class="contactar btn btn-circle colormensaje" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons">email</i> </button>
+                          <button class="add btn btn-circle coloragregaramigo" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">person_add</i> </button></td>
                         </tr>
                       @endforeach
                       </tbody>
