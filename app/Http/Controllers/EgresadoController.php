@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Egresado;
+use App\Models\Notificacion;
 use App\Models\Mensaje;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -13,8 +14,8 @@ use App\User;
 class EgresadoController extends Controller
 {
     public function __construct(){
-      $this->middleware('admin',['only'=>['index','indexsuscrita','cancelar','cambiarvalor']]);
-      $this->middleware('egresado',['only'=>['darsedebaja','contactos']]);
+        $this->middleware('admin',['only'=>['index','indexsuscrita','cancelar','cambiarvalor']]);
+        $this->middleware('egresado',['only'=>['darsedebaja','contactos']]);
     }
     /**
      * Display a listing of the resource.
@@ -111,7 +112,7 @@ class EgresadoController extends Controller
           $data2['id_usuario'] =$user->id;
           $data2['tipo'] ='ban'; //egresado agregado
           $data2['id_tipo'] ='1'; //1 para los agregados, 1 para los banneados
-          \Notificacion::create($data2);
+          Notificacion::create($data2);
           //\Session::flash('flash_message','Cuenta Banneada');
           flash('Cuenta banneada')->important();
           return redirect()->back();
