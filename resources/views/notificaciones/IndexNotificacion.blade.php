@@ -7,7 +7,7 @@
 @section('recuadro')
   <div>
           <div class="panelexterno panel-default gestionadmin scrollbar1">
-              <div class="panel-heading" align="center">Gestión de Administradores</div>
+              <div class="panel-heading" align="center">Notificaciones</div>
               <div class="panel-body">
                     <table class="table tabladmin cell-border compact" id="users">
                       <thead>

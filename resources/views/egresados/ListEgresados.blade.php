@@ -66,7 +66,6 @@
                         @else
                           <img src="https://image.ibb.co/kanMpb/Foto_Egresado_2.png" style="width:70px; padding-top: 7px;">
                         @endif
-                  
                           </td>
 
                           <td>{{$user->name}}</td>
@@ -75,14 +74,16 @@
                           <td>{{$user->egresado->intereses}}</td>
                           <td>{{$user->egresado->carrera}}</td>
 
-                          <td align="center"><button class="contactar btn btn-circle colormensaje" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons">email</i> </button>
+                          <td align="center"><button class="contactar btn btn-circle colormensaje" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons">email</i> </button></td>
 
   @php
     $favoritos=App\Models\Favorito::where('id_usuario',auth::user()->id)->where('amigo',$user->id)->get();
   @endphp
 @if (count($favoritos)>0)
+  <td>
     <button class="add btn btn-circle colordelete" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons">highlight_off</i> </button></td>
 @else
+<td>
   <button class="add btn btn-circle coloragregaramigo" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">person_add</i> </button></td>
 
 @endif

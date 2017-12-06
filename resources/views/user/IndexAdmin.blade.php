@@ -98,7 +98,6 @@
 
                     </table>
                 </div>
-
             </div>
         </div>
         @section('mainmodals')

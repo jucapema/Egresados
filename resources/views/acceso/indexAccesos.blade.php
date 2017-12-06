@@ -5,56 +5,58 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-<div style="overflow:scroll;height:450px;width:850px;">
-              <div class="panel-heading" align="center">Viendo Egresados</div>
-              <div class="panel-body">
 
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>DNI</th>
-                 <th>Nombre</th>
-                 <th>Apellido</th>
-                 <th>Fecha Ultimo Acceso</th>
-                 <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($accesos as $acceso)
+        <div>
+          <div class="panelexterno panel-default gestionegresados scrollbar1">
+            <div class="panel-heading" align="center">Registro de Actividad (Egresados)</div>
+            <div class="panel-body">
+                <table class="table tabladmin cell-border compact" id="users">
+                  <thead>
+                    <tr>
+                       <th>DNI</th>
+                       <th>Nombre</th>
+                       <th>Apellido</th>
+                       <th>Fecha Ultimo Acceso</th>
+                       <th>Mensaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($accesos as $acceso)
 @if ($acceso->user->tipo_rol!='root')
 
 
-                          @component('user.ModalFormEdit')
-                                 @slot('id')
-                                   {{$acceso->user->id}}
+                      @component('user.ModalFormEdit')
+                             @slot('id')
+                               {{$acceso->user->id}}
+                             @endslot
+                             @slot('idmodal')
+                                 modalSend{{$acceso->user->id}}
+                             @endslot
+                             @slot('title')
+                                   Enviar email a {{$acceso->user->name}}
+                             @endslot
+                             @slot('contenido')
+                               @component('notificaciones.ModalMensaje')
+                                 @slot('correo')
+                                   {{$acceso->user->email}}
                                  @endslot
-                                 @slot('idmodal')
-                                     modalSend{{$acceso->user->id}}
-                                 @endslot
-                                 @slot('title')
-                                       Enviar email a {{$acceso->user->name}}
-                                 @endslot
-                                 @slot('contenido')
-                                   @component('notificaciones.ModalMensaje')
-                                     @slot('correo')
-                                       {{$acceso->user->email}}
-                                     @endslot
-                                   @endcomponent
-                                 @endslot
-                             @endcomponent
-                          <tr>
-                              <td>{{$acceso->user->dni}}</td>
-                              <td>{{$acceso->user->name}}</td>
-                              <td>{{$acceso->user->apellido}}</td>
-                              <td>{{$acceso->created_at}}</td>
-                              <td> <button type="button" class='send btn btn-info' data-toggle='modal' data-target='#modalSend{{$acceso->user->id}}' ><i class="material-icons iconosmenu">email</i></button></td>
-                          </tr>
-                        @endif
-                    @endforeach
-</tbody>
-</table>
-</div>
-</div>
+                               @endcomponent
+                             @endslot
+                         @endcomponent
+                      <tr id="columtable">
+                          <td>{{$acceso->user->dni}}</td>
+                          <td>{{$acceso->user->name}}</td>
+                          <td>{{$acceso->user->apellido}}</td>
+                          <td>{{$acceso->created_at}}</td>
+                          <td align="center"> <button type="button" class='send btn btn-circle coloredit' data-toggle='modal' data-target='#modalSend{{$acceso->user->id}}' ><i class="material-icons">email</i></button></td>
+                      </tr>
+                    @endif
+                @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 @section('mainmodals')
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>

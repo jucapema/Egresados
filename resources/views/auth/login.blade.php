@@ -45,7 +45,7 @@
                             <label for="email" class="col-md-4 control-label">Correo</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus onchange="ValidarCorreo(this);">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
