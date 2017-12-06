@@ -1,5 +1,6 @@
 @extends('layouts.menus')
 @section('headers')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
     @yield('mainheaders')
 @endsection('headers')
 @section('content')
@@ -32,8 +33,8 @@
                     <li><a href="{{route('Notificacion.index')}}"><i class="material-icons iconosmenu">notifications_active</i>Notificaciones</a><span class="badge">{{count(Auth::user()->notificacion)}}</span></li>
                     <li><a href="{{route('Mensaje.index')}}"><i class="material-icons iconosmenu">mail</i>Mensajes de Egresados</a><span class="badge">{{count($mensajes)}}</span></li>
                     <li><a href="{{route('listcontactos')}}"><i class="material-icons iconosmenu">person_add</i>Buscar Amigos</a></li>
-                    <li><a data-toogle="modal" data-target="#contactos"><i class="btn9 material-icons iconosmenu">list</i>Lista de Amigos</a></li>
-                    <li><a data-toogle="modal" data-target="#chat"><i class="btn7 material-icons iconosmenu">chat</i>Chat</a></li>
+                    <li><a href="{{route('Favorito.index')}}"><i class="material-icons iconosmenu">list</i>Lista de Amigos</a></li>
+                    <!--<li><a data-toogle="modal" data-target="#chat"><i class="btn7 material-icons iconosmenu">chat</i>Chat</a></li>-->
                 </ul>
             </div>
     </div>
@@ -41,44 +42,24 @@
     <div class= "recuadro">
     @yield('recuadro')
   </div>
-    @component('modals.modal')
-      @slot('id')
-        baja
-      @endslot
-      @slot('title')
-        Seguro de darte de baja
-      @endslot
-      @slot('cuerpo')
-          Darse de baja
-<a href="{{route('baja',['user'=>Auth::user()->egresado->id])}}" class="btn btn-danger block">DarseBaja</a>
-      @endslot
-      @slot('boton')
-        btn5
-      @endslot
-    @endcomponent
-    @component('modals.modal')
-      @slot('id')
-        contactos
-      @endslot
-      @slot('title')
-        Lista de amigos
-      @endslot
-      @slot('cuerpo')
-          @component('egresados.amigos')
-            @slot('id')
-              {{\auth::user()->id}}
-            @endslot
-          @endcomponent
-      @endslot
-      @slot('boton')
-        btn9
-      @endslot
-    @endcomponent
 
-          <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  @component('modals.modal')
+    @slot('id')
+      baja
+    @endslot
+    @slot('title')
+      Seguro de darte de baja
+    @endslot
+    @slot('cuerpo')
+      Darse de baja
+      <a href="{{route('baja',['user'=>Auth::user()->egresado->id])}}" class="btn btn-danger block">DarseBaja</a>
+    @endslot
+    @slot('boton')
+      btn5
+    @endslot
+  @endcomponent
 
-    @section('modals')
-        @yield('mainmodals')
-    @endsection
+  @section('modals')
+      @yield('mainmodals')
+  @endsection
 @endsection('content')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Favorito;
+use App\Models\Mensaje;
 use Illuminate\Http\Request;
 use App\User;
 use Session;
@@ -16,9 +17,10 @@ class FavoritoController extends Controller
   }
 
     public function index(){
-      $favoritos=Favorito::where('id_usuario',Auth::user()->id)->get();
-      $user=User::where('id',$favoritos->amigo)->get();
-      //var_dump($user);
+       $favoritos=Favorito::where('id_usuario',Auth::user()->id)->get();
+      //$user=User::where('id',$favoritos->amigo)->get();
+        $mensajes=Mensaje::mensajesid(Auth::user()->egresado->id)->get();
+      return view('egresados.amigos',['favoritos'=>$favoritos,'mensajes'=>$mensajes]);
     }
 
     public function eliminaramigo(Request $request){

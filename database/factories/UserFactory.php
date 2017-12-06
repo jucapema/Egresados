@@ -11,27 +11,52 @@
 |
 */
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->defineAs(App\User::class,'woman' ,function (Faker\Generator $faker) {
     static $password;
     return [
-        'dni'=> $faker->numberBetween($min = 100000, $max = 900000),
-        'name' => $faker->name,
-        'email' => $faker->unique()->firstname.'@'.'utp.edu.co',
+        'dni'=> $faker->numberBetween($min = 1000000, $max = 9000000),
+        'name' => $faker->firstNameFemale      ,
+        'email' => $faker->unique()->firstNameFemale.'@'.'utp.edu.co',
         'password' => $password ?: $password = bcrypt('secret'),
         'apellido' => $faker->lastname,
         //'estado_cuenta'=> 'activa',
         'remember_token' => str_random(10),
     ];
 });
-
-//egresado completo
-$factory->define(App\Models\Egresado::class, function (Faker\Generator $faker) {
+////////////////////////////////////////////////////////male
+$factory->defineAs(App\User::class,'man' ,function (Faker\Generator $faker) {
+    static $password;
+    return [
+        'dni'=> $faker->numberBetween($min = 1000000, $max = 9000000),
+        'name' => $faker->firstNameMale,
+        'email' => $faker->unique()->firstNameMale.'@'.'utp.edu.co',
+        'password' => $password ?: $password = bcrypt('secret'),
+        'apellido' => $faker->lastname,
+        //'estado_cuenta'=> 'activa',
+        'remember_token' => str_random(10),
+    ];
+});
+//egresado completo woman
+$factory->defineAs(App\Models\Egresado::class,'mujer', function (Faker\Generator $faker) {
     return [
         'id_usuario' => function () {
-            return factory(App\User::class)->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
+            return factory(App\User::class,'woman')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
+        },
+        'intereses'=> function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
+        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(rand(1990,1998), rand(1,12), rand(1,30));},
+        'baja'=>'false',
+        'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
+        'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
+    ];
+});
+//egresado completo woman
+$factory->defineAs(App\Models\Egresado::class,'hombre' ,function (Faker\Generator $faker) {
+    return [
+        'id_usuario' => function () {
+            return factory(App\User::class,'man')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
         },
         'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
-        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
+        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(rand(1990,1998), rand(1,12), rand(1,30));},
         'baja'=>'false',
         'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
         'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
@@ -41,7 +66,7 @@ $factory->define(App\Models\Egresado::class, function (Faker\Generator $faker) {
 $factory->define(App\Models\Administrador::class, function (Faker\Generator $faker) {
     return [
         'id_usuario' => function () {
-            return factory(App\User::class)->create(['tipo_rol' => 'admin','estado_cuenta'=> 'activa'])->id;
+            return factory(App\User::class,'man')->create(['tipo_rol' => 'admin','estado_cuenta'=> 'activa'])->id;
         },
         'direccion'=> $faker->address,
         'ciudad'=>$faker->city,
@@ -49,24 +74,51 @@ $factory->define(App\Models\Administrador::class, function (Faker\Generator $fak
         'telefono' => $faker->phonenumber,
     ];
 });
-//egresado con pedido de baja
-$factory->defineAs(App\Models\Egresado::class,'baja', function (Faker\Generator $faker) {
+//egresado con pedido de baja mujer
+$factory->defineAs(App\Models\Egresado::class,'bajaF', function (Faker\Generator $faker) {
         return [
         'id_usuario' => function () {
-            return factory(App\User::class)->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
+            return factory(App\User::class,'woman')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
         },
         'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
-        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
+        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(rand(1990,1998), rand(1,12), rand(1,30));},
         'baja'=>'true',
         'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
         'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
     ];
 });
-//egresado suscrito
-$factory->defineAs(App\Models\Egresado::class,'suscrita', function (Faker\Generator $faker) {
+///////////////egresado hombre
+$factory->defineAs(App\Models\Egresado::class,'bajaM', function (Faker\Generator $faker) {
+        return [
+        'id_usuario' => function () {
+            return factory(App\User::class,'man')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'activa'])->id;
+        },
+        'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
+        'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(rand(1990,1998), rand(1,12), rand(1,30));},
+        'baja'=>'true',
+        'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
+        'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
+    ];
+});
+
+//egresado suscrito man
+$factory->defineAs(App\Models\Egresado::class,'suscritam', function (Faker\Generator $faker) {
   return [
   'id_usuario' => function () {
-      return factory(App\User::class)->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'suscrita'])->id;
+      return factory(App\User::class,'man')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'suscrita'])->id;
+  },
+  'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
+  'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
+  'baja'=>'baja',
+  'carrera'=> function(){ $carrera=array("Ing Sistemas","Ing Fisica","Ing Electrica","Mecatronica","Lic Español","Lic Lengua Inglesa","Lic Pedagogia Infantil","Adm Ambiental");return $carrera[rand(0,7)];},
+  'genero' => function(){ $cargos=array("Masculino","Femenino");return $cargos[rand(0,1)];},
+];
+});
+//egresado suscrito femal
+$factory->defineAs(App\Models\Egresado::class,'suscritaf', function (Faker\Generator $faker) {
+  return [
+  'id_usuario' => function () {
+      return factory(App\User::class,'woman')->create(['tipo_rol' => 'egresado','estado_cuenta'=> 'suscrita'])->id;
   },
   'intereses'=>function(){ $cargos=array("Deportes","Reuniones","Informacion");return $cargos[rand(0,2)];},
   'fecha_nacimiento' => function(){ return \Carbon\Carbon::createFromDate(1995, 10, 25);},
@@ -78,8 +130,7 @@ $factory->defineAs(App\Models\Egresado::class,'suscrita', function (Faker\Genera
 //notificaciones relacionadas a eventos null ,  solo tiene notificaciones para un usuario
 $factory->defineAs(App\Models\Notificacion::class, 'post' ,function (Faker\Generator $faker) {
       return [
-        'id_usuario' => function(){return '2';
-        },
+        'id_usuario' => function(){return '2';},
         'tipo'=> 'post',
         'id_tipo'=> function(){return factory(App\Models\Publicacion::class)->create()->id;},
       ];
@@ -90,7 +141,7 @@ $factory->define(App\Models\Publicacion::class, function (Faker\Generator $faker
         'id_administrador' => function () {return rand(1,3);
         },
         'titulo'=>  function(){ $cargos=array("Actividad Reciclar","Reunion De Egresados","Reuniones","Actividaddes");return $cargos[rand(0,3)];},
-        'cuerpo'=> function(){ return "Reunicon de egresados para .... en .... gracias por la atencion ";},
+        'cuerpo'=> function(){ $cargos=array("Reunion de egresados para .... en .... gracias por la atencion" ,"Reunion de egresados en la julita gracias por la atencion ","Reunion de egresados  en gracias por la atencion","Actividaddes pedagocias","Alumbrado UTP");return $cargos[rand(0,4)];},
         'fecha'=>  function(){ return \Carbon\Carbon::createFromDate(2017, 12, 25);},
     ];
 });

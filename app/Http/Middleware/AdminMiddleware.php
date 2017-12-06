@@ -20,7 +20,7 @@ class AdminMiddleware
            }
           else{
              //flash()->overlay('Acceso denegado');
-             flash()->overlay('No tienes Permisos Para esta ruta','¡Acceso Denegado');
+             flash('¡Acceso Denegado! No tienes Permisos Para esta ruta')->error();
              return redirect()->back();
            }
     }

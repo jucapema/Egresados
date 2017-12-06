@@ -109,7 +109,7 @@ class UserController extends Controller
       $v = \Validator::make($request->all(), [
             'dni'=>'numeric',
             'email'    => 'regex:/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i',
-            'telefono'=> 'regex:/^[3][0-9]{7}$/',
+            'telefono'=> 'regex:/^[3][0-9]*$/',
           ],
           $messages = [
               'email.regex' => 'Debes usar el correo institucional',

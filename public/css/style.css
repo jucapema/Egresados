@@ -29,7 +29,7 @@ header{
 /*----- Estilo Foto -----*/
 .foto{
   margin: 0px;
-  padding: 0px;  
+  padding: 0px;
   left: -150px;
   color: #0E7AD0;
 }
@@ -45,7 +45,7 @@ header{
 /*----- Estilo Foto -----*/
 .nombre{
   margin: 0px;
-  padding: 0px;  
+  padding: 0px;
   font-family: Montserrat;
   font-size: 25px;
   font-weight: bold;
@@ -131,7 +131,7 @@ header{
   border: 3px solid #000000;
   padding: 0px;
   top: -60px;
-} 
+}
 
 .bordesubmenu {
   border-bottom: 1px solid #FFFFFF;
@@ -280,7 +280,7 @@ header{
   padding-left: 0px;
   border-left: 3px solid #000000;
   border-right: 3px solid #000000;
-  border-bottom: 3px solid #000000;  
+  border-bottom: 3px solid #000000;
 }
 /*----- Texto Menú -----*/
 .nav-side-menu li a {
@@ -466,7 +466,7 @@ header{
 .suscrip{
   font-family: Montserrat;
   font-size: 25px;
-  color: #FFFFFF;  
+  color: #FFFFFF;
   position: relative;
   left: 110px;
 }
