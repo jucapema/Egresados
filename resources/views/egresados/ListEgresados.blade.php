@@ -58,7 +58,14 @@
                               @endslot
                             @endcomponent
                         <tr id="columtable">
-                           <td><img src="storage/images/1.jpg" alt="" style="width:50px;"></td>
+                           <td>
+                        @if($user->egresado->genero=='Masculino')
+                          <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png" style="width:70px; padding-top: 7px;">
+                        @else
+                          <img src="https://image.ibb.co/kanMpb/Foto_Egresado_2.png" style="width:70px; padding-top: 7px;">
+                        @endif
+                  
+                          </td>
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->egresado->genero}}</td>
@@ -70,7 +77,7 @@
     $favoritos=App\Models\Favorito::where('id_usuario',auth::user()->id)->where('amigo',$user->id)->get();
   @endphp
 @if (count($favoritos)>0)
-    <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">delete</i> </button></td>
+    <button class="add btn btn-circle colordelete" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">delete</i> </button></td>
 @else
   <button class="add btn btn-circle coloragregaramigo" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">person_add</i> </button></td>
 @endif

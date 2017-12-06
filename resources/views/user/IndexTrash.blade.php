@@ -6,58 +6,57 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-<div style="overflow:scroll;height:450px;width:800px;">
-              <div class="panel-heading" align="center">Usuairos eliminados {{count($users)}}</div>
+
+        <div>
+          <div class="panelexterno panel-default gestionadmin scrollbar1">
+              <div class="panel-heading" align="center">Usuarios Eliminados [{{count($users)}}]</div>
               <div class="panel-body">
+                <table class="table tabladmin cell-border compact" id="users"" id="users">
+                  <thead>
+                    <tr>
+                      <th>DNI</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Rol</th>
+                      <th>Email</th>
+                      <th>Fecha Elminacion</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($users as $user)
+                      <!-- boton para aceptar-->
 
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>DNI</th>
-                          <th>Nombre</th>
-                          <th>Apellido</th>
-                          <th>Rol</th>
-                          <th>Email</th>
-                          <th>Fecha Elminacion</th>
+                    <tr id="columtable">
+                      <td>{{$user->dni}}</td>
+                      <td>{{$user->name}}</td>
+                      <td>{{$user->apellido}}</td>
+                      <td>{{{$user->tipo_rol}}}</td>
+                      <td>{{$user->email}}</td>
+                      <td>{{$user->deleted_at->diffForHumans()}}</td>
+                      <td align="center"><button class="contactar btn btn-circle colorrestaurar" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons">restore</i></button>
+                      @component('user.ModalConfirmarAdd')
+                        @slot('ruta')
+                          {{route('restore',['user'=>$user->id])}}
+                        @endslot
+                        @slot('idmodal')
+                            modalBorrar{{$user->id}}
+                        @endslot
+                        @slot('title')
+                              Agregar {{$user->name}}
+                        @endslot
+                        @slot('contenido')
+                          Estas Seguro que deseas Restarurar a {{$user->name}} Nuestra plataforma
+                        @endslot
+                      @endcomponent
+                    </td></tr>
+                  @endforeach
+                  </tbody>
 
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($users as $user)
-                          <!-- boton para aceptar-->
-
-                        <tr>
-                          <td>{{$user->dni}}</td>
-                          <td>{{$user->name}}</td>
-                          <td>{{$user->apellido}}</td>
-                          <td>{{{$user->tipo_rol}}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{$user->deleted_at->diffForHumans()}}</td>
-
-                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons iconosmenu">restore</i> </button>
-                          @component('user.ModalConfirmarAdd')
-                            @slot('ruta')
-                              {{route('restore',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalBorrar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Agregar {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas Restarurar a {{$user->name}} Nuestra plataforma
-                            @endslot
-                          @endcomponent
-                        </tr>
-                      @endforeach
-                      </tbody>
-
-                    </table>
-                </div>
-
+                </table>
             </div>
+          </div>
+        </div>
         @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>

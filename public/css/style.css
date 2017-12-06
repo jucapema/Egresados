@@ -567,7 +567,7 @@ header{
   height:530px;
   width:850px;
   position: relative;
-  top: -30px;
+  top: 0px;
   font-family: Montserrat;
   color: #000000;
 }
@@ -598,7 +598,7 @@ header{
   background-color: #1874A3;
   color: #FFFFFF;
   border: 2px solid #000000;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 .coloredit:hover{
   background-color: #044668;
@@ -617,6 +617,18 @@ header{
   border: 2px solid #000000;
 }
 
+.colorbannear{
+  background-color: #6400B1;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 20px;
+  padding: 4px;
+}
+.colorbannear:hover{
+  background-color: #260142;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
 .dataTables_filter input{
   padding: 5px;
   padding-left: 10px;
@@ -723,4 +735,130 @@ header{
   background-color: #044668;
   color: #FFFFFF;
   border: 2px solid #000000;
+}
+/*################### ESTILO TABLA PUBLICACIONES ####################*/
+.colormensaje{
+  background-color: #189633;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  margin-bottom: 5px;
+}
+.colormensaje:hover{
+  background-color: #0D7223;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+
+.coloragregaramigo{
+  background-color: #1874A3;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+.coloragregaramigo:hover{
+  background-color: #044668;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+/*################### ESTILO TABLA PUBLICACIONES ####################*/
+.colorrestaurar{
+  background-color: #189633;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  margin-top: 0px;
+}
+.colorrestaurar:hover{
+  background-color: #0D7223;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+/*################### ESTILO SPAN (NUMERO) ####################*/
+.badge{
+  width: 28px;
+  height: 28px;
+  padding: 4px;
+  border-radius: 50px;
+  margin-left: 10px;
+  margin-bottom: 3px;
+  border: 2px solid #000000;
+  background: #90E1FC;
+  color: #000000;
+  font-family: Montserrat;
+  font-size: 16px;
+}
+/*################### ESTILO MENSAJES LARAVEL ####################*/
+.mensajemergente{
+  position: absolute; 
+  z-index: 100;
+  width: 30%;
+}
+
+.modal-content{
+  border: 3px solid #000000;
+  background: #0096FF;
+  color: #000000;
+  font-family: Montserrat;
+}
+
+.modal-title{
+  text-align: center;
+  font-family: Montserrat;
+  color: #FFFFFF;
+  text-shadow: 0 0 3px #000000, 0 0 3px #000000;
+}
+
+.botonmodals1{
+  background-color: #92CD1F;
+  color: #000000;
+  font-family: Montserrat;
+  font-size: 15px;
+  font-weight: bold;
+  border: 2px solid #000000;
+  margin-top: 10px;
+  position: relative;
+  left: -40px;
+}
+
+.botonmodals1:hover{
+  background-color: #64910D;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.botonmodals2{
+  background-color: #D50202;
+  color: #FFFFFF;
+  font-family: Montserrat;
+  font-size: 15px;
+  border: 2px solid #000000;
+}
+
+.botonmodals2:hover{
+  background-color: #8C0808;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+}
+/*################### ESTILO TABLA GESTION CUENTAS DE EGRESADOS ####################*/
+.cuentasegresados{
+  overflow: auto;
+  margin: 0px;
+  padding: 0px;
+  height:530px;
+  width:1030px;
+  position: relative;
+  top: -170px;
+  font-family: Montserrat;
+  color: #000000;
+}
+
+/*################### ESTILO GENERAL EGRESADOS ####################*/
+.gestionegresados{
+  overflow: auto;
+  margin: 0px;
+  padding: 0px;
+  height:530px;
+  width:850px;
+  position: relative;
+  top: -170px;
+  font-family: Montserrat;
+  color: #000000;
 }

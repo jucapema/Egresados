@@ -5,113 +5,116 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-<div style="overflow:scroll;height:450px;width:850px;">
-              <div class="panel-heading" align="center">Viendo Egresados</div>
-              <div class="form-group">
 
-                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add_circle</i> New Egresado</button>
-                @component('modals.modal')
-                  @slot('id')
-                    modalAdd
-                  @endslot
-                  @slot('title')
-                    Agregar
-                  @endslot
-                  @slot('cuerpo')
-                      @component('egresados.CreateEgresado')
-                      @endcomponent
-                  @endslot
-                  @slot('boton')
-                    button.agregar
-                  @endslot
-                @endcomponent
-              </div>
-              <div class="panel-body">
-
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>DNI</th>
-                          <th>Nombre</th>
-                          <th>Apellido</th>
-                          <th>Email</th>
-                          <th>Intereses</th>
-                          <th>Edad</th>
-                          <th>Genero</th>
-                          <th>Estado Cuenta</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($users as $user)
-                              @component('user.ModalFormEdit')
-                                @slot('id')
-                                  {{$user->id}}
-                                @endslot
-                                @slot('idmodal')
-                                    modalEditar{{$user->id}}
-                                @endslot
-                                @slot('title')
-                                      Editar Informacion de {{$user->name}}
-                                @endslot
-                                @slot('contenido')
-                                  @component('administrador.EditAdmin')
-                                    @slot('id')
-                                      {{$user->id}}
-                                    @endslot
-                                  @endcomponent
-                                @endslot
-                              @endcomponent
-                          @component('user.ModalConfirmarAdd')
-                            @slot('ruta')
-                              {{route('bannear',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalState{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Cambiar el estado del usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              ¿Estas Seguro de Cambiar el estado de la cuenta {{$user->name}} a Banneado?
-                              {{auth::user()->name}}
-                            @endslot
-                          @endcomponent
-                          @php
-                            $edad = Carbon\Carbon::parse($user->egresado->fecha_nacimiento)->age;
-                          @endphp
-                        <tr>
-                          <td>{{$user->dni}}</td>
-                          <td>{{$user->name}}</td>
-                          <td>{{$user->apellido}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{$user->egresado->intereses}}</td>
-                          <td>{{$edad}}</td>
-                          <td>{{$user->egresado->genero}}</td>
-                          <td>{{$user->estado_cuenta}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">edit</i></button>	<button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete</i></button>
-                          <button type='button' class='state btn btn-info' data-toggle='modal' data-target='#modalState{{$user->id}}' ><i class="material-icons iconosmenu">update</i>State</button></td>
-
-                          @component('user.ModalConfirmar')
-                            @slot('ruta')
-                              {{route('Usuario.destroy',['user'=>$user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$user->id}}
-                            @endslot
-                            @slot('title')
-                                  Eliminar Usuario {{$user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas eliminar a {{$user->name}}
-                            @endslot
-                          @endcomponent
-                        </tr>
-                      @endforeach
-                      </tbody>
-                    </table>
-                </div>
+        <div>
+          <div class="panelexterno panel-default cuentasegresados scrollbar1">
+            <div class="panel-heading" align="center">Cuentas de Egresados</div>
+            <div class="form-group">
+              <button type='button' class='agregar btn boton1' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add_circle</i> New Egresado</button>
+              @component('modals.modal')
+                @slot('id')
+                  modalAdd
+                @endslot
+                @slot('title')
+                  Agregar
+                @endslot
+                @slot('cuerpo')
+                    @component('egresados.CreateEgresado')
+                    @endcomponent
+                @endslot
+                @slot('boton')
+                  button.agregar
+                @endslot
+              @endcomponent
             </div>
+            <div class="panel-body">
+
+                  <table class="table tabladmin cell-border compact" id="users">
+                    <thead>
+                      <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Intereses</th>
+                        <th>Edad</th>
+                        <th>Genero</th>
+                        <th>Estado Cuenta</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                        <th>Bannear</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($users as $user)
+                            @component('user.ModalFormEdit')
+                              @slot('id')
+                                {{$user->id}}
+                              @endslot
+                              @slot('idmodal')
+                                  modalEditar{{$user->id}}
+                              @endslot
+                              @slot('title')
+                                    Editar Informacion de {{$user->name}}
+                              @endslot
+                              @slot('contenido')
+                                @component('administrador.EditAdmin')
+                                  @slot('id')
+                                    {{$user->id}}
+                                  @endslot
+                                @endcomponent
+                              @endslot
+                            @endcomponent
+                        @component('user.ModalConfirmarAdd')
+                          @slot('ruta')
+                            {{route('bannear',['user'=>$user->id])}}
+                          @endslot
+                          @slot('idmodal')
+                              modalState{{$user->id}}
+                          @endslot
+                          @slot('title')
+                                Cambiar el estado del usuario {{$user->name}}
+                          @endslot
+                          @slot('contenido')
+                            ¿Estas Seguro de Cambiar el estado de la cuenta {{$user->name}} a Banneado?
+                            {{auth::user()->name}}
+                          @endslot
+                        @endcomponent
+                        @php
+                          $edad = Carbon\Carbon::parse($user->egresado->fecha_nacimiento)->age;
+                        @endphp
+                      <tr id="columtable">
+                        <td>{{$user->dni}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->apellido}}</td>
+                        <td>{{$user->email}}</td>
+                        <td>{{$user->egresado->intereses}}</td>
+                        <td>{{$edad}}</td>
+                        <td>{{$user->egresado->genero}}</td>
+                        <td>{{$user->estado_cuenta}}</td>
+                        <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons">edit</i></button></td>	
+                        <td align="center"><button type='button' class='eliminar btn-circle colordelete' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons">delete</i></button>
+                        @component('user.ModalConfirmar')
+                          @slot('ruta')
+                            {{route('Usuario.destroy',['user'=>$user->id])}}
+                          @endslot
+                          @slot('idmodal')
+                              modalEliminar{{$user->id}}
+                          @endslot
+                          @slot('title')
+                                Eliminar Usuario {{$user->name}}
+                          @endslot
+                          @slot('contenido')
+                            Estas Seguro que deseas eliminar a {{$user->name}}
+                          @endslot
+                        @endcomponent</td>
+                        <td align="center"><button type='button' class='state btn colorbannear' data-toggle='modal' data-target='#modalState{{$user->id}}' ><i class="material-icons">update</i>State</button></td>
+                      </tr>
+                    @endforeach
+                    </tbody>
+                  </table>
+              </div>
+          </div>
         @section('mainmodals')
 
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>

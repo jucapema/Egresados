@@ -6,24 +6,22 @@
 @endsection('headers')
 @section('content')
   <!-- CSRF Token -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
-       <div class="container" align="center">
-        <div class="row">
-            <div class="btn-group btn-breadcrumb" >
-                <a href="#" class="btn btn-primary bordemenu activa1"><i class="glyphicon glyphicon-home"></i></a>
-              <a href="#" class="btn btn-primary bordemenu" data-toggle="dropdown" data-hover="dropdown">Perfil</a>
-                  <ul class="dropdown-menu">
-                      <li><a class="btn4 bordesubmenu" >Foto de Perfil</a></li>
-                      <li><a class="btn2 bordesubmenu" data-toogle="modal" data-target="#miventanaadmin">Editar Información</a></li>
-                      <li><a class="btn3" data-toogle="modal" data-target="#ventanapassword">Cambiar Contraseña</a></li>
-                  </ul>
-                <a class="btn btn-primary btn6 bordemenu" data-toogle="modal" data-target="#miventanainfo">Información</a>
-
-                <a href="https://www.utp.edu.co/egresados/egresados-utp.html" target="_blank" class="btn btn-primary">Ayuda</a>
-               <a href="{{route('logout')}}" class="btn btn-primary">Salir</a>
-            </div>
-        </div>
-    </div>
+    <nav id="menu" class="poshorizontal">
+        <li><a href="{{route('Publicacion.index')}}">
+            <i class="glyphicon glyphicon-home tamicon"></i></a></li>
+        <li><a href="#">Perfil</a>
+            <ul>
+                <li><a class="btn4">Foto de Perfil</a></li>
+                <li><a class="btn2" data-toogle="modal" data-target="#miventanaadmin">
+                Editar Información</a></li>
+                <li><a class="btn3" data-toogle="modal" data-target="#ventanapassword">Cambiar Contraseña</a></li>
+            </ul>
+        </li>
+        <li><a class="btn6" data-toogle="modal" data-target="#miventanainfo">Información</a></li>
+        <li><a href="https://www.utp.edu.co/egresados/egresados-utp.html" 
+            target="_blank">Ayuda</a></li>
+        <li><a href="{{route('logout')}}">Salir</a></li>
+    </nav>
 
 
     <div class="nav-side-menu">

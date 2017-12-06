@@ -5,89 +5,97 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-<div style="overflow:scroll;height:450px;width:800px;">
-              <div class="panel-heading" align="center">Viendo Lista de suscriptores {{count($users)}}</div>
-              <div class="panel-body">
 
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>DNI</th>
-                          <th>Nombre</th>
-                          <th>Apellido</th>
-                          <th>Email</th>
-                          <th>Fecha Nacimiento</th>
-                          <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($users as $user)
-                          <!-- boton para contactar-->
-                          @component('user.ModalFormEdit')
-                            @slot('id')
-                              {{$user->id}}
+      <div>
+        <div class="panelexterno panel-default gestionegresados scrollbar1">
+          <div class="panel-heading" align="center">Lista de Suscriptores [{{count($users)}}]</div>
+              <div class="panel-body">
+                  <table class="table tabladmin cell-border compact" id="users">
+                    <thead>
+                      <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Email</th>
+                        <th>Edad</th>
+                        <th>Fecha de Registro</th>
+                        <th>Aceptar</th>
+                        <th>Eliminar</th>
+                        <th>Contactar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @foreach ($users as $user)
+                      @php $edad=\Carbon\Carbon::parse($user->egresado->fecha_nacimiento)->age; @endphp
+                        <!-- boton para contactar-->
+                        @component('user.ModalFormEdit')
+                          @slot('id')
+                            {{$user->id}}
+                          @endslot
+                          @slot('idmodal')
+                              modalSend{{$user->id}}
+                          @endslot
+                          @slot('title')
+                                Enviar email a {{$user->name}}
+                          @endslot
+                          @slot('contenido')
+                            @component('notificaciones.ModalMensaje')
+                              @slot('correo')
+                                {{$user->email}}
+                              @endslot
+                            @endcomponent
+                          @endslot
+                        @endcomponent
+
+                        
+                      <tr id="columtable">
+                        <td>{{$user->dni}}</td>
+                        <td>{{$user->name}}</td>
+                        <td>{{$user->apellido}}</td>
+                        <td>{{$user->email}}</td>
+                        <td>{{$edad}}</td>
+                        <td>{{$user->created_at}}</td>
+                        <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons">done_all</i></button></td>
+                        <td align="center"><button type='button' class='eliminar btn btn-circle colordelete' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons">delete_forever</i></button></td>
+                        <td align="center"><button type='button' class='send btn btn-circle colorrestaurar' data-toggle='modal' data-target='#modalSend{{$user->id}}' ><i class="material-icons">send</i></button></td>
+                          <!-- boton para aceptar-->
+                          @component('user.ModalConfirmarAdd')
+                            @slot('ruta')
+                              {{route('agregar',['user'=>$user->id])}}
                             @endslot
                             @slot('idmodal')
-                                modalSend{{$user->id}}
+                                modalEditar{{$user->id}}
                             @endslot
                             @slot('title')
-                                  Enviar email a {{$user->name}}
+                                  Agregar {{$user->name}}
                             @endslot
                             @slot('contenido')
-                              @component('notificaciones.ModalMensaje')
-                                @slot('correo')
-                                  {{$user->email}}
-                                @endslot
-                              @endcomponent
+                              Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
                             @endslot
                           @endcomponent
-                        <tr>
-                          <td>{{$user->dni}}</td>
-                          <td>{{$user->name}}</td>
-                          <td>{{$user->apellido}}</td>
-                          <td>{{$user->email}}</td>
-                          <td>{{$user->egresado->fecha_nacimiento}}</td>
-                          <td><button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons iconosmenu">done_all</i></button>
-                            <button type='button' class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminar{{$user->id}}' ><i class="material-icons iconosmenu">delete_forever</i></button>
-                            <button type='button' class='send btn btn-success' data-toggle='modal' data-target='#modalSend{{$user->id}}' ><i class="material-icons iconosmenu">send</i></button></td>
-                            <!-- boton para aceptar-->
-                            @component('user.ModalConfirmarAdd')
-                              @slot('ruta')
-                                {{route('agregar',['user'=>$user->id])}}
-                              @endslot
-                              @slot('idmodal')
-                                  modalEditar{{$user->id}}
-                              @endslot
-                              @slot('title')
-                                    Agregar {{$user->name}}
-                              @endslot
-                              @slot('contenido')
-                                Estas Seguro que deseas Agregar a {{$user->name}} Nuestra plataforma
-                              @endslot
-                            @endcomponent
-                            <!-- boton para rechazar-->
-                            @component('user.ModalConfirmar')
-                              @slot('ruta')
-                                {{route('Usuario.destroy',['user'=>$user->id])}}
-                              @endslot
-                              @slot('idmodal')
-                                  modalEliminar{{$user->id}}
-                              @endslot
-                              @slot('title')
-                                    Rechazar Usuario {{$user->name}}
-                              @endslot
-                              @slot('contenido')
-                                Estas Seguro que deseas Rechazar a {{$user->name}}
-                              @endslot
-                            @endcomponent
+                          <!-- boton para rechazar-->
+                          @component('user.ModalConfirmar')
+                            @slot('ruta')
+                              {{route('Usuario.destroy',['user'=>$user->id])}}
+                            @endslot
+                            @slot('idmodal')
+                                modalEliminar{{$user->id}}
+                            @endslot
+                            @slot('title')
+                                  Rechazar Usuario {{$user->name}}
+                            @endslot
+                            @slot('contenido')
+                              Estas Seguro que deseas Rechazar a {{$user->name}}
+                            @endslot
+                          @endcomponent
+                      </tr>
+                    @endforeach
+                    </tbody>
 
-                        </tr>
-                      @endforeach
-                      </tbody>
+                  </table>
+              </div>
 
-                    </table>
-                </div>
-        </div>
+      </div>
         @section('mainmodals')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>

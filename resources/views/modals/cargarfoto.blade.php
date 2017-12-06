@@ -48,7 +48,7 @@ function ValidarImagen(obj){
               </div>
             <div class="form-group">
               <div class="col-md-12 col-md-offset-6">
-                <button type="submit" class="btn btn-primary">Subir</button>
+                <button type="submit" class="btn botonmodals1">Subir</button>
               </div>
             </div>
           </form>

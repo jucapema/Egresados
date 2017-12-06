@@ -5,7 +5,7 @@
 @section('content')
 
     <nav id="menu" class="poshorizontal">
-        <li><a href="#">
+        <li><a href="{{route('Administrador.index')}}">
             <i class="glyphicon glyphicon-home tamicon"></i></a></li>
         <li><a href="#">Perfil</a>
             <ul>
@@ -29,7 +29,6 @@
                 <ul id="menu-content" class="menu-content collapse out">
                     <li><a href="{{route('Administrador.index')}}"><i class="material-icons iconosmenu">settings</i>Gestionar Administradores</a></li>
                     <li><a href="{{route('listrestore')}}"><i class="material-icons iconosmenu">delete_sweep</i>Cuentas Inactivas</a></li>
-                    <li><a href="#"><i class="material-icons iconosmenu">web_asset</i>Actividad Plaataforma</a></li>
                 </ul>
 
             </div>

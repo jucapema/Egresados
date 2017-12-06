@@ -75,8 +75,8 @@
                           <td>{{$user->email}}</td>
                           <td>{{$user->administrador->telefono}}</td>
                           <td>{{$user->administrador->direccion}}</td>
-                          <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons">edit</i></button>
-                            <button class="contactar btn btn-circle colordelete" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons">delete</i> </button></td>
+                          <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$user->id}}'><i class="material-icons">edit</i></button></td>
+                            <td align="center"><button class="contactar btn btn-circle colordelete" data-toggle='modal' data-target='#modalBorrar{{$user->id}}'> <i class="material-icons">delete</i> </button>
                             @component('user.ModalConfirmar')
                               @slot('ruta')
                                 {{route('Usuario.destroy',['user'=>$user->id])}}
@@ -91,7 +91,7 @@
                                 Eliminar Usuario {{$user->name}}
                               @endslot
                             @endcomponent
-                        </tr>
+                        </td></tr>
 
                       @endforeach
                       </tbody>

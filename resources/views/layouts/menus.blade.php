@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <div class="container" align="center">
+  <div class="container mensajemergente" align="center">
     @include('flash::message')
   </div>
     <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
@@ -37,14 +37,17 @@
                     <img src="https://image.ibb.co/ftpqxm/Titulo_P_gina.png" class="animated bounceInDown title"></div>
             </section>
             <section class="main row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 atras2">
-                    <a href="#"><i class="fa fa-arrow-circle-left fa-4x atr2" aria-hidden="true"></i></a></div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 foto">
                   <!--<img src="{{asset('storage/images/1.png')}}"-->
-                    <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png"
-                    onmouseover="this.src='https://image.ibb.co/eY9aF6/Cambiar_Foto_de_Perfil.png';"
-                    onmouseout="this.src='https://image.ibb.co/fLsj8R/Foto_Egresado.png';" class="ft"
-                    onmousedown ="cargar();">
+                    @if(Auth::user()->tipo_rol=='egresado')
+                        @if(Auth::user()->egresado->genero=='Masculino')
+                            <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png">
+                        @else
+                            <img src="https://image.ibb.co/kanMpb/Foto_Egresado_2.png">
+                    @endif
+                   @else
+                       <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png">
+                   @endif
                   </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8">
                     <h1 class="usuario">Usuario:
@@ -70,18 +73,23 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-<script type="text/javascript">
-  function cargar(){
-    alert("vida hpt");
-    //view('pruebaarchivo');
-    };
-</script>
-
-
 <!--<div class="recuadro"></div>-->
 <script>
     $('#flash-overlay-modal').modal();
 </script>
+
+<script>
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+</script>
+<!--
+<script type="text/javascript">
+$(document).ready(function() {
+    setTimeout(function() {
+        $(".mensajemergente").fadeOut(1500);
+    },3000);
+});
+</script>
+-->
 </body>
 
 <footer>
