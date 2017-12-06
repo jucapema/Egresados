@@ -20,6 +20,7 @@
                           <th>Intereses</th>
                           <th>Carrera</th>
                           <th>Contactar</th>
+                          <th>Relacion</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -57,6 +58,7 @@
                                 Agregar a {{$user->name}} tu lista de amigos
                               @endslot
                             @endcomponent
+
                         <tr id="columtable">
                            <td>
                         @if($user->egresado->genero=='Masculino')
@@ -66,6 +68,7 @@
                         @endif
                   
                           </td>
+
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->egresado->genero}}</td>
@@ -73,14 +76,30 @@
                           <td>{{$user->egresado->carrera}}</td>
 
                           <td align="center"><button class="contactar btn btn-circle colormensaje" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons">email</i> </button>
+
   @php
     $favoritos=App\Models\Favorito::where('id_usuario',auth::user()->id)->where('amigo',$user->id)->get();
   @endphp
 @if (count($favoritos)>0)
-    <button class="add btn btn-circle colordelete" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">delete</i> </button></td>
+    <button class="add btn btn-circle colordelete" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons">highlight_off</i> </button></td>
 @else
   <button class="add btn btn-circle coloragregaramigo" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">person_add</i> </button></td>
+
 @endif
+@component('user.ModalConfirmarAdd')
+  @slot('idmodal')
+      modalDelete{{$user->id}}
+  @endslot
+  @slot('title')
+        Borrar a {{$user->name}} de tu lista de contactos
+  @endslot
+  @slot('contenido')
+    Borrar Contacto
+  @endslot
+  @slot('ruta')
+    {{route('eliminaramigo',['user'=>$user->id])}}
+  @endslot
+@endcomponent
                         </tr>
                       @endforeach
                       </tbody>

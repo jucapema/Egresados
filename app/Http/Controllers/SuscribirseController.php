@@ -15,7 +15,7 @@ class SuscribirseController extends Controller
 
     public function store(Request $request)
     {
-      if(\Hash::check($request->password_confirmation, $request->password)){
+      //if(\Hash::check($request->password_confirmation, $request->password)){
       $v = \Validator::make($request->all(), [
             'name' => 'required',
             'dni' => 'required|regex:/^[0-9]*$/i|unique:users',
@@ -42,17 +42,18 @@ class SuscribirseController extends Controller
                 Egresado::create($data);
                  Auth::logout();
                  Session::flash('flash_message', 'Solicitud en Proceso');
-                 return view('auth.login');
+                 return redirect()->back();
               }
               else{
                 flash('Debes ser mayor de edad')->error()->important();
                  return view('auth.register');
               }
-          }
-        }else{
+
+        }/*else{
           //Session::flash('flash_message', 'La clave no coincide');
           flash('La clave no coincide')->error()->important();
            return view('auth.register');
-        }
-  }
+        }*/
+      }
+
 }

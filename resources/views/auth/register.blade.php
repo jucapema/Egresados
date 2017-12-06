@@ -94,7 +94,7 @@ function ValidarCorreo(obj){
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('Fecha Nacimiento') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Fecha de Nacimiento</label>
 
                             <div class="col-md-6">
@@ -103,6 +103,39 @@ function ValidarCorreo(obj){
                                 @if ($errors->has('fecha_nacimiento'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('fecha_nacimiento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('genero') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Genero</label>
+
+                            <div class="col-md-6">
+                              <select class="form-control" name="genero" required>
+                                    <option>Masculino</option>
+                                    <option>Femenino</option>
+                                  </select>
+                                @if ($errors->has('genero'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('genero') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('intereses') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Intereses</label>
+
+                            <div class="col-md-6">
+                              <select class="form-control" name="intereses" required>
+                                    <option>Deportes</option>
+                                    <option>Reuniones</option>
+                                    <option>Informacion</option>
+                                  </select>
+                                @if ($errors->has('intereses'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('intereses') }}</strong>
                                     </span>
                                 @endif
                             </div>

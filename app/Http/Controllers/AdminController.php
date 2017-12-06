@@ -69,7 +69,7 @@ class AdminController extends Controller
     //  Mail::raw('$Usuario->email', function ($message) {   //funcion para enviar al correo del empleado la clave, por ahora crea un log
       //echo 'welcome tu contraseña es $data[password]';
     //  });
-      flash()->overlay('Registro Exitoso','Registro usuario');
+      flash('Registro Exitoso','Registro usuario')->success();
       return redirect()->route('Administrador.index');
     }
   }

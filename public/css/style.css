@@ -49,8 +49,13 @@ header{
 /*----- Estilo Foto -----*/
 .foto{
   margin: 0px;
+<<<<<<< HEAD
   padding: 0px;  
   left: 30px;
+=======
+  padding: 0px;
+  left: -150px;
+>>>>>>> upstream/master
   color: #0E7AD0;
 }
 /*----- Mouse sobre Foto -----*/
@@ -82,10 +87,14 @@ header{
 /*----- Estilo Nombre -----*/
 .nombre{
   margin: 0px;
+<<<<<<< HEAD
   padding: 5px;  
   padding-left: 15px;
   padding-right: 15px;
   width: 400px;
+=======
+  padding: 0px;
+>>>>>>> upstream/master
   font-family: Montserrat;
   font-size: 18px;
   font-weight: bold;
@@ -196,6 +205,17 @@ header{
 #menu ul a {
   border-bottom:1px solid #fff;
   background-color: #0E51A2;
+<<<<<<< HEAD
+=======
+  left: 80px;
+  border: 3px solid #000000;
+  padding: 0px;
+  top: -60px;
+}
+
+.bordesubmenu {
+  border-bottom: 1px solid #FFFFFF;
+>>>>>>> upstream/master
 }
 /*----- Mouse sobre el Submenú -----*/
 #menu li:hover ul {
@@ -303,7 +323,7 @@ header{
   padding-left: 0px;
   border-left: 3px solid #000000;
   border-right: 3px solid #000000;
-  border-bottom: 3px solid #000000;  
+  border-bottom: 3px solid #000000;
 }
 /*----- Texto Menú -----*/
 .nav-side-menu li a {
@@ -489,7 +509,7 @@ header{
 .suscrip{
   font-family: Montserrat;
   font-size: 25px;
-  color: #FFFFFF;  
+  color: #FFFFFF;
   position: relative;
   left: 110px;
 }

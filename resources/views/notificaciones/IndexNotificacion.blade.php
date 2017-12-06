@@ -5,18 +5,17 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-  <div style="overflow:scroll;height:450px;width:800px;">
-          <div class="panel panel-default">
-              <div class="panel-heading" align="center">Notificaciones Pendientes {{count($notificaciones)}}</div>
+  <div>
+          <div class="panelexterno panel-default gestionadmin scrollbar1">
+              <div class="panel-heading" align="center">Gestión de Administradores</div>
               <div class="panel-body">
-
-                    <table class="table" id="users">
+                    <table class="table tabladmin cell-border compact" id="users">
                       <thead>
                         <tr>
                           <th>Tipo</th>
                           <th>Informacion</th>
                           <th>Hora</th>
-                          <th>Ver</th>
+                            <th>Ver</th>
                           <th>Marcar como vista</th>
                         </tr>
                       </thead>
@@ -40,7 +39,7 @@
                               button.ver
                             @endslot
                           @endcomponent
-                        <tr>
+                                  <tr id="columtable">
                           @if ($notificacion->tipo=='post')
                             @php
                               $publicacion=\App\Models\Publicacion::findorfail($notificacion->id_tipo);
@@ -66,23 +65,6 @@
 
                           <td><button type='button' class='ver btn btn-success' data-toggle='modal' data-target='#modalAdd{{$notificacion->id}}' ><i class="material-icons iconosmenu">pageview</i></button></td>
                           <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalBorrar{{$notificacion->id}}'> <i class="material-icons iconosmenu">visibility_off</i> </button>
-@if ($notificacion->tipo=='mensaje')
-  @component('user.ModalConfirmarAdd')
-    @slot('ruta')
-      {{route('agregar',['user'=>$user->id])}}
-    @endslot
-    @slot('idmodal')
-        modalAgregar{{$user->id}}
-    @endslot
-    @slot('title')
-          Agregar Contacto {{$user->name}}
-    @endslot
-    @slot('contenido')
-      Has recibido un Mensaje de {{$user->name}} añadir a tu lista de amigos
-    @endslot
-  @endcomponent
-  <button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_add</i> </button>
-@endif
 @component('user.ModalConfirmar')
   @slot('ruta')
     {{route('Notificacion.destroy',['notificaciones'=>$notificacion->id])}}

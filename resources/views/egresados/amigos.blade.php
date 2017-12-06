@@ -1,9 +1,10 @@
+@extends('egresados.EgresadoMain')
+@section('recuadro')
 @php
-         $favoritos=App\Models\Favorito::where('id_usuario',Auth::user()->id)->get();
+    //     $favoritos=App\Models\Favorito::where('id_usuario',Auth::user()->id)->get();
     //$users=App\User::where('id',$favorito->amigo)->get();
 @endphp
-<div style="overflow:scroll;height:450px;width:500px;">
-
+    <div style="overflow:scroll;height:450px;width:500px;">
             <div class="panel-body">
               @foreach ($favoritos as $favorito)
                 @php
@@ -48,10 +49,11 @@
                         <h2>Email: {{$user->email}}</h2>
         <div class="panel-footer">
           <button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons iconosmenu">email</i> </button>
-          <button class="contactar btn btn-danger" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons iconosmenu">delete</i> </button>
+          <button class="contactar btn btn-danger" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons iconosmenu">highlight_off</i> </button>
         </div>
               </div>
                   </div>
                   </div>
                 @endforeach
                   </div>
+@endsection

@@ -45,10 +45,25 @@ class HomeController extends Controller
               }
             }
         if(Auth::User()->tipo_rol=='root'){
-          return redirect()->route('Administrador.index');}
+          $acceso=acceso::where('id_usuario',Auth::user()->id)->get();
+          if(count($acceso)==0){
+            $users=User::where('estado_cuenta','activa')
+                      ->where('tipo_rol','egresado')
+                      ->where('id','!=','2')->get();
+           $publicaciones=Publicacion::all();
+           foreach ($publicaciones as $publicacion) {
+              foreach ($users as $user) {
+                           $data2['id_usuario'] =$user->id;
+                           $data2['tipo'] ='post';
+                           $data2['id_tipo'] =$publicacion->id;
+                           Notificacion::create($data2);
+                  }
+              }
+          }
+          return redirect()->route('Administrador.index');
+        }
         }
       }
-
       //  return view('home');
 
 }
