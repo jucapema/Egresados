@@ -5,24 +5,23 @@
 @endsection('headers')
 @section('content')
 
-    <div class="container" align="center">
-        <div class="row">
-            <div class="btn-group btn-breadcrumb" >
-                <a href="{{route('posts')}}" class="btn btn-primary bordemenu activa1"><i class="glyphicon glyphicon-home"></i></a>
-              <a href="#" class="btn btn-primary bordemenu" data-toggle="dropdown" data-hover="dropdown">Perfil</a>
-                  <ul class="dropdown-menu">
-                    <li><a class="btn4 bordesubmenu">Foto de Perfil</a></li>
-                    <li><a class="btn2 bordesubmenu" data-toogle="modal" data-target="#miventana">Editar Información</a></li>
-                    <li><a class="btn3" data-toogle="modal" data-target="#ventanapassword">Cambiar Contraseña</a></li>
-                </ul>
-                <a class="btn btn-primary btn6 bordemenu" data-toogle="modal" data-target="#miventanainfo">Información</a>
-                <a class="btn btn-primary btn5 bordemenu"  data-toogle="modal" data-target="#baja">Dar de Baja</a>
-                <a href="https://www.utp.edu.co/egresados/egresados-utp.html" target="_blank" class="btn btn-primary">Ayuda</a>
-                <a href="{{route('logout')}}" class="btn btn-primary">Salir</a>
-            </div>
-        </div>
-    </div>
-
+    <nav id="menu" class="poshorizontal2">
+        <li><a href="{{route('posts')}}">
+            <i class="glyphicon glyphicon-home tamicon"></i></a></li>
+        <li><a href="#">Perfil</a>
+            <ul>
+                <li><a class="btn4">Foto de Perfil</a></li>
+                <li><a class="btn2" data-toogle="modal" data-target="#miventana">
+                Editar Información</a></li>
+                <li><a class="btn3" data-toogle="modal" data-target="#ventanapassword">Cambiar Contraseña</a></li>
+            </ul>
+        </li>
+        <li><a class="btn6" data-toogle="modal" data-target="#miventanainfo">Información</a></li>
+        <li><a class="btn5" data-toogle="modal" data-target="#baja">Dar de Baja</a></li>
+        <li><a href="https://www.utp.edu.co/egresados/egresados-utp.html"
+            target="_blank">Ayuda</a></li>
+        <li><a href="{{route('logout')}}">Salir</a></li>
+    </nav>
 
     <div class="nav-side-menu">
         <div class="brand">Egresados UTP</div>
@@ -43,21 +42,6 @@
     @yield('recuadro')
   </div>
 
-  @component('modals.modal')
-    @slot('id')
-      baja
-    @endslot
-    @slot('title')
-      Seguro de darte de baja
-    @endslot
-    @slot('cuerpo')
-      Darse de baja
-      <a href="{{route('baja',['user'=>Auth::user()->egresado->id])}}" class="btn btn-danger block">DarseBaja</a>
-    @endslot
-    @slot('boton')
-      btn5
-    @endslot
-  @endcomponent
 
   @section('modals')
       @yield('mainmodals')

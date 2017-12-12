@@ -3,6 +3,23 @@
 
 @endsection
 @section('recuadro')
+  @if (count($mensajes)<=0)
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-sm-6 col-md-10">
+         <div class="thumbnail">
+           <div class="caption">
+             <h3>No tienes mensajes disponibles</h3>
+             <div class="form-group" align="center">
+               <p>NO tienes mensajes pendientes</p>
+             </div>
+           </div>
+         </div>
+       </div>
+       </div>
+       </div></div>
+  @endif
   <div style="overflow:scroll;height:400px;width:800px;">
   @foreach ($mensajes as $mensaje)
 
@@ -11,7 +28,9 @@
 <div class="row">
   <div class="col-sm-6 col-md-10">
     <div class="thumbnail">
-
+@php
+  $user=\App\User::findorfail($mensaje->send_id);
+@endphp
       @component('user.ModalFormEdit')
         @slot('id')
           {{$mensaje->id}}
@@ -20,12 +39,12 @@
             modalReply{{$mensaje->id}}
         @endslot
         @slot('title')
-              Enviar email a {{$mensaje->egresado->user->name}}
+              Enviar email a {{$user->name}}
         @endslot
         @slot('contenido')
           @component('notificaciones.ModalMensajeReply')
             @slot('correo')
-              {{$mensaje->egresado->user->email}}
+              {{$user->email}}
             @endslot
             @slot('contenido')
               {{$mensaje->contenido}}
@@ -42,12 +61,12 @@
             modalSend{{$mensaje->id}}
         @endslot
         @slot('title')
-              Enviar email a {{$mensaje->egresado->user->name}}
+              Enviar email a {{$user->name}}
         @endslot
         @slot('contenido')
           @component('notificaciones.ModalMensaje')
             @slot('correo')
-              {{$mensaje->egresado->user->email}}
+              {{$user->email}}
             @endslot
           @endcomponent
         @endslot
@@ -74,7 +93,7 @@
         <div class="form-group" align="center">
           <p>Contenido: {{$mensaje->contenido}}</p>
         </div>
-        <p>Enviado el  {{$mensaje->created_at}} by {{$mensaje->egresado->user ->name}}</p>
+        <p>Enviado el  {{$mensaje->created_at}} by {{$user ->name}}</p>
       </div>
       <div class="form-group" aling="right">
       <p>

@@ -64,7 +64,24 @@
               @endcomponent
 <!-- darse baja -->
 @if (auth::user()->tipo_rol=='egresado')
+
     @component('modals.modal')
+      @slot('id')
+        baja
+      @endslot
+      @slot('title')
+        Seguro de darte de baja
+      @endslot
+      @slot('cuerpo')
+        Darse de baja
+        <a href="{{route('baja',['user'=>Auth::user()->egresado->id])}}" class="btn btn-danger block">DarseBaja</a>
+      @endslot
+      @slot('boton')
+        btn5
+      @endslot
+    @endcomponent
+    
+  @component('modals.modal')
     @slot('id')
      chat
     @endslot

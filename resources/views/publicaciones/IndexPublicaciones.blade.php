@@ -5,12 +5,12 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-  <div style="overflow:scroll;height:450px;width:800px;">
-          <div class="panel panel-default">
-              <div class="panel-heading" align="center">Notificaciones Pendientes {{count($publicaciones)}}</div>
-              <div class="panel-body">
+        <div>
+          <div class="panelexterno panel-default gestionegresados scrollbar1">
+              <div class="panel-heading" align="center">Notificaciones Pendientes 
+              [{{count($publicaciones)}}]</div>
                 <div class="form-group">
-                <button type='button' class='agregar btn btn-success' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>Publicar Contenido</button>
+                <button type='button' class='agregar btn boton1' data-toggle='modal' data-target='#modalAdd' ><i class="material-icons iconosmenu">add</i>Publicar Contenido</button>
                              @component('modals.modal')
                                @slot('id')
                                  modalAdd
@@ -27,19 +27,20 @@
                                @endslot
                              @endcomponent
                            </div>
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>Image</th>
-                         <th>Titulo</th>
-                         <th>Contenido</th>
-                         <th>Fecha del Evento</th>
-                         <th>Publicado Por</th>
-
-                         <th>Publicado el</th>
-                         <th>Acciones</th>
-                        </tr>
-                      </thead>
+                   <div class="panel-body">
+                      <table class="table tabladmin cell-border compact" id="users">
+                        <thead>
+                          <tr>
+                            <th>Imagen</th>
+                           <th>Titulo</th>
+                           <th>Contenido</th>
+                           <th>Fecha Evento</th>
+                           <th>Publicado Por</th>
+                           <th>Publicado</th>
+                          <th>Editar</th>
+                          <th>Eliminar</th>
+                          </tr>
+                        </thead>
                       <tbody>
                         @foreach ($publicaciones as $publicacion)
                           @component('user.ModalFormEdit')
@@ -60,42 +61,46 @@
                                 @endcomponent
                               @endslot
                             @endcomponent
-                        <tr>
-                          <td><img src="/storage/images/{{$publicacion->multimedia}}" alt="" style="width:50px;"></td>
-                                                   <td>{{$publicacion->titulo}}</td>
-                                                   <td>{{$publicacion->cuerpo}}</td>
-                                                   <td>{{$publicacion->fecha}}</td>
-                                                   @if ($publicacion->administrador!=null)
-                                                     <td>{{$publicacion->administrador->user->name}}</td>
-                                                   @else
-                                                       <td>Administrador Desconocido</td>
-                                                   @endif
+                        <tr id="columtable">
+                          @if ($publicacion->multimedia!=null)
+                          <td><img src="/storage/images/{{$publicacion->multimedia}}" alt="" style="width:70px;"></td>
+                          @else
+                          <td><img src="https://image.ibb.co/cAeb5G/Publicaciones.png" alt="" style="width:70px;"></td>
+                          @endif
+                           <td>{{$publicacion->titulo}}</td>
+                           <td>{{$publicacion->cuerpo}}</td>
+                           <td>{{$publicacion->fecha}}</td>
+                           @if ($publicacion->administrador!=null)
+                             <td>{{$publicacion->administrador->user->name}}</td>
+                           @else
+                               <td>Administrador Desconocido</td>
+                           @endif
 
-                                                   <td>{{$publicacion->created_at->diffForHumans()}}</td>
+                           <td>{{$publicacion->created_at->diffForHumans()}}</td>
 
-                          <td><button type='button' class='editar btn btn-success' data-toggle='modal' data-target='#modalEditar{{$publicacion->id}}' ><i class="material-icons iconosmenu">edit</i></button></td>
-                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalBorrar{{$publicacion->id}}'> <i class="material-icons iconosmenu">delete_forever</i> </button>
-@component('user.ModalConfirmar')
-  @slot('ruta')
-    {{route('Publicacion.destroy',['Publicacion'=>$publicacion->id])}}
-  @endslot
-  @slot('idmodal')
-    modalBorrar{{$publicacion->id}}
-  @endslot
-  @slot('title')
-    Eliminar publicacion
-  @endslot
-  @slot('contenido')
-    Seguro de Eliminar esta Publicacion
-  @endslot
-@endcomponent
-                        </tr>
+                          <td align="center"><button type='button' class='editar btn btn-circle coloredit' data-toggle='modal' data-target='#modalEditar{{$publicacion->id}}' ><i class="material-icons">edit</i></button></td>
+                          <td align="center"><button class="contactar btn-circle colordelete" data-toggle='modal' data-target='#modalBorrar{{$publicacion->id}}'> <i class="material-icons">delete_forever</i> </button>
+                          @component('user.ModalConfirmar')
+                            @slot('ruta')
+                              {{route('Publicacion.destroy',['Publicacion'=>$publicacion->id])}}
+                            @endslot
+                            @slot('idmodal')
+                              modalBorrar{{$publicacion->id}}
+                            @endslot
+                            @slot('title')
+                              Eliminar publicacion
+                            @endslot
+                            @slot('contenido')
+                              Seguro de Eliminar esta Publicacion
+                            @endslot
+                          @endcomponent
+                        </td></tr>
                       @endforeach
                       </tbody>
 
                     </table>
                 </div>
-</div>
+              </div>
             </div>
 
         @section('mainmodals')

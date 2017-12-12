@@ -6,9 +6,10 @@
 @endsection
 @section('recuadro')
   <div>
-          <div class="panelexterno panel-default gestionadmin scrollbar1">
-              <div class="panel-heading" align="center">Gestión de Administradores</div>
+          <div class="panelexterno panel-default buscaramigos scrollbar1">
+              <div class="panel-heading" align="center">Buscar Amigos</div>
               <div class="panel-body">
+
                     <table class="table tabladmin cell-border compact" id="users">
                       <thead>
                         <tr>
@@ -57,21 +58,34 @@
                                 Agregar a {{$user->name}} tu lista de amigos
                               @endslot
                             @endcomponent
-                                  <tr id="columtable">
-                           <td><img src="storage/images/1.jpg" alt="" style="width:50px;"></td>
+
+                        <tr id="columtable">
+                           <td>
+                        @if($user->egresado->genero=='Masculino')
+                          <img src="https://image.ibb.co/fLsj8R/Foto_Egresado.png" style="width:70px; padding-top: 7px;">
+                        @else
+                          <img src="https://image.ibb.co/kanMpb/Foto_Egresado_2.png" style="width:70px; padding-top: 7px;">
+                        @endif
+                          </td>
+
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{$user->egresado->genero}}</td>
                           <td>{{$user->egresado->intereses}}</td>
                           <td>{{$user->egresado->carrera}}</td>
-                          <td><button class="contactar btn btn-primary" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons iconosmenu">email</i> </button></td>
+
+                          <td align="center"><button class="contactar btn btn-circle colormensaje" data-toggle='modal' data-target='#modalSend{{$user->id}}'> <i class="material-icons">email</i> </button></td>
+
   @php
     $favoritos=App\Models\Favorito::where('id_usuario',auth::user()->id)->where('amigo',$user->id)->get();
   @endphp
 @if (count($favoritos)>0)
-  <td><button class="contactar btn btn-danger" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons iconosmenu">highlight_off</i> </button></td>
+  <td>
+    <button class="add btn btn-circle colordelete" data-toggle='modal' data-target='#modalDelete{{$user->id}}'> <i class="material-icons">highlight_off</i> </button></td>
 @else
-  <td><button class="add btn btn-primary" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons iconosmenu">person_add</i> </button></td>
+<td>
+  <button class="add btn btn-circle coloragregaramigo" data-toggle='modal' data-target='#modalAgregar{{$user->id}}'> <i class="material-icons">person_add</i> </button></td>
+
 @endif
 @component('user.ModalConfirmarAdd')
   @slot('idmodal')

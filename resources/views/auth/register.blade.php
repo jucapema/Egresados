@@ -25,8 +25,8 @@ function ValidarCorreo(obj){
   }
 }
 </script>
-<div class="form-group" align="center">
-    @include('flash::message')
+<div class="container mensajemergente" align="center">
+  @include('flash::message')
 </div>
 <div class="container">
     <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
@@ -176,5 +176,12 @@ function ValidarCorreo(obj){
         </div>
     </div>
 </div>
+<script>
+    $('#flash-overlay-modal').modal();
+</script>
+
+<script>
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+</script>
 </body>
 </html>

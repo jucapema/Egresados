@@ -5,71 +5,73 @@
 <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
 @endsection
 @section('recuadro')
-<div style="overflow:scroll;height:450px;width:850px;">
-              <div class="panel-heading" align="center">Viendo Egresados</div>
+        <div>
+          <div class="panelexterno panel-default gestionegresados scrollbar1">
+            <div class="panel-heading" align="center">Solicitudes de Cancelación de Cuenta</div>
               <div class="panel-body">
+                <table class="table tabladmin cell-border compact" id="users">
+                  <thead>
+                    <tr>
+                      <th>DNI</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Email</th>
+                      <th>Fecha Pidio Darse de Baja</th>
+                      <th>Editar</th>
+                      <th>Mensaje</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($egresados as $egresado)
 
-                    <table class="table" id="users">
-                      <thead>
-                        <tr>
-                          <th>DNI</th>
-                 <th>Nombre</th>
-                 <th>Apellido</th>
-                 <th>Email</th>
-                 <th>Fecha Pidio Darse de Baja</th>
-                 <th>Acciones</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        @foreach ($egresados as $egresado)
+                      @component('user.ModalFormEdit')
+                             @slot('id')
+                               {{$egresado->user->id}}
+                             @endslot
+                             @slot('idmodal')
+                                 modalSend{{$egresado->user->id}}
+                             @endslot
+                             @slot('title')
+                                   Enviar email a {{$egresado->user->name}}
+                             @endslot
+                             @slot('contenido')
+                               @component('notificaciones.ModalMensaje')
+                                 @slot('correo')
+                                   {{$egresado->user->email}}
+                                 @endslot
+                               @endcomponent
+                             @endslot
+                         @endcomponent
+                      <tr id="columtable">
+                       <td>{{$egresado->user->dni}}</td>
+                       <td>{{$egresado->user->name}}</td>
+                       <td>{{$egresado->user->apellido}}</td>
+                       <td>{{$egresado->user->email}}</td>
+                       <td>{{$egresado->user->updated_at}}</td>
+                       <td align="center"><button type='button' class='eliminar btn btn-circle colordelete' data-toggle='modal' data-target='#modalEliminar{{$egresado->user->id}}' ><i class="material-icons">delete</i></button></td>
+                       <td align="center"><button type='button' class='send btn btn-circle colorrestaurar' data-toggle='modal' data-target='#modalSend{{$egresado->user->id}}' ><i class="material-icons">email</i></button></td>
 
-                          @component('user.ModalFormEdit')
-                                 @slot('id')
-                                   {{$egresado->user->id}}
-                                 @endslot
-                                 @slot('idmodal')
-                                     modalSend{{$egresado->user->id}}
-                                 @endslot
-                                 @slot('title')
-                                       Enviar email a {{$egresado->user->name}}
-                                 @endslot
-                                 @slot('contenido')
-                                   @component('notificaciones.ModalMensaje')
-                                     @slot('correo')
-                                       {{$egresado->user->email}}
-                                     @endslot
-                                   @endcomponent
-                                 @endslot
-                             @endcomponent
-                          <tr>
-                                 <td>{{$egresado->user->dni}}</td>
-                                 <td>{{$egresado->user->name}}</td>
-                                 <td>{{$egresado->user->apellido}}</td>
-                                 <td>{{$egresado->user->email}}</td>
-                                 <td>{{$egresado->user->updated_at}}</td>
-                          <td><button type='button' class='eliminar btn btn-success' data-toggle='modal' data-target='#modalEliminar{{$egresado->user->id}}' ><i class="material-icons iconosmenu">delete</i></button>
-                          <button type='button' class='send btn btn-info' data-toggle='modal' data-target='#modalSend{{$egresado->user->id}}' ><i class="material-icons iconosmenu">email</i></button></td>
-
-                          @component('user.ModalConfirmarAdd')
-                            @slot('ruta')
-                              {{route('borrar',['user'=>$egresado->user->id])}}
-                            @endslot
-                            @slot('idmodal')
-                                modalEliminar{{$egresado->user->id}}
-                            @endslot
-                            @slot('title')
-                                  Eliminar Usuario {{$egresado->user->name}}
-                            @endslot
-                            @slot('contenido')
-                              Estas Seguro que deseas eliminar a {{$egresado->user->name}}
-                            @endslot
-                          @endcomponent
-                        </tr>
-                      @endforeach
-                      </tbody>
-                    </table>
-                </div>
+                      @component('user.ModalConfirmarAdd')
+                        @slot('ruta')
+                          {{route('borrar',['user'=>$egresado->user->id])}}
+                        @endslot
+                        @slot('idmodal')
+                            modalEliminar{{$egresado->user->id}}
+                        @endslot
+                        @slot('title')
+                              Eliminar Usuario {{$egresado->user->name}}
+                        @endslot
+                        @slot('contenido')
+                          Estas Seguro que deseas eliminar a {{$egresado->user->name}}
+                        @endslot
+                      @endcomponent
+                    </tr>
+                  @endforeach
+                  </tbody>
+                </table>
             </div>
+          </div>
+        </div>
         @section('mainmodals')
 
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
