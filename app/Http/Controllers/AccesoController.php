@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\acceso;
+use App\Models\Egresado;
 use Illuminate\Http\Request;
-
+use app\User;
 class AccesoController extends Controller
 {
     /**
@@ -12,15 +13,21 @@ class AccesoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function __construct(){
+       $this->middleware('admin',['only'=>'index']);
+     }
+
     public function index()
     {
-        $accesos=Acceso::orderBy('id','desc')->paginate(10);
-        return view('acesso.index',['acceso'=>$acceso->id_usuario]);
+        $accesos=Acceso::where('id_usuario','!=',\auth::user()->id)->get();
+        $cantnewuser=User::where('estado_cuenta','suscrita')->get();
+        $cantcance=Egresado::where('baja','true')->get();
+        return view('acceso.indexAccesos',['accesos'=>$accesos,'cantnewuser'=>$cantnewuser,'cantcance'=>$cantcance]);
     }
 
 
     public function odernar($id){
-      $ordenar = Acceso::all()->orderBy('id','desc')->where('id','');
+      //$ordenar = Acceso::all()->orderBy('id','desc')->where('id','');
     }
     /**
      * Store a newly created resource in storage.
@@ -37,5 +44,5 @@ class AccesoController extends Controller
     public function destroy(acceso $acceso)
     {
         //
-    }
+    }*/
 }

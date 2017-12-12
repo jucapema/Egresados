@@ -8,11 +8,11 @@ class Publicacion extends Model
 {
   protected $table = 'publicaciones';
 
-  protected $fillable = ['id_administrador','titulo','cuerpo',
+  protected $fillable = ['id_administrador','titulo','cuerpo','fecha','multimedia',
   ];
 
   public function administrador(){
-    return $this->belongsTo('App\Models\Administrador');
+    return $this->belongsTo('App\Models\Administrador','id_administrador');
   }
-  
+
 }

@@ -18,6 +18,16 @@
 </head>
 
 <body>
+<script>
+function ValidarCorreo(obj){
+  if (!(/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i).test(obj)) {  //expresion regular va aca
+    alert('Debes Usar el Correo Institucional');
+  }
+}
+</script>
+<div class="form-group" align="center">
+    @include('flash::message')
+</div>
 <div class="container">
     <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
     <div class="row">
@@ -25,13 +35,13 @@
             <div class="panel2 panel-default">
                 <div class="panel-heading">Formulario de suscripcion</div>
                     <div class="atras">
-                    <a href="#"><i class="fa fa-arrow-circle-left fa-4x atr" aria-hidden="true">
+                    <a href="{{route('inicio')}}"><i class="fa fa-arrow-circle-left fa-4x atr" aria-hidden="true">
                     </i></a></div>
                 <div class="panel-body">
                     <form class="form-horizontal" action="{{ route('suscribirse') }}" method="POST">
                         {{ csrf_field() }}
                         <div class="form-group{{ $errors->has('dni') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">DNI</label>
+                            <label for="dni" class="col-md-4 control-label">DNI</label>
 
                             <div class="col-md-6">
                                 <input id="dni" type="number" class="form-control" name="dni" value="{{ old('dni') }}" required autofocus>
@@ -71,10 +81,11 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input  type="email" class="form-control" placeholder="name@utp.edu.co" name="email" value="{{ old('email') }}" required onchange="ValidarCorreo(this);">
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -83,7 +94,7 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('Fecha Nacimiento') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-error' : '' }}">
                             <label for="name" class="col-md-4 control-label">Fecha de Nacimiento</label>
 
                             <div class="col-md-6">
@@ -92,6 +103,39 @@
                                 @if ($errors->has('fecha_nacimiento'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('fecha_nacimiento') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('genero') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Genero</label>
+
+                            <div class="col-md-6">
+                              <select class="form-control" name="genero" required>
+                                    <option>Masculino</option>
+                                    <option>Femenino</option>
+                                  </select>
+                                @if ($errors->has('genero'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('genero') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('intereses') ? ' has-error' : '' }}">
+                            <label for="name" class="col-md-4 control-label">Intereses</label>
+
+                            <div class="col-md-6">
+                              <select class="form-control" name="intereses" required>
+                                    <option>Deportes</option>
+                                    <option>Reuniones</option>
+                                    <option>Informacion</option>
+                                  </select>
+                                @if ($errors->has('intereses'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('intereses') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -112,10 +156,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            <label for="password_confirmation" class="col-md-4 control-label">Confirm Password</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                  <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 

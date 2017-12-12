@@ -32,18 +32,31 @@ class User extends Authenticatable
     ];
 
     public function egresado(){
-      return $this->hasOne('App\Models\Egresado');
+      return $this->hasOne('App\Models\Egresado','id_usuario');
     }
 
     public function administrador(){
-        return $this->hasOne('App\Models\Administrador');
+        return $this->hasOne('App\Models\Administrador','id_usuario');
     }
 
     public function notificacion(){
-        return $this->hasMany('App\Models\Notificacion');
+        return $this->hasMany('App\Models\Notificacion','id_usuario');
     }
 
     public function acceso(){
-      return $this->hasMany('App\Models\acceso');
+      return $this->hasMany('App\Models\acceso','id_usuario');
     }
+
+    public function mensaje(){
+      return $this->hasMany('App\Models\Mensaje','id_usuario');
+    }
+
+    public function favoritos(){
+      return $this->hasMany('App\Models\Favorito','id_usuario');
+    }
+
+    public function scopeContactos($query,$id){
+      return $query->where('tipo_rol','egresado')->where('id','!=',$id)->where('estado_cuenta','activa');
+    }
+
 }

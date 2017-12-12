@@ -121,11 +121,12 @@ return [
     | new session cookie is created by the framework for every driver.
     |
     */
-
+/*
     'cookie' => env(
         'SESSION_COOKIE',
         str_slug(env('APP_NAME', 'laravel'), '_').'_session'
-    ),
+    ),*/
+    'cookie' => 'laravel_session',
 
     /*
     |--------------------------------------------------------------------------

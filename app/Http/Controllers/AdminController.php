@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrador;
+use App\Models\Egresado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use Mail;
 use Session;
+
 class AdminController extends Controller
 {
+  public function __construct(){
+    $this->middleware('root',['only'=>['index','store']]);
+    $this->middleware('admin',['only'=>'borrarcuenta']);
+  }
+
   /**
   * Display a listing of the resource.
   *
@@ -17,8 +24,8 @@ class AdminController extends Controller
   */
   public function index()
   {
-    $users = User::where('tipo_rol','=','admin')->paginate(10);
-    return view('user.indexAdmin',['users'=>$users]);
+    $users = User::where('tipo_rol','admin')->get();
+    return view('user.IndexAdmin',['users'=>$users]);
   }
 
   /**
@@ -41,24 +48,28 @@ class AdminController extends Controller
   {
     $v = \Validator::make($request->all(),[
       'dni'=>'required|unique:users|numeric',
-      'email'=>'required|email|unique:users',
-      'telefono'=> 'required|min:7|numeric',
+      'email'=>'required|regex:/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i|unique:users',
+      'telefono'=> 'required|regex:/^[3][0-9]*$/',
+    ],
+    $messages = [
+        'email.regex' => 'Debes usar el correo institucional',
     ]);
     if($v->fails()){
       return redirect()->back()->withInput()->withErrors($v->errors());
     }else{
       $data = $request->all();
       $data['tipo_rol'] = 'admin';
-      $data['password'] = Hash::make(rand(0,8));
-      $data['confirmation_password'] = Hash::make($data['password']);
+      $data['password'] = bcrypt('secret');//Hash::make(rand(0,8));
+      $data['confirmation_password'] = bcrypt($data['password']);
       $data['estado_cuenta'] = 'activa';
       $Usuario= User::create($data);
       $data['id_usuario'] = $Usuario->id;
+      $data['valor'] = 'false';
       $Administrador = Administrador::create($data);
     //  Mail::raw('$Usuario->email', function ($message) {   //funcion para enviar al correo del empleado la clave, por ahora crea un log
       //echo 'welcome tu contraseña es $data[password]';
     //  });
-      Session::flash('flash_message', 'Registro Exitoso');
+      flash('Registro Exitoso','Registro usuario')->success();
       return redirect()->route('Administrador.index');
     }
   }
@@ -69,51 +80,16 @@ class AdminController extends Controller
   * @param  \App\Administrador  $administrador
   * @return \Illuminate\Http\Response
   */
-  public function show(Administrador $administrador)
-  {
-      return redirect()->route('usuario.show',['usuario'=>$administrador->id_usuario]);
-  }
 
-  /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  \App\Administrador  $administrador
-  * @return \Illuminate\Http\Response
-  */
-  public function edit(Administrador $administrador)
-  {
-    $user=User::findOrfail($administrador->id_usuario);
-    return view('administrador.EditAdmin',['administrador'=>$administrador,'user'=>$user]);
-  }
 
-  /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  \App\Administrador  $administrador
-  * @return \Illuminate\Http\Response
-  */
-  public function update(Request $request, Administrador $administrador)
-  {
-    if($request->fails()){
-      return redirect()->back()->withInput()->withErrors($v->errors());
-    }else{
-      $administrador->update($request->all());
-      return redirect()->route('Administrador.show',['administrador'=>$administrador]);
+    public function borrarcuenta(Request $request){
+      $user=User::findOrfail($request->user);
+      $egresado=Egresado::findOrfail($user->egresado->id);
+      $egresado->delete();
+      $user->delete();
+      //envio emails
+      //Session::flash('flash_message', 'Usuario dado de baja');
+      flash('Usuario dado de baja')->success();
+      return redirect()->back();
     }
-  }
-
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  \App\Administrador  $administrador
-  * @return \Illuminate\Http\Response
-  */
-  public function destroy(Administrador $administrador)
-  {
-    $user=User::findOrfail($administrador->id);
-    $administrador->delete();$user->delete();
-    Session::flash('deleted', 'Usuario Eliminado');
-    return redirect()->route('Administrador.index',['deleted',$user->id]); //TODO this is for restore
-  }
 }

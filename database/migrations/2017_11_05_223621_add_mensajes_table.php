@@ -16,11 +16,13 @@ class AddMensajesTable extends Migration
         Schema::create('mensajes', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('id_egresado')->unsigned(); //fk
+            $table->integer('send_id')->unsigned();
             //$table->integer('id_notificacion')->unsigned(); //fk
             $table->string('contenido');
             $table->string('title');
             $table->timestamps();
             $table->foreign('id_egresado')->references('id')->on('egresados');//->onDelate();
+            $table->foreign('send_id')->references('id')->on('users');//->onDelate();
         });
     }
 

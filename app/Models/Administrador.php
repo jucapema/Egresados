@@ -11,14 +11,14 @@ class Administrador extends Model
 
   use softDeletes;
   protected $dates = ['deleted_at'];
-  protected $fillable = ['id_usuario', 'direccion', 'ciudad', 'telefono',
+  protected $fillable = ['id_usuario', 'direccion', 'ciudad', 'telefono','valor',
   ];
 
   public function user(){
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\User','id_usuario');
   }
 
   public function publicacion(){
-    return $this->hasMany('App\Models\Publicaciones');
+    return $this->hasMany('App\Models\Publicaciones','id_administrador');
   }
 }

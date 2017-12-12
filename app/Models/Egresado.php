@@ -10,14 +10,14 @@ class Egresado extends Model
 
   use softDeletes;
   protected $dates = ['deleted_at'];
-  protected $fillable = ['id_usuario', 'intereses','fecha_nacimiento','genero',
+  protected $fillable = ['id_usuario', 'intereses','fecha_nacimiento','genero','carrera','baja',
   ];
 
   public function user(){
-    return $this->belongsTo('App\User');
+    return $this->belongsTo('App\User','id_usuario');
   }
 
   public function mensaje(){
-    return $this->hasMany('App\Models\Mensaje');
+    return $this->hasMany('App\Models\Mensaje','id_egresado');
   }
 }

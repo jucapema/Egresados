@@ -19,9 +19,20 @@
 
 <div class="container">
   @if(Session::has('flash_message'))
-      {{Session::get('flash_message')}}
-    @endif
-    <img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
+    <script type="text/javascript">
+      alert("{{Session::get('flash_message')}}");
+    </script>
+  @endif
+
+  <script>
+  function ValidarCorreo(obj){
+    if (!(/^[-\w.%+]{1,64}@[u][t][p]\.[e][d][u]\.[c][o]$/i).test(obj)) {  //expresion regular va aca
+      alert('Debes Usar el Correo Institucional');
+    }
+  }
+  </script>
+
+<img src="https://image.ibb.co/gzqtsb/Wallpaper_1920x1080.jpg" class="wallpaper">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
